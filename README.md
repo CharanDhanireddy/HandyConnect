@@ -1,4 +1,4 @@
-# ServiceIt
+# FindHandyman
 Class project for CEN5035 - Software Engineering
 
 ## Project Idea:
