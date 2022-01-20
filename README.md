@@ -17,9 +17,9 @@ Platform for connecting customers with skilled and experienced professionals pro
 
 ---
 
-## Sprint Plan
+# Sprint Plan
 
-### Sprint 1:
+## Sprint 1:
 
 Vendor App:
 - Sign Up with vendor personal details along with service (Selection), and city
@@ -32,8 +32,7 @@ Workflow:
 - User selects service, day, location
 - Automatically asssign a vendor
 
-### Sprint 2:
-
+## Sprint 2:
 
 Vendor App:
 - Block the time slot for the service during diff times of day
@@ -45,8 +44,7 @@ User App:
 Workflow:
 - User selects service, day, timeslot, location and vendor is automatically selected
 
-### Sprint 3:
-
+## Sprint 3:
 
 Vendor App:
 - Can rate and reviews users based on the service
@@ -56,8 +54,7 @@ User App:
 - Can rate and reviews vendors based on the service
 
 
-### Sprint 4:
-
+## Sprint 4:
 
 Vendor App:
 - Provide a quotation for the requested job
