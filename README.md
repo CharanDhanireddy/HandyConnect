@@ -9,7 +9,7 @@ Platform for connecting customers with skilled and experienced professionals pro
 | :--: | :--: | :--: |
 | Sai Charan Reddy Dhanireddy | s.dhanireddy@ufl.edu | 33614329 |
 | Venkata Shiva Reddy Manchala | manchala.v@ufl.edu | 61099624 |
-| Venkat Dhavaleswarapu | v.dhavaleswarapu@ufl.edu | 72167758 |
+| Venkat Dhavaleswarapu | vdhavaleswarapu@ufl.edu | 72167758 |
 | Srikanth Rao Parcha | parcha.srikanthr@ufl.edu | 46324560 |
 
 ## Stack:
