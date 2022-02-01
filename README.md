@@ -15,7 +15,7 @@ Platform for connecting customers with skilled and experienced professionals pro
 ## Stack:
 - Backend: Go Lang
 - Frontend: ReactJS
-- Database: Postgres
+- Database: SQLite
 
 ---
 
