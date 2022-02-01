@@ -10,6 +10,7 @@ POST - User Login
 
 POST - Vendor SignUp
 POST - Vendor Login
+
 GET - Service list
 GET - City list
 
@@ -46,6 +47,10 @@ return: confirmation with vendor details
 - Mocking Library for all the above APIs
 - Bootstrap: UI elements Library (MaterialUI / Reactstrap)
 - Bootstrap: Responsive design (without media queries) containers
+
+User SignUp:
+
+
 
 ---
 
