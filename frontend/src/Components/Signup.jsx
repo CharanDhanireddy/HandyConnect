@@ -9,6 +9,8 @@ import {
   FormControl
 } from "react-bootstrap";
 
+import axios from "axios";
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ class Signup extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onSignupClick = () => {
+  onSignupClick = async () => {
     const userData = {
       firstName: this.state.firstName,
       lastname: this.state.lastname,
@@ -32,7 +34,11 @@ class Signup extends Component {
       password: this.state.password,
       rePassword: this.state.rePassword,
     };
-    console.log("Sign up " + userData.firstName + " " + userData.lastname + " " + userData.email + " " + userData.password);
+    
+    let res = await axios.post("http://localhost:5000/user/signup", userData)
+    let data = res.data
+    let status = res.status
+    console.log(data, status)
   };
 
   render() {
@@ -91,7 +97,7 @@ class Signup extends Component {
               </Form.Group>
 
               <Form.Group controlId="rePasswordId">
-                <Form.Label>Your password</Form.Label>
+                <Form.Label>Re-enter password</Form.Label>
                 <Form.Control
                   type="password"
                   name="rePassword"
