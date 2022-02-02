@@ -37,14 +37,15 @@ class Signup extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col md="4">
-            <h1>Sign up</h1>
+      <Container className="center">
+        <Row className = "">
+          <Col md="4" className="mx-auto ">
+            <h1 className="login-signup-heading">Sign up</h1>
             <Form>
             <Form.Group controlId="firstNameId">
-                <Form.Label>First Name</Form.Label>
+                
                 <Form.Control
+                  className = "mb-2"
                   type="text"
                   name="firstName"
                   placeholder="Enter First Name"
@@ -55,8 +56,9 @@ class Signup extends Component {
               </Form.Group>
 
               <Form.Group controlId="lastNameId">
-                <Form.Label>Last Name</Form.Label>
+                
                 <Form.Control
+                  className = "mb-2"
                   type="text"
                   name="lastName"
                   placeholder="Enter Last Name"
@@ -67,8 +69,9 @@ class Signup extends Component {
               </Form.Group>
 
               <Form.Group controlId="emailId">
-                <Form.Label>Email</Form.Label>
+                
                 <Form.Control
+                  className = "mb-2"
                   type="text"
                   name="email"
                   placeholder="Enter email address"
@@ -79,8 +82,9 @@ class Signup extends Component {
               </Form.Group>
 
               <Form.Group controlId="passwordId">
-                <Form.Label>Your password</Form.Label>
+                
                 <Form.Control
+                  className = "mb-2"
                   type="password"
                   name="password"
                   placeholder="Enter password"
@@ -91,8 +95,9 @@ class Signup extends Component {
               </Form.Group>
 
               <Form.Group controlId="rePasswordId">
-                <Form.Label>Your password</Form.Label>
+                
                 <Form.Control
+                  className = "mb-2"
                   type="password"
                   name="rePassword"
                   placeholder="Re-enter password"
@@ -104,6 +109,7 @@ class Signup extends Component {
 
             </Form>
             <Button 
+              className="mt-3 w-100 btn btn-lg btn" variant = "outline-primary"
               color="primary"
               onClick={this.onSignupClick}  
             >Sign up</Button>
