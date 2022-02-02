@@ -9,6 +9,8 @@ import {
   FormControl
 } from "react-bootstrap";
 
+import axios from "axios";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -21,12 +23,20 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onLoginClick = () => {
+  onLoginClick = async () => {
     const userData = {
       email: this.state.email,
       password: this.state.password
     };
-    console.log("Login " + userData.email + " " + userData.password);
+
+    let res = await axios.post("http://localhost:5000/user/login", userData)
+    let data = res.data
+    let status = res.status
+    console.log(data, status)
+    // if(data == null)
+      // Show Error
+    // else
+      // redirect to Homepage - with City selection popUp
   };
   render() {
     return (
