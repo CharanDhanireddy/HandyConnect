@@ -15,7 +15,11 @@ createServer({
       return schema.users.create(attrs)
     })
 
-    this.get('/users')
+    this.post('/user/login', (schema, request) => {
+      let attrs = JSON.parse(request.requestBody)
+      let user = schema.users.findBy({ email: attrs.email });
+      return user
+    })
 
   },
 })
