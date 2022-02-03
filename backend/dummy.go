@@ -23,6 +23,8 @@ func handleRequests() {
 	// log.Fatal(http.ListenAndServe(":10000", nil))
 
 	http.HandleFunc("/cityapi", returnCity) //pushing the cities json to cityapi
+
+	http.HandleFunc("/vendorapi", returnVendor)
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }
 
@@ -37,8 +39,16 @@ type city struct {
 	City_id   int    `json: "city_id"`
 }
 
+type vendor struct {
+	First_name string `json: "first_name"`
+	Last_name  string `json: "last_name"`
+	Phone      int    `json: "phn"`
+}
+
 var cities []city
 var items []search
+
+// var vend []vendor
 
 var id string
 var name string
@@ -46,6 +56,12 @@ var pos string
 
 var city_id int
 var city_name string
+
+var f_name string
+var l_name string
+var phn int
+
+var vend_list = make([]*vendor, 0, 10)
 
 //json for customer/vendor information
 
@@ -62,6 +78,13 @@ func returnCity(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Returning the city search criteria:")
 	json.NewEncoder(w).Encode(cities)
+
+}
+
+func returnVendor(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("Returning the vendor search criteria:")
+	json.NewEncoder(w).Encode(vend_list)
 
 }
 
@@ -82,6 +105,9 @@ func main() {
 
 	createCity(sqliteDatabase)
 	insertCity(sqliteDatabase, "Gainesville")
+	createVendor(sqliteDatabase)
+	insertVendor(sqliteDatabase, "Aaron", "Smith", 3524513872, "asmith@gmail.com", "plumbing", "carpentry", "electrical")
+	insertVendor(sqliteDatabase, "John", "Doe", 3525555555, "jdoe@gmail.com", "plumbing", "", "")
 
 	// INSERT RECORDS
 	insertStudent(sqliteDatabase, "0001", "Liana Kim", "Bachelor")
@@ -99,6 +125,9 @@ func main() {
 
 	//printing city
 	displayCity(sqliteDatabase)
+
+	//printing vendor details
+	displayVendor(sqliteDatabase)
 
 	items = []search{
 		{ID: id, Name: name, Position: pos},
@@ -158,6 +187,26 @@ func createCity(db *sql.DB) {
 	log.Println("city table created")
 }
 
+func createVendor(db *sql.DB) {
+	createVendorTableSQL := `CREATE TABLE vendor (
+		"first_name" TEXT NOT NULL,
+		"last_name" TEXT,
+		"phone" integer,
+		"email" TEXT,
+		"service_1" TEXT,
+		"service_2" TEXT,
+		"service_3" TEXT
+	  );` // SQL Statement for Create Table
+
+	log.Println("Create vendor table...")
+	statement, err := db.Prepare(createVendorTableSQL) // Prepare SQL Statement
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	statement.Exec() // Execute SQL Statements
+	log.Println("Vendor table created")
+}
+
 // We are passing db reference connection from main to our method with other parameters
 func insertCity(db *sql.DB, city_name string) {
 	log.Println("Inserting city record ...")
@@ -168,6 +217,20 @@ func insertCity(db *sql.DB, city_name string) {
 		log.Fatalln(err.Error())
 	}
 	_, err = statement.Exec(city_name)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+}
+
+func insertVendor(db *sql.DB, first_name string, last_name string, phone int, email string, service_1 string, service_2 string, service_3 string) {
+	log.Println("Inserting vendor record ...")
+	insertVendorSQL := `INSERT INTO vendor(first_name, last_name, phone, email,service_1, service_2, service_3) VALUES (?,?,?,?,?,?,?)`
+	statement, err := db.Prepare(insertVendorSQL) // Prepare statement.
+	// This is good to avoid SQL injections
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	_, err = statement.Exec(first_name, last_name, phone, email, service_1, service_2, service_3)
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
@@ -186,6 +249,26 @@ func displayStudents(db *sql.DB) {
 	default:
 		panic(err)
 	}
+}
+
+func displayVendor(db *sql.DB) {
+
+	sqlStmt := `SELECT first_name, last_name, phone FROM vendor WHERE service_1 = $1 ;`
+
+	row, err := db.Query(sqlStmt, "plumbing")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&f_name, &l_name, &phn)
+		vend_list = append(vend_list, &vendor{f_name, l_name, phn})
+		// vend = []vendor{
+		// 	{First_name: f_name, Last_name: l_name, Phone: phn},
+		// }
+		fmt.Println(f_name, l_name, phn)
+	}
+	row.Close()
 }
 
 func displayCity(db *sql.DB) {
