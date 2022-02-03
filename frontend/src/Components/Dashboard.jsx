@@ -15,8 +15,6 @@ class Dashboard extends Component {
     async componentDidMount(){
         let res = await axios.get("http://localhost:5000/city")
         let data = res.data
-        let status = res.status
-        console.log(data, status)
         this.setState({cityList: data.cities})
     }
 
@@ -30,9 +28,12 @@ class Dashboard extends Component {
         const {city, cityList, showModal} = this.state;
         if(!cityList)return null
         return (
-        <Container>
+        <Container >
             <h1>Dashboard</h1>
             <Modal
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
                 show={showModal}
                 // WHY
                 // onHide={handleClose}

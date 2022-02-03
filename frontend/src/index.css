@@ -36,3 +36,19 @@ code {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+.footer{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: grey;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.footer-github-link{
+  color: white;
+  text-decoration: none;
+}
