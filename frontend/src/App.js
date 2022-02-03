@@ -8,6 +8,13 @@ import Dashboard from "./Components/Dashboard.jsx";
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    };
+  }
+
   render() {
     return (
       <div>
