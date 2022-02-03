@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.login-signup-heading{
+  margin-bottom: 10%;
+  text-align: center;
+}
+
+.loginpage-email-field{
+  margin-bottom: 2px;
+  /* border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0; */
+}
+.loginpage-password-field{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.footer{
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: grey;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+}
+
+.footer-github-link{
+  color: white;
+  text-decoration: none;
+}
