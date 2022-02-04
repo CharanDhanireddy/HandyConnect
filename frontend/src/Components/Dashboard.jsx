@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Modal, Form, Button} from "react-bootstrap";
+import { Container, Card, Modal, Form, Button} from "react-bootstrap";
 import axios from "axios";
 
 class Dashboard extends Component {
@@ -8,7 +8,8 @@ class Dashboard extends Component {
         this.state = {
             cityList: null,
             city: null,
-            showModal: true
+            showModal: true,
+            serviceList: null
         }
     }
 
@@ -20,6 +21,18 @@ class Dashboard extends Component {
         this.setState({cityList: data.cities})
     }
 
+    async componentDidUpdate(_prevProps, prevState){
+        if(this.state.city !== prevState.city){
+            let res = await axios.get("http://localhost:5000/service", {
+                params: {
+                    city: this.state.city
+                }
+            })
+        let data = res.data
+        this.setState({serviceList: data.services})
+        }
+    }
+
     handleClose = () => {
         // check if city not null
         if(this.state.city)
@@ -27,11 +40,17 @@ class Dashboard extends Component {
     }
 
     render() {
-        const {city, cityList, showModal} = this.state;
+        const {city, cityList, serviceList, showModal} = this.state;
         if(!cityList)return null
         return (
         <Container>
-            <h1>Dashboard</h1>
+            <h3>Select a service from the following</h3>
+            {serviceList ? (
+                <Container>
+                {serviceList.map(service => (<Card key={service.id}>{service.name}</Card>) )}
+                </Container>
+            ) : (null)}
+
             <Modal
                 show={showModal}
                 // WHY
@@ -47,11 +66,11 @@ class Dashboard extends Component {
                 <Modal.Body>
                     <Form>
                         <Form.Select
-                         onChange={(e) => {this.setState({city: e.target.value})}}
+                         onChange={(e) => {console.log('here');this.setState({city: e.target.value})}}
                         >
                             <option value={null}>Select</option>
                             {cityList.map(city => (
-                                <option value={city.name}>{city.name}</option>
+                                <option key={city.id} value={city.name}>{city.name}</option>
                             ))}
                         </Form.Select>
                     </Form>

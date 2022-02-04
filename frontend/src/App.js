@@ -1,27 +1,62 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./Components/Home.jsx";
 import Signup from "./Components/Signup.jsx";
 import Login from "./Components/Login.jsx";
 import Dashboard from "./Components/Dashboard.jsx";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 
 
+function setToken(userToken) {
+  localStorage.setItem('token', JSON.stringify(userToken));
+}
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <BrowserRouter>
-          <Routes>
-            <Route exact path="/"  element={<Home />}/>
-            <Route path="/signup" element={<Signup />} />
-            <Route path = "/login" element = {<Login />} />
-            <Route path = "/dashboard" element = {<Dashboard />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
+function getToken() {
+  const tokenString = localStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  console.log('get token called: ', userToken?.token)
+  return userToken
+}
+
+
+function App() {
+  const token = getToken()
+  const navigate = useNavigate()
+
+  let logOut = () => {
+    localStorage.removeItem('token');
+    navigate('/');
   }
+
+  if(!token){
+    return(
+      <div>
+        <Header isLoggedIn={token!=null} logOut={logOut}/>
+        {/* <Login setToken={this.setToken}/>  */}
+        <Routes>
+          <Route exact path="/"  element={<Home />}/>
+          <Route path="/signup" element={<Signup setToken={setToken}/>} />
+          <Route path = "/login" element = {<Login setToken={setToken}/>} />
+          {/* <Route path = "/dashboard" element = {<Dashboard />} /> */}
+        </Routes>
+        </div>
+    )
+  }
+
+  return (
+    <div>
+      <Header isLoggedIn={token!=null} logOut={logOut}/>
+        <Routes>
+          {/* <Route exact path="/"  element={<Home />}/> */}
+          {/* <Route path="/signup" element={<Signup />} /> */}
+          {/* <Route path = "/login" element = {<Login />} /> */}
+          <Route path = "/" element = {<Dashboard />} />
+        </Routes>
+      <Footer />
+    </div>
+  );
+
 }
 
 export default App;
