@@ -3,9 +3,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./Components/Home.jsx";
 import Signup from "./Components/Signup.jsx";
 import Login from "./Components/Login.jsx";
+import VendorLogin from "./Components/VendorLogin.jsx";
+import VendorSignup from "./Components/VendorSignup.jsx";
 import Dashboard from "./Components/Dashboard.jsx";
 import Header from "./Components/Header.jsx"
 import Footer from "./Components/Footer.jsx"
+import VendorDashboard from "./Components/VendorDashboard.jsx";
+
 
 function setToken(userToken) {
   localStorage.setItem('token', JSON.stringify(userToken));
@@ -28,30 +32,33 @@ function App() {
     navigate('/');
   }
 
-  if(!token){
-    return(
+  if (!token) {
+    return (
       <div>
-        <Header isLoggedIn={token!=null} logOut={logOut}/>
+        <Header isLoggedIn={token != null} logOut={logOut} />
         {/* <Login setToken={this.setToken}/>  */}
         <Routes>
-          <Route exact path="/"  element={<Home />}/>
-          <Route path="/signup" element={<Signup setToken={setToken}/>} />
-          <Route path = "/login" element = {<Login setToken={setToken}/>} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="/signup" element={<Signup setToken={setToken} />} />
+          <Route path="/login" element={<Login setToken={setToken} />} />
+          <Route path="/vendorsignup" element={<VendorSignup setToken={setToken} />} />
+          <Route path="/vendorlogin" element={<VendorLogin setToken={setToken} />} />
           {/* <Route path = "/dashboard" element = {<Dashboard />} /> */}
         </Routes>
-        </div>
+      </div>
     )
   }
 
   return (
     <div>
-      <Header isLoggedIn={token!=null} logOut={logOut}/>
-        <Routes>
-          {/* <Route exact path="/"  element={<Home />}/> */}
-          {/* <Route path="/signup" element={<Signup />} /> */}
-          {/* <Route path = "/login" element = {<Login />} /> */}
-          <Route path = "/" element = {<Dashboard />} />
-        </Routes>
+      <Header isLoggedIn={token != null} logOut={logOut} />
+      <Routes>
+        {/* <Route exact path="/"  element={<Home />}/> */}
+        {/* <Route path="/signup" element={<Signup />} /> */}
+        {/* <Route path = "/login" element = {<Login />} /> */}
+        <Route path="/" element={<Dashboard getToken={getToken} />} />
+        <Route path="/vendorDashboard" element={<VendorDashboard getToken={getToken} />} />
+      </Routes>
       <Footer />
     </div>
   );
