@@ -4,8 +4,8 @@ import Home from "./Components/Home.jsx";
 import Signup from "./Components/Signup.jsx";
 import Login from "./Components/Login.jsx";
 import Dashboard from "./Components/Dashboard.jsx";
-import Header from "./Components/Header.jsx";
-import Footer from "./Components/Footer.jsx";
+import Header from "./Components/Header.jsx"
+import Footer from "./Components/Footer.jsx"
 
 function setToken(userToken) {
   localStorage.setItem('token', JSON.stringify(userToken));
