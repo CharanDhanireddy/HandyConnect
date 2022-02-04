@@ -45,13 +45,13 @@ func verifyUserLogin(username string, password string) (bool, error) {
 	return false, nil
 }
 
-func userSignUp(w http.ResponseWriter, r *http.Request) {
+func customerSignUp(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(405) // Return 405 Method Not Allowed.
 		return
 	}
 
-	var request schema.UserProfileSchema
+	var request schema.CustomerProfileSchema
 
 	// Try to decode the request body into the struct. If there is an error,
 	// respond to the client with the error message and a 400 status code.
@@ -61,7 +61,28 @@ func userSignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db.InsertUser(sqliteDatabase, request)
+	db.InsertCustomer(sqliteDatabase, request)
+
+	w.WriteHeader(200) // Successfully logged in.
+}
+
+func vendorSignUp(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(405) // Return 405 Method Not Allowed.
+		return
+	}
+
+	var request schema.VendorProfileSchema
+
+	// Try to decode the request body into the struct. If there is an error,
+	// respond to the client with the error message and a 400 status code.
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	db.InsertVendor(sqliteDatabase, request)
 
 	w.WriteHeader(200) // Successfully logged in.
 }
