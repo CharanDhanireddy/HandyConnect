@@ -15,13 +15,13 @@ func handleRequests() {
 	http.HandleFunc("/userLogin", userLogin)
 
 	//Post user sign up
-	http.HandleFunc("/userSignUp", userSignUp)
+	http.HandleFunc("/customerSignUp", customerSignUp)
 
 	//Post vendor login
 	http.HandleFunc("/vendorLogin", userLogin)
 
 	//Post vendor sign up
-	http.HandleFunc("/vendorSignUp", userLogin)
+	http.HandleFunc("/vendorSignUp", vendorSignUp)
 
 	//Get User profile
 	http.HandleFunc("/user", returnCity)

@@ -21,7 +21,7 @@ func newDBConnection() {
 	// log.Println("sqlite-database.db created")
 
 	log.Println("Establishing connection to database...")
-	db, err := sql.Open("sqlite3", "./sqlite-database.db") // Open the created SQLite File
+	db, err := sql.Open("sqlite3", "./sqlite-database.db?_foreign_keys=on") // Open the created SQLite File
 	if err != nil {
 		log.Fatal(err.Error())
 	}
