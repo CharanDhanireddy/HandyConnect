@@ -24,7 +24,7 @@ func handleRequests() {
 	http.HandleFunc("/vendorSignUp", userLogin)
 
 	//Get User profile
-	http.HandleFunc("/use", returnCity)
+	http.HandleFunc("/user", returnCity)
 
 	//Get Vendor profile
 	http.HandleFunc("/vendor", returnCity)
@@ -38,10 +38,10 @@ func handleRequests() {
 	//Post create booking
 	http.HandleFunc("/booking", userLogin)
 
-	// //Get bookings of uer
+	// //Get bookings of user
 	// http.HandleFunc("/booking", returnCiy)
 
-	// //Get bookings of venor
+	// //Get bookings of vendor
 	// http.HandleFunc("/booking", returnCiy)
 
 	// http.HandleFunc("/consumeapi", returnSearch) //pushing the consumer/vendor info to consumepi
