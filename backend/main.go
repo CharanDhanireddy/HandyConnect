@@ -22,7 +22,7 @@ var f_name string
 var l_name string
 var phn int
 
-var vend_list = make([]*vendor, 0, 10)
+var vend_list []vendor
 
 func main() {
 
