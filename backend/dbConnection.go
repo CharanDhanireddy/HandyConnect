@@ -25,6 +25,7 @@ func newDBConnection() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	log.Println("Successfully connected to database...")
 	sqliteDatabase = db
 
 	// defer sqliteDatabase.Close()                                    // Defer Closing the database

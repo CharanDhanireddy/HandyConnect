@@ -6,7 +6,7 @@ type search struct {
 	Position string `json: "Position"`
 }
 
-type city struct {
+type City struct {
 	City_id   int    `json: "city_id"`
 	City_name string `json: "city_name"`
 }
@@ -17,15 +17,7 @@ type vendor struct {
 	Phone      int    `json: "phn"`
 }
 
-type loginRequest struct {
+type LoginRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
-}
-
-type UserProfileSchema struct {
-	FirstName string `json:first_name`
-	LastName  string `json:last_name`
-	Phone     string `json:phone`
-	Username  string `json:"username"`
-	Password  string `json:"password"`
 }

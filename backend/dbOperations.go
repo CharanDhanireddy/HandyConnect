@@ -57,20 +57,6 @@ func insertCity(db *sql.DB, city_name string) {
 	}
 }
 
-func insertUser(db *sql.DB, user UserProfileSchema) {
-	log.Println("Inserting vendor record ...")
-	insertVendorSQL := `INSERT INTO user(first_name, last_name, phone, email, password) VALUES (?,?,?,?,?,?,?)`
-	statement, err := db.Prepare(insertVendorSQL) // Prepare statement.
-	// This is good to avoid SQL injections
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
-	_, err = statement.Exec(user.FirstName, user.LastName, user.Phone, user.Username, user.Password)
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
-}
-
 func insertVendor(db *sql.DB, first_name string, last_name string, phone int, email string, service_1 string, service_2 string, service_3 string) {
 	log.Println("Inserting vendor record ...")
 	insertVendorSQL := `INSERT INTO vendor(first_name, last_name, phone, email,service_1, service_2, service_3) VALUES (?,?,?,?,?,?,?)`
@@ -102,7 +88,7 @@ func insertVendor(db *sql.DB, first_name string, last_name string, phone int, em
 // 	}
 // }
 
-func displayCity(db *sql.DB) []city {
+func displayCity(db *sql.DB) []City {
 	var city_id int
 	var city_name string
 
@@ -113,10 +99,10 @@ func displayCity(db *sql.DB) []city {
 		log.Fatal(err)
 	}
 	defer row.Close()
-	var city_list []city
+	var city_list []City
 	for row.Next() { // Iterate and fetch the records from result cursor
 		row.Scan(&city_id, &city_name)
-		city_list = append(city_list, city{city_id, city_name})
+		city_list = append(city_list, City{city_id, city_name})
 		fmt.Println(city_id, city_name)
 	}
 	row.Close()
