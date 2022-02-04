@@ -15,7 +15,7 @@ func handleRequests() {
 	http.HandleFunc("/userLogin", userLogin)
 
 	//Post user sign up
-	http.HandleFunc("/userSignUp", userLogin)
+	http.HandleFunc("/userSignUp", userSignUp)
 
 	//Post vendor login
 	http.HandleFunc("/vendorLogin", userLogin)
