@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
   Button,
@@ -11,37 +11,38 @@ import {
 
 import axios from "axios";
 
-class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+function Signup(props) {
+  const [state, setState] = useState({
       firstName: "",
       lastName: "",
       email: "",
       password: "",
       rePassword: ""
-    };
-  }
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    })
+    const navigate = useNavigate()
+  
+  let onChange = e => {
+    setState({...state, [e.target.name] : e.target.value})
   };
 
-  onSignupClick = async () => {
+  let onSignupClick = async () => {
     const userData = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      password: this.state.password,
-      rePassword: this.state.rePassword,
+      firstName: state.firstName,
+      lastName: state.lastName,
+      email: state.email,
+      password: state.password,
+      rePassword: state.rePassword,
     };
 
     let res = await axios.post("http://localhost:5000/user/signup", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)
+    let token = data?.user?.id ? data?.user?.id : null
+    props.setToken(token)
+    navigate('/')
   };
 
-  render() {
     return (
       <Container className="center">
         <Row className = "">
@@ -55,8 +56,8 @@ class Signup extends Component {
                   type="text"
                   name="firstName"
                   placeholder="Enter First Name"
-                  value={this.state.firstName}
-                  onChange={this.onChange}
+                  value={state.firstName}
+                  onChange={onChange}
                 />
                 <FormControl.Feedback type="invalid"></FormControl.Feedback>
               </Form.Group>
@@ -68,8 +69,8 @@ class Signup extends Component {
                   type="text"
                   name="lastName"
                   placeholder="Enter Last Name"
-                  value={this.state.lastName}
-                  onChange={this.onChange}
+                  value={state.lastName}
+                  onChange={onChange}
                 />
                 <FormControl.Feedback type="invalid"></FormControl.Feedback>
               </Form.Group>
@@ -81,8 +82,8 @@ class Signup extends Component {
                   type="text"
                   name="email"
                   placeholder="Enter email address"
-                  value={this.state.email}
-                  onChange={this.onChange}
+                  value={state.email}
+                  onChange={onChange}
                 />
                 <FormControl.Feedback type="invalid"></FormControl.Feedback>
               </Form.Group>
@@ -94,8 +95,8 @@ class Signup extends Component {
                   type="password"
                   name="password"
                   placeholder="Enter password"
-                  value={this.password}
-                  onChange={this.onChange}
+                  value={state.password}
+                  onChange={onChange}
                 />
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
@@ -107,8 +108,8 @@ class Signup extends Component {
                   type="password"
                   name="rePassword"
                   placeholder="Re-enter password"
-                  value={this.rePassword}
-                  onChange={this.onChange}
+                  value={state.rePassword}
+                  onChange={onChange}
                 />
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
@@ -117,7 +118,7 @@ class Signup extends Component {
             <Button 
               className="mt-3 w-100 btn btn-lg btn" variant = "outline-primary"
               color="primary"
-              onClick={this.onSignupClick}  
+              onClick={onSignupClick}  
             >Sign up</Button>
             <p className="mt-2">
               Already have account? <Link to="/login">Login</Link>
@@ -126,7 +127,6 @@ class Signup extends Component {
         </Row>
       </Container>
     );
-  }
 }
 
 export default Signup;
