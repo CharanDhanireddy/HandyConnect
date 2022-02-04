@@ -1,5 +1,7 @@
 package main
 
+import "log"
+
 // "database/sql"
 // "encoding/json"
 // "fmt"
@@ -25,6 +27,7 @@ var phn int
 var vend_list []vendor
 
 func main() {
+	log.Println("Handy Connect server starting....")
 
 	newDBConnection()
 
