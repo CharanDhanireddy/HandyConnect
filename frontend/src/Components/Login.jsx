@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
   Button,
@@ -11,34 +11,34 @@ import {
 
 import axios from "axios";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+function Login(props) {
+  const [state, setState] = useState({email: "", password: ""})
+  const navigate = useNavigate()
+
+  let onChange = e => {
+    setState({...state, [e.target.name] : e.target.value})
   };
 
-  onLoginClick = async () => {
+  let onLoginClick = async () => {
     const userData = {
-      email: this.state.email,
-      password: this.state.password
+      email: state.email,
+      password: state.password
     };
 
     let res = await axios.post("http://localhost:5000/user/login", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)
+    // debugger
+    let token = data?.user?.id ? data?.user?.id : null
+    props.setToken(token)
+    navigate('/')
     // if(data == null)
       // Show Error
     // else
       // redirect to Homepage - with City selection popUp
   };
-  render() {
+  
     return (
       <Container className = "center" >
         <Row>
@@ -51,8 +51,8 @@ class Login extends Component {
                   type="text"
                   name="email"
                   placeholder="Email"
-                  value={this.state.email}
-                  onChange={this.onChange}
+                  value={state.email}
+                  onChange={onChange}
                 />
                 <FormControl.Feedback type="invalid"></FormControl.Feedback>
               </Form.Group>
@@ -63,13 +63,13 @@ class Login extends Component {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onChange}
+                  value={state.password}
+                  onChange={onChange}
                 />
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
             </Form>
-            <Button className="mt-3 w-100 btn btn-lg btn" variant = "outline-dark"  color="primary" onClick={this.onLoginClick}>Login</Button>
+            <Button className="mt-3 w-100 btn btn-lg btn" variant = "outline-dark"  color="primary" onClick={onLoginClick}>Login</Button>
             <p className="mt-2">
               Don't have account? <Link to="/signup">Signup</Link>
             </p>
@@ -77,7 +77,7 @@ class Login extends Component {
         </Row>
       </Container>
     );
-  }
 }
+
 
 export default Login;
