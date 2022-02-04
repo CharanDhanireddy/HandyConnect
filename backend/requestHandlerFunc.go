@@ -34,6 +34,7 @@ func returnCity(w http.ResponseWriter, r *http.Request) {
 func returnVendor(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Returning the vendor search criteria:")
+	displayVendor(sqliteDatabase)
 	json.NewEncoder(w).Encode(vend_list)
 
 }
