@@ -25,15 +25,6 @@ func populateData(sqliteDatabase *sql.DB) {
 
 	insertVendor(sqliteDatabase, "Aaron", "Smith", 3524513872, "asmith@gmail.com", "plumbing", "carpentry", "electrical")
 	insertVendor(sqliteDatabase, "John", "Doe", 3525555555, "jdoe@gmail.com", "plumbing", "", "")
-
-	// DISPLAY INSERTED RECORDS
-	displayStudents(sqliteDatabase)
-
-	//printing city
-	displayCity(sqliteDatabase)
-
-	//printing vendor details
-	displayVendor(sqliteDatabase)
 }
 
 // We are passing db reference connection from main to our method with other parameters
@@ -66,6 +57,20 @@ func insertCity(db *sql.DB, city_name string) {
 	}
 }
 
+func insertUser(db *sql.DB, user UserProfileSchema) {
+	log.Println("Inserting vendor record ...")
+	insertVendorSQL := `INSERT INTO user(first_name, last_name, phone, email, password) VALUES (?,?,?,?,?,?,?)`
+	statement, err := db.Prepare(insertVendorSQL) // Prepare statement.
+	// This is good to avoid SQL injections
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	_, err = statement.Exec(user.FirstName, user.LastName, user.Phone, user.Username, user.Password)
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+}
+
 func insertVendor(db *sql.DB, first_name string, last_name string, phone int, email string, service_1 string, service_2 string, service_3 string) {
 	log.Println("Inserting vendor record ...")
 	insertVendorSQL := `INSERT INTO vendor(first_name, last_name, phone, email,service_1, service_2, service_3) VALUES (?,?,?,?,?,?,?)`
@@ -80,38 +85,49 @@ func insertVendor(db *sql.DB, first_name string, last_name string, phone int, em
 	}
 }
 
-func displayStudents(db *sql.DB) {
+// func displayStudents(db *sql.DB) {
+// 	var id string
+// 	var name string
+// 	var pos string
+// 	sqlStmt := `SELECT code, name, program FROM student WHERE code = $1;`
 
-	sqlStmt := `SELECT code, name, program FROM student WHERE code = $1;`
+// 	row := db.QueryRow(sqlStmt, "0002")
+// 	switch err := row.Scan(&id, &name, &pos); err {
+// 	case sql.ErrNoRows:
+// 		fmt.Println("No rows")
+// 	case nil:
+// 		fmt.Println(id, name, pos)
+// 	default:
+// 		panic(err)
+// 	}
+// }
 
-	row := db.QueryRow(sqlStmt, "0002")
-	switch err := row.Scan(&id, &name, &pos); err {
-	case sql.ErrNoRows:
-		fmt.Println("No rows")
-	case nil:
-		fmt.Println(id, name, pos)
-	default:
-		panic(err)
-	}
-}
-
-func displayCity(db *sql.DB) {
+func displayCity(db *sql.DB) []city {
+	var city_id int
+	var city_name string
 
 	sqlStmt := `SELECT city_ID, city_name FROM City WHERE city_ID = $1;`
 
-	row := db.QueryRow(sqlStmt, "1")
-	switch err := row.Scan(&city_id, &city_name); err {
-	case sql.ErrNoRows:
-		fmt.Println("No rows")
-	case nil:
-		fmt.Println(city_id, city_name)
-	default:
-		panic(err)
+	row, err := db.Query(sqlStmt, "1")
+	if err != nil {
+		log.Fatal(err)
 	}
+	defer row.Close()
+	var city_list []city
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&city_id, &city_name)
+		city_list = append(city_list, city{city_id, city_name})
+		fmt.Println(city_id, city_name)
+	}
+	row.Close()
 
+	return city_list
 }
 
-func displayVendor(db *sql.DB) {
+func displayVendor(db *sql.DB) []vendor {
+	var f_name string
+	var l_name string
+	var phn int
 
 	sqlStmt := `SELECT first_name, last_name, phone FROM vendor WHERE service_1 = $1 ;`
 
@@ -120,13 +136,14 @@ func displayVendor(db *sql.DB) {
 		log.Fatal(err)
 	}
 	defer row.Close()
+
+	var vend_list []vendor
 	for row.Next() { // Iterate and fetch the records from result cursor
 		row.Scan(&f_name, &l_name, &phn)
 		vend_list = append(vend_list, vendor{f_name, l_name, phn})
-		// vend = []vendor{
-		// 	{First_name: f_name, Last_name: l_name, Phone: phn},
-		// }
 		fmt.Println(f_name, l_name, phn)
 	}
 	row.Close()
+
+	return vend_list
 }
