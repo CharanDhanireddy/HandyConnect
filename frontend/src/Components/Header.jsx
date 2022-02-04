@@ -19,7 +19,7 @@ function Header(props){
                 )
                 :(
                     <>
-                        <Nav.Link className = "ml-auto" href="/login">Vendor Login</Nav.Link>
+                        <Nav.Link className = "ml-auto" href="/vendorlogin">Vendor Login</Nav.Link>
                         <Nav.Link href="/login">Login</Nav.Link>
                     </>
                 )}

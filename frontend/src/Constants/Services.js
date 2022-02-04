@@ -5,10 +5,10 @@ const services = [
     "Housekeeper",
     "Hairdresser",
     "Electrician",
-    "General Electronics Repair",
+    "Electronics Repair",
     "Massage Therapist",
     "AC Repair",
-    "Washing Machine Repair",
+    // "Washing Machine Repair",
     "TV Repair"
 ]
 
