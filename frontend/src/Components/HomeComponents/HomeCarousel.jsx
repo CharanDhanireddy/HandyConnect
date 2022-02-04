@@ -1,7 +1,7 @@
 import React from "react";
 import{Carousel} from "react-bootstrap";
 import Carpenter from "../../Images/carpenter2.jpg";
-import Painter from "../../Images/hairdresser3.jpg";
+import Electrician from "../../Images/electrician.jpeg";
 import Tools from "../../Images/wallpainter.jpg"
 
 
@@ -22,8 +22,8 @@ function HomeCarousel(){
         <Carousel.Item>
             <img
             className="d-block w-100"
-            src={Painter}
-            alt="Painter"
+            src={Electrician}
+            alt="Electrician"
             />
 
             <Carousel.Caption>
