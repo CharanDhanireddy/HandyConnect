@@ -7,8 +7,8 @@ type search struct {
 }
 
 type city struct {
-	City_name string `json: "city_name"`
 	City_id   int    `json: "city_id"`
+	City_name string `json: "city_name"`
 }
 
 type vendor struct {
@@ -17,14 +17,15 @@ type vendor struct {
 	Phone      int    `json: "phn"`
 }
 
-type loginSchema struct {
+type loginRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
-type SignUpSchema struct {
-	Name     string `json:name`
-	Phone    string `json:phone`
-	Username string `json:"username"`
-	Password string `json:"password"`
+type UserProfileSchema struct {
+	FirstName string `json:first_name`
+	LastName  string `json:last_name`
+	Phone     string `json:phone`
+	Username  string `json:"username"`
+	Password  string `json:"password"`
 }
