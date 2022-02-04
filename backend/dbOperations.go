@@ -122,7 +122,7 @@ func displayVendor(db *sql.DB) {
 	defer row.Close()
 	for row.Next() { // Iterate and fetch the records from result cursor
 		row.Scan(&f_name, &l_name, &phn)
-		vend_list = append(vend_list, &vendor{f_name, l_name, phn})
+		vend_list = append(vend_list, vendor{f_name, l_name, phn})
 		// vend = []vendor{
 		// 	{First_name: f_name, Last_name: l_name, Phone: phn},
 		// }

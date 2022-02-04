@@ -16,3 +16,15 @@ type vendor struct {
 	Last_name  string `json: "last_name"`
 	Phone      int    `json: "phn"`
 }
+
+type loginSchema struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type SignUpSchema struct {
+	Name     string `json:name`
+	Phone    string `json:phone`
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
