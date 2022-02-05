@@ -34,3 +34,9 @@ type BookingSchema struct {
 	Year       int    `json:"year"`
 	Address    string `json:"address"`
 }
+
+type serviceSchema struct {
+	Service_name string `json:"service_name"`
+	Description  string `json:"Desc"`
+	Time_taken   int    `json:"time"`
+}

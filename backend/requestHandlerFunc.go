@@ -33,6 +33,13 @@ func returnCity(w http.ResponseWriter, r *http.Request) {
 func returnVendor(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Returning the vendor search criteria:")
-	vend_list := displayVendor(sqliteDatabase)
+	vend_list := displayVendorData(sqliteDatabase)
 	json.NewEncoder(w).Encode(vend_list)
+}
+
+func custData(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("Returning the customer data:")
+	cust := displayCustData(sqliteDatabase)
+	json.NewEncoder(w).Encode(cust)
 }
