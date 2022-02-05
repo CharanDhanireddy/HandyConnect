@@ -33,10 +33,10 @@ func handleRequests() {
 	http.HandleFunc("/services", returnCity)
 
 	//Get dates for service in a city
-	http.HandleFunc("/availability", returnCity)
+	http.HandleFunc("/availability", GetServiceAvailability)
 
 	//Post create booking
-	http.HandleFunc("/booking", userLogin)
+	http.HandleFunc("/booking", CreateBooking)
 
 	// //Get bookings of user
 	// http.HandleFunc("/booking", returnCiy)
@@ -44,9 +44,8 @@ func handleRequests() {
 	// //Get bookings of vendor
 	// http.HandleFunc("/booking", returnCiy)
 
-	// http.HandleFunc("/consumeapi", returnSearch) //pushing the consumer/vendor info to consumepi
-
 	http.HandleFunc("/vendorapi", returnVendor)
 
 	log.Fatal(http.ListenAndServe(":10000", nil))
+
 }
