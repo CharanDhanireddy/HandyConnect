@@ -22,6 +22,7 @@ Platform for connecting customers with skilled and experienced professionals pro
 ## Sprint 1:
 
 ### Frontend with mocked-up backend
+[Frontend Demo video](https://youtu.be/5rjAeEBbr_4)
 
 Tasks completed:
 
@@ -35,6 +36,7 @@ Tasks completed:
 ---
 
 ### Backend with mocked-up frontend
+[Backend Demo video](https://youtu.be/YhrciuviPqM)
 
 Tasks completed: (APIs for the below functionality are implemented and tested using Postman (shown in video))
 
