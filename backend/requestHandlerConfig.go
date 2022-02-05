@@ -23,11 +23,11 @@ func handleRequests() {
 	//Post vendor sign up
 	http.HandleFunc("/vendorSignUp", vendorSignUp)
 
-	//Get User profile
-	http.HandleFunc("/user", returnCity)
+	//Get customer profile
+	http.HandleFunc("/customer", custData)
 
 	//Get Vendor profile
-	http.HandleFunc("/vendor", returnCity)
+	http.HandleFunc("/vendor", returnVendor)
 
 	//Get Services for city
 	http.HandleFunc("/services", returnCity)

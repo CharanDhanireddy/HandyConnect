@@ -20,3 +20,9 @@ type VendorProfileSchema struct {
 	Service2Id int    `json:"service2_id"`
 	Service3Id int    `json:"service3_id"`
 }
+
+type serviceSchema struct {
+	Service_name string `json:"service_name"`
+	Description  string `json:"Desc"`
+	Time_taken   int    `json:"time"`
+}
