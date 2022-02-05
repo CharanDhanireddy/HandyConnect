@@ -59,7 +59,7 @@ func insertCity(db *sql.DB, city_name string) {
 
 func insertVendor(db *sql.DB, first_name string, last_name string, phone int, email string, service_1 string, service_2 string, service_3 string) {
 	log.Println("Inserting vendor record ...")
-	insertVendorSQL := `INSERT INTO vendor(first_name, last_name, phone, email,service_1, service_2, service_3) VALUES (?,?,?,?,?,?,?)`
+	insertVendorSQL := `INSERT INTO vendor(first_name, last_name, phone, email,service1_id, service2_id, service3_id) VALUES (?,?,?,?,?,?,?)`
 	statement, err := db.Prepare(insertVendorSQL) // Prepare statement.
 	// This is good to avoid SQL injections
 	if err != nil {
@@ -92,7 +92,7 @@ func displayCity(db *sql.DB) []City {
 	var city_id int
 	var city_name string
 
-	sqlStmt := `SELECT city_ID, city_name FROM City WHERE city_ID = $1;`
+	sqlStmt := `SELECT id, city_name FROM City WHERE id = $1;`
 
 	row, err := db.Query(sqlStmt, "1")
 	if err != nil {
@@ -110,14 +110,44 @@ func displayCity(db *sql.DB) []City {
 	return city_list
 }
 
-func displayVendor(db *sql.DB) []vendor {
+func displayCustData(db *sql.DB) []Cust {
 	var f_name string
 	var l_name string
+	var city string
 	var phn int
+	var email string
 
-	sqlStmt := `SELECT first_name, last_name, phone FROM vendor WHERE service_1 = $1 ;`
+	sqlStmt := `SELECT c.first_name, c.last_name, city.city_name, c.phone, c.email FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
 
-	row, err := db.Query(sqlStmt, "plumbing")
+	row, err := db.Query(sqlStmt, "1")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+	var cust_data []Cust
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&f_name, &l_name, &city, &phn, &email)
+		cust_data = append(cust_data, Cust{f_name, l_name, city, phn, email})
+
+	}
+	row.Close()
+
+	return cust_data
+}
+
+func displayVendorData(db *sql.DB) []vendor {
+	var f_name string
+	var l_name string
+	var city string
+	var phn int
+	var email string
+	var service1 string
+	// var service2 string
+	// var service3 string
+
+	sqlStmt := `SELECT v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
+
+	row, err := db.Query(sqlStmt, "5")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -125,11 +155,43 @@ func displayVendor(db *sql.DB) []vendor {
 
 	var vend_list []vendor
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&f_name, &l_name, &phn)
-		vend_list = append(vend_list, vendor{f_name, l_name, phn})
+		row.Scan(&f_name, &l_name, &city, &phn, &email, &service1)
+		vend_list = append(vend_list, vendor{f_name, l_name, city, phn, email, service1})
 		fmt.Println(f_name, l_name, phn)
 	}
 	row.Close()
 
 	return vend_list
 }
+
+// var f_name string
+// var l_name string
+// var email string
+// var service1 string
+// var service2 string
+// var service3 string
+// var phn int
+
+// func displayVendor(db *sql.DB) []vendor {
+// 	var f_name string
+// 	var l_name string
+// 	var phn int
+
+// 	sqlStmt := `SELECT first_name, last_name, phone FROM vendor WHERE service1_id = $1 ;`
+
+// 	row, err := db.Query(sqlStmt, "plumbing")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer row.Close()
+
+// 	var vend_list []vendor
+// 	for row.Next() { // Iterate and fetch the records from result cursor
+// 		row.Scan(&f_name, &l_name, &phn)
+// 		vend_list = append(vend_list, vendor{f_name, l_name, phn})
+// 		fmt.Println(f_name, l_name, phn)
+// 	}
+// 	row.Close()
+
+// 	return vend_list
+// }
