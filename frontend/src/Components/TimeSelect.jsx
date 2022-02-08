@@ -3,21 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { Container, Card, Modal, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 
+const initial_state = {
+    timeslot: null,
+    timeslotList: [],
+    address: null,
+    zipcode: null,
+    errors: []
+}
+
 function TimeSelect(props) {
-    const [state, setState] = useState({
-        timeslot: null,
-        timeslotList: [],
-        address: null,
-        zipcode: null
-    })
+    const [state, setState] = useState(initial_state)
     const navigate = useNavigate()
 
     useEffect(() => {
         let fetchData = async () => {
-            let timeslot_response = await axios.get("http://localhost:5000/timeslot",
+            let timeslot_response = await axios.get("http://localhost:5000/availability",
                 {
                     params: {
-                        service: props.service, city: props.city
+                        service: props.service,
+                        city: props.city
                     }
                 })
             setState({ ...state, timeslotList: timeslot_response.data.timeslots })
@@ -29,7 +33,18 @@ function TimeSelect(props) {
         setState({ ...state, [e.target.name]: e.target.value })
     };
 
+    let isValid = () => {
+        let errors = {}
+        if (!state.timeslot) errors['timeslot'] = 'Required'
+        if (!state.address) errors['address'] = 'Required'
+        if (!state.zipcode) errors['zipcode'] = 'Required'
+        setState({ ...state, errors })
+        if (Object.keys(errors).length === 0) return true;
+        else return false;
+    }
+
     let onSubmit = async (e) => {
+        if (!isValid()) return
         // let res = await axios.post("http://localhost:5000/booking", {
         //     ...state,
         //     city: props.city,
@@ -39,6 +54,7 @@ function TimeSelect(props) {
         // let status = res.status
 
         // navigate('/')
+        setState(initial_state)
         props.updateState('showToast', true)
         props.updateState('service', null)
     }
@@ -79,6 +95,7 @@ function TimeSelect(props) {
                                 </Col>
                             ))}
                         </Row>
+                        <span className='text-danger'>{state.errors.timeslot}</span>
                         <hr />
                         <Form>
                             <Form.Group controlId="addressId" className="timeSelect-address-field">
@@ -89,8 +106,9 @@ function TimeSelect(props) {
                                     placeholder="Address"
                                     value={state.address}
                                     onChange={onChange}
+                                    isInvalid={state.errors.address}
                                 />
-                                <FormControl.Feedback type="invalid"></FormControl.Feedback>
+                                <FormControl.Feedback type="invalid">{state.errors.address}</FormControl.Feedback>
                             </Form.Group>
 
                             <Form.Group controlId="cityId" className="timeSelect-city-field">
@@ -101,7 +119,6 @@ function TimeSelect(props) {
                                     placeholder="City"
                                     value={props.city}
                                     disabled={true}
-                                // onChange={onChange}
                                 />
                                 <FormControl.Feedback type="invalid"></FormControl.Feedback>
                             </Form.Group>
@@ -114,8 +131,9 @@ function TimeSelect(props) {
                                     placeholder="Zip Code"
                                     value={state.zipcode}
                                     onChange={onChange}
+                                    isInvalid={state.errors.zipcode}
                                 />
-                                <FormControl.Feedback type="invalid"></FormControl.Feedback>
+                                <FormControl.Feedback type="invalid">{state.errors.zipcode}</FormControl.Feedback>
                             </Form.Group>
 
                         </Form>
