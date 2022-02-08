@@ -8,22 +8,32 @@ createServer({
     vendor: Model,
     city: Model,
     service: Model,
-    timeslot: Model
+    timeslot: Model,
+    booking: Model
   },
   seeds(server) {
-    server.create('user', { firstName: 'u', lastName: '1', city: 'Miami', phone: '123456789', email: 'u1@gmail.com', password: 'pwd12341' })
-    server.create('user', { firstName: 'u', lastName: '2', city: 'Miami', phone: '123456789', email: 'u2@gmail.com', password: 'pwd12342' })
-    server.create('user', { firstName: 'u', lastName: '3', city: 'Miami', phone: '123456789', email: 'u3@gmail.com', password: 'pwd12343' })
-    server.create('user', { firstName: 'Aaron', lastName: 'Smith', city: 'Miami', phone: '123456789', email: 'aaronsmith@gmail.com', password: 'pwd12345' })
+    server.create('user', { firstName: 'u', lastName: '1', city: 'Miami', phone: '123456789', email: 'u1@gmail.com', password: 'pwd12345' })
+    server.create('user', { firstName: 'u', lastName: '2', city: 'Miami', phone: '123456789', email: 'u2@gmail.com', password: 'pwd12345' })
+    server.create('user', { firstName: 'u', lastName: '3', city: 'Miami', phone: '123456789', email: 'u3@gmail.com', password: 'pwd12345' })
+    server.create('user', { firstName: 'Aaron', lastName: 'Smith', city: 'Orlando', phone: '123456789', email: 'aaronsmith@gmail.com', password: 'pwd12345' })
 
-    server.create('vendor', { firstName: 'v', lastName: '1', service: 'Carpenter', city: 'Gainesville', email: 'v1@gmail.com', password: 'pwd1' })
-    server.create('vendor', { firstName: 'v', lastName: '2', service: 'Electrician', city: 'Miami Beach', email: 'v2@gmail.com', password: 'pwd2' })
+    server.create('vendor', { firstName: 'Bruce', lastName: 'Wayne', service: 'Carpenter', city: 'Gainesville', email: 'bw@gmail.com', password: 'pwd1235' })
+    server.create('vendor', { firstName: 'Barry', lastName: 'Allen', service: 'Electrician', city: 'Orlando', email: 'ba@gmail.com', password: 'pwd12345' })
+
     server.create('timeslot', { time: '2/5/2022' })
     server.create('timeslot', { time: '2/6/2022' })
     server.create('timeslot', { time: '2/7/2022' })
     server.create('timeslot', { time: '2/8/2022' })
     server.create('timeslot', { time: '2/9/2022' })
     server.create('timeslot', { time: '2/10/2022' })
+
+    server.create('booking', { userId: 4, service: 'Electrician', city: 'Orlando', vendor: 'Barry Allen', timeslot: { time: '2/12/2022' } })
+    server.create('booking', { userId: 4, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
+    server.create('booking', { userId: 2, service: 'Electrician', city: 'Orlando', vendor: 'Barry Allen', timeslot: { time: '2/12/2022' } })
+    server.create('booking', { userId: 2, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
+    server.create('booking', { userId: 3, service: 'Electrician', city: 'Orlando', vendor: 'Barry Allen', timeslot: { time: '2/12/2022' } })
+    server.create('booking', { userId: 1, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
+
     floridaCities.forEach(city => server.create('city', { name: city }))
     services.forEach(service => server.create('service', { name: service }))
   },
@@ -55,6 +65,10 @@ createServer({
     this.get('/profile', (schema, request) => {
       let { password, ...user } = schema.users.findBy({ id: request.queryParams.id }).attrs
       return user
+    })
+
+    this.get('/bookings', (schema, request) => {
+      return schema.bookings.where({ userId: request.queryParams.userId })
     })
 
     this.get('/city', (schema, request) => {

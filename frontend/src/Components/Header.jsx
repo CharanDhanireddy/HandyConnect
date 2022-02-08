@@ -21,6 +21,7 @@ function Header(props) {
                             <>
                                 <Nav.Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>Book a service</Nav.Link>
                                 <Nav.Link href="/profile" className={`nav-item ${isActive('/profile') ? 'active' : ''}`}>Profile</Nav.Link>
+                                <Nav.Link href="/bookings" className={`nav-item ${isActive('/bookings') ? 'active' : ''}`}>Bookings</Nav.Link>
                                 <NavLink onClick={() => props.logOut()}>Log out</NavLink>
                             </>
                         )
