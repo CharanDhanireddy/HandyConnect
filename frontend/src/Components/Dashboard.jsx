@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Card, Modal, Form, Button, Row, Col } from "react-bootstrap";
+import { Container, Card, Modal, Form, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
 import TimeSelect from "./TimeSelect";
 
@@ -11,7 +11,8 @@ class Dashboard extends Component {
             city: null,
             showModal: true,
             serviceList: null,
-            service: null
+            service: null,
+            showToast: false
         }
     }
 
@@ -41,8 +42,12 @@ class Dashboard extends Component {
             this.setState({ showModal: false })
     }
 
+    updateState = (key, value) => {
+        this.setState({ [key]: value })
+    }
+
     render() {
-        const { city, cityList, service, serviceList, showModal } = this.state;
+        const { city, cityList, service, serviceList, showModal, showToast } = this.state;
         if (!cityList) return null
         return (
             <Container >
@@ -57,10 +62,10 @@ class Dashboard extends Component {
                                             key={service.id}
                                             style={{ height: '6rem', margin: '0 1rem 1rem 0', cursor: 'pointer' }}
                                             className='bg-dark text-white border'
-                                            onClick={() => { console.log('here'); }}
+                                            onClick={() => { this.setState({ service: service.name }) }}
                                         >
                                             <Card.Body className='mx-auto'>
-                                                <h3 text-center>{service.name}</h3>
+                                                <h3 className='text-center'>{service.name}</h3>
                                             </Card.Body>
                                             {/* <Button size="sm" variant="outline-primary">Select</Button> */}
                                         </Card>
@@ -72,7 +77,7 @@ class Dashboard extends Component {
                     </>
                 ) : (null)}
 
-                <TimeSelect service={service} />
+                <TimeSelect updateState={this.updateState} service={service} city={city} props={this.props} />
 
                 <Modal
                     show={showModal}
@@ -80,7 +85,7 @@ class Dashboard extends Component {
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                 >
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title>Select a city</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -101,6 +106,19 @@ class Dashboard extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
+                {/* To update lates */}
+                <ToastContainer position="top-start">
+                    <Toast className="d-inline-block m-1" bg='light' show={showToast}
+                        // delay={3000} 
+                        autohide>
+                        <Toast.Body
+                        // className={variant === 'Dark' && 'text-white'}
+                        >
+                            Booking Successful!
+                        </Toast.Body>
+                    </Toast>
+                </ToastContainer>
+
             </Container>
         );
     }
