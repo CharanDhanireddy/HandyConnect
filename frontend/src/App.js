@@ -10,6 +10,7 @@ import Header from "./Components/Header.jsx"
 import Footer from "./Components/Footer.jsx"
 import Profile from "./Components/Profile.jsx"
 import VendorDashboard from "./Components/VendorDashboard.jsx";
+import Bookings from "./Components/Bookings.jsx";
 
 
 function setToken(userToken) {
@@ -19,7 +20,6 @@ function setToken(userToken) {
 function getToken() {
   const tokenString = localStorage.getItem('token');
   const userToken = JSON.parse(tokenString);
-  console.log('get token called: ', userToken?.token)
   return userToken
 }
 
@@ -58,6 +58,7 @@ function App() {
         {/* <Route exact path="/"  element={<Home />}/> */}
         {/* <Route path="/signup" element={<Signup />} /> */}
         <Route path="/profile" element={<Profile getToken={getToken} />} />
+        <Route path="/bookings" element={<Bookings getToken={getToken} />} />
         <Route path="/" element={<Dashboard getToken={getToken} />} />
         <Route path="/vendorDashboard" element={<VendorDashboard getToken={getToken} />} />
       </Routes>
