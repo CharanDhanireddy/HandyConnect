@@ -1,31 +1,31 @@
 import React from "react";
-import {Navbar, Nav, NavLink} from "react-bootstrap";
-import {Container} from "react-bootstrap";
+import { Navbar, Nav, NavLink } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
-function Header(props){
+function Header(props) {
     const isLoggedIn = props.isLoggedIn
     console.log(isLoggedIn)
-    return(
-    <Navbar bg="dark" variant="dark">
-        <Container>
-            <Navbar.Brand href="/home">HandyConnect</Navbar.Brand>
+    return (
+        <Navbar bg="dark" variant="dark">
+            <Container>
+                <Navbar.Brand className="py-4" href="/home">HandyConnect</Navbar.Brand>
                 <Nav className="ml-auto" >
-                {isLoggedIn ? 
-                (
-                    <>
-                        <Nav.Link href="/profile">Profile</Nav.Link>
-                        <NavLink onClick={() => props.logOut()}>Log out</NavLink>
-                    </>
-                )
-                :(
-                    <>
-                        <Nav.Link className = "ml-auto" href="/vendorlogin">Vendor Login</Nav.Link>
-                        <Nav.Link href="/login">Login</Nav.Link>
-                    </>
-                )}
-            </Nav>
-        </Container>
-    </Navbar>
+                    {isLoggedIn ?
+                        (
+                            <>
+                                <Nav.Link href="/profile">Profile</Nav.Link>
+                                <NavLink onClick={() => props.logOut()}>Log out</NavLink>
+                            </>
+                        )
+                        : (
+                            <>
+                                <Nav.Link className="ml-auto" href="/vendorlogin">Vendor Login</Nav.Link>
+                                <Nav.Link href="/login">Login</Nav.Link>
+                            </>
+                        )}
+                </Nav>
+            </Container>
+        </Navbar>
     )
 }
 

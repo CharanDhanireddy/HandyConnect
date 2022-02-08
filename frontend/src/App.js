@@ -8,6 +8,7 @@ import VendorSignup from "./Components/VendorSignup.jsx";
 import Dashboard from "./Components/Dashboard.jsx";
 import Header from "./Components/Header.jsx"
 import Footer from "./Components/Footer.jsx"
+import Profile from "./Components/Profile.jsx"
 import VendorDashboard from "./Components/VendorDashboard.jsx";
 
 
@@ -45,6 +46,7 @@ function App() {
           <Route path="/vendorlogin" element={<VendorLogin setToken={setToken} />} />
           {/* <Route path = "/dashboard" element = {<Dashboard />} /> */}
         </Routes>
+        <Footer />
       </div>
     )
   }
@@ -55,7 +57,7 @@ function App() {
       <Routes>
         {/* <Route exact path="/"  element={<Home />}/> */}
         {/* <Route path="/signup" element={<Signup />} /> */}
-        {/* <Route path = "/login" element = {<Login />} /> */}
+        <Route path="/profile" element={<Profile getToken={getToken} />} />
         <Route path="/" element={<Dashboard getToken={getToken} />} />
         <Route path="/vendorDashboard" element={<VendorDashboard getToken={getToken} />} />
       </Routes>
