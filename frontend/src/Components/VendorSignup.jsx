@@ -60,7 +60,7 @@ function VendorSignup(props) {
     <Container className="center">
       <Row className="">
         <Col md="4" className="mx-auto ">
-          <h1 className="login-signup-heading">Sign up</h1>
+          <h1 className="login-signup-heading">Service Provider Signup</h1>
           <Form>
             <Form.Group controlId="firstNameId">
 
