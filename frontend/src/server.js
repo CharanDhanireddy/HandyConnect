@@ -65,7 +65,7 @@ createServer({
       return schema.services.all()
     })
 
-    this.get('/timeslot', (schema, request) => {
+    this.get('/availability', (schema, request) => {
       return schema.timeslots.all()
     })
   },
