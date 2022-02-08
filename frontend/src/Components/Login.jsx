@@ -12,14 +12,36 @@ import {
 import axios from "axios";
 
 function Login(props) {
-  const [state, setState] = useState({email: "", password: ""})
+  const [state, setState] = useState({ email: "", password: "", errors: {} })
   const navigate = useNavigate()
 
   let onChange = e => {
-    setState({...state, [e.target.name] : e.target.value})
+    setState({ ...state, [e.target.name]: e.target.value })
   };
 
+  let isValid = () => {
+    console.log('here')
+    let errors = {}
+    const email_pattern = /\S+@\S+/
+    if (!state.email) {
+      errors['email'] = 'Required'
+    }
+    else if (!email_pattern.test(String(state.email).toLowerCase())) {
+      errors['email'] = 'Provide a valid email address'
+    }
+    if (!state.password) {
+      errors['password'] = 'Required'
+    }
+    else if (state.password.length < 8) {
+      errors['password'] = 'Atleast 8 characters'
+    }
+    setState({ ...state, errors })
+    if (Object.keys(errors).length === 0) return true;
+    else return false;
+  }
+
   let onLoginClick = async () => {
+    if (!isValid()) return
     const userData = {
       email: state.email,
       password: state.password
@@ -29,54 +51,55 @@ function Login(props) {
     let data = res.data
     let status = res.status
     console.log(data, status)
-    // debugger
+    // Can use the errors state to show errors from the api
     let token = data?.user?.id ? data?.user?.id : null
     props.setToken(token)
     navigate('/')
-    // if(data == null)
-      // Show Error
-    // else
-      // redirect to Homepage - with City selection popUp
   };
-  
-    return (
-      <Container className = "center" >
-        <Row>
-          <Col className = "mx-auto" md="4 pt-10">
-            <h1 className = "login-signup-heading">Login</h1>
-            <Form>
-              <Form.Group controlId="emailId" className = "loginpage-email-field">
-                <Form.Control
-                  className="loginpage-email-field mb-2"
-                  type="text"
-                  name="email"
-                  placeholder="Email"
-                  value={state.email}
-                  onChange={onChange}
-                />
-                <FormControl.Feedback type="invalid"></FormControl.Feedback>
-              </Form.Group>
 
-              <Form.Group className = "loginpage-password-field" controlId="passwordId">
-                <Form.Control
-                  
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={state.password}
-                  onChange={onChange}
-                />
-                <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-              </Form.Group>
-            </Form>
-            <Button className="mt-3 w-100 btn btn-lg btn" variant = "outline-dark"  color="primary" onClick={onLoginClick}>Login</Button>
-            <p className="mt-2">
-              Don't have account? <Link to="/signup">Signup</Link>
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    );
+  return (
+    <Container className="center" >
+      <Row>
+        <Col className="mx-auto" md="4 pt-10">
+          <h1 className="login-signup-heading">Login</h1>
+          <Form noValidate>
+            <Form.Group controlId="emailId" className="loginpage-email-field">
+              <Form.Control
+                className="loginpage-email-field mb-2"
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={state.email}
+                onChange={onChange}
+                isInvalid={state.errors.email}
+              />
+              <FormControl.Feedback type="invalid">
+                {state.errors.email}
+              </FormControl.Feedback>
+            </Form.Group>
+
+            <Form.Group className="loginpage-password-field" controlId="passwordId">
+              <Form.Control
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={state.password}
+                onChange={onChange}
+                isInvalid={state.errors.password}
+              />
+              <Form.Control.Feedback type="invalid">
+                {state.errors.password}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form>
+          <Button className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Login</Button>
+          <p className="mt-2">
+            Don't have account? <Link to="/signup">Signup</Link>
+          </p>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
 
 
