@@ -7,7 +7,7 @@ import Tools from "../../Images/wallpainter.jpg"
 
 function HomeCarousel() {
     return (
-        <Carousel className="home-carousel">
+        <Carousel id = "home-carousel" className="home-carousel">
 
             <Carousel.Item>
                 <img
