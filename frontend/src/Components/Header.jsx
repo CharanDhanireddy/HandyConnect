@@ -14,7 +14,7 @@ function Header(props) {
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand className="py-4" href="/home">HandyConnect</Navbar.Brand>
+                <Navbar.Brand id = "header-handyconnect" className="py-4" href="/home">HandyConnect</Navbar.Brand>
                 <Nav className="ml-auto" >
                     {isLoggedIn ?
                         (
