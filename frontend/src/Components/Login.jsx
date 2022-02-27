@@ -92,7 +92,7 @@ function Login(props) {
               </Form.Control.Feedback>
             </Form.Group>
           </Form>
-          <Button className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Login</Button>
+          <Button id ="user-login-button" className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Login</Button>
           <p className="mt-2">
             Don't have account? <Link to="/signup">Signup</Link>
           </p>
