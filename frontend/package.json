@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
     "cypress": "^9.5.0",
     "miragejs": "^0.1.43"
   }
