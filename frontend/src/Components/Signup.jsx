@@ -208,6 +208,7 @@ function Signup(props) {
 
           </Form>
           <Button
+            id="signup-button"
             className="mt-3 w-100 btn btn-lg btn" variant="outline-primary"
             color="primary"
             onClick={onSignupClick}
