@@ -45,7 +45,7 @@ function VendorLogin(props) {
           <Col className = "mx-auto" md="4 pt-10">
             <h1 className = "login-signup-heading">Service Provider Login</h1>
             <Form>
-              <Form.Group controlId="emailId" className = "loginpage-email-field">
+              <Form.Group id= "vendor-email" controlId="emailId" className = "loginpage-email-field">
                 <Form.Control
                   className="loginpage-email-field mb-2"
                   type="text"
@@ -57,7 +57,7 @@ function VendorLogin(props) {
                 <FormControl.Feedback type="invalid"></FormControl.Feedback>
               </Form.Group>
 
-              <Form.Group className = "loginpage-password-field" controlId="passwordId">
+              <Form.Group id = "vendor-password" className = "loginpage-password-field" controlId="passwordId">
                 <Form.Control
                   
                   type="password"
@@ -69,7 +69,7 @@ function VendorLogin(props) {
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
             </Form>
-            <Button className="mt-3 w-100 btn btn-lg btn" variant = "outline-dark"  color="primary" onClick={onLoginClick}>Login</Button>
+            <Button id = "vendor-login-button" className="mt-3 w-100 btn btn-lg btn" variant = "outline-dark"  color="primary" onClick={onLoginClick}>Login</Button>
             <p className="mt-2">
               Don't have account? <Link to="/vendorsignup">Signup</Link>
             </p>
