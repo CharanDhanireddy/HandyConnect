@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Card, Modal, Form, Button, Row, Col, Toast, ToastContainer } from "react-bootstrap";
+import { Container, Card, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
 import TimeSelect from "./TimeSelect";
 
@@ -7,32 +7,31 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            cityList: null,
-            city: null,
-            showModal: true,
             serviceList: null,
             service: null,
             showToast: false
         }
     }
 
-    async componentDidMount() {
-        let res = await axios.get("http://localhost:5000/city")
-        let data = res.data
-        let status = res.status
-        console.log(data, status)
-        this.setState({ cityList: data.cities })
+    async getServices(city) {
+        let res = await axios.get("http://localhost:5000/service", {
+            params: {
+                city
+            }
+        })
+        return res?.data?.services
     }
 
-    async componentDidUpdate(_prevProps, prevState) {
-        if (this.state.city !== prevState.city) {
-            let res = await axios.get("http://localhost:5000/service", {
-                params: {
-                    city: this.state.city
-                }
-            })
-            let data = res.data
-            this.setState({ serviceList: data.services })
+    async componentDidMount() {
+        let serviceList = await this.getServices(this.props.city)
+        this.setState({ serviceList })
+    }
+
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.city !== prevProps.city) {
+            let serviceList = await this.getServices(this.props.city)
+            this.setState({ serviceList })
         }
     }
 
@@ -47,8 +46,8 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { city, cityList, service, serviceList, showModal, showToast } = this.state;
-        if (!cityList) return null
+        const { service, serviceList, showToast } = this.state;
+        if (!this.props.city) return null
         return (
             <Container >
                 {serviceList ? (
@@ -56,8 +55,8 @@ class Dashboard extends Component {
                         <h2 className='text-center'>Select a service from the following</h2>
                         <Container className='mt-4'>
                             <Row xs={2} md={3} lg={4}>
-                                {serviceList.map(service => (
-                                    <Col>
+                                {serviceList.map((service, key) => (
+                                    <Col key={key}>
                                         <Card
                                             id={service.name}
                                             key={service.id}
@@ -78,9 +77,9 @@ class Dashboard extends Component {
                     </>
                 ) : (null)}
 
-                <TimeSelect updateState={this.updateState} service={service} city={city} props={this.props} />
+                <TimeSelect updateState={this.updateState} service={service} city={this.props.city} props={this.props} />
 
-                <Modal
+                {/* <Modal
                     show={showModal}
                     backdrop="static"
                     aria-labelledby="contained-modal-title-vcenter"
@@ -107,8 +106,8 @@ class Dashboard extends Component {
                             Confirm
                         </Button>
                     </Modal.Footer>
-                </Modal>
-                {/* To update lates */}
+                </Modal> */}
+                {/* To update later */}
                 <ToastContainer position="top-start">
                     <Toast className="d-inline-block m-1" bg='light' show={showToast}
                         // delay={3000} 

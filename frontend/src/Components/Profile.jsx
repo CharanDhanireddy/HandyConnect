@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getToken } from "../util/localStorage";
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Profile(props) {
@@ -7,7 +8,7 @@ function Profile(props) {
 
     useEffect(() => {
         let fetchData = async () => {
-            let token = props.getToken()
+            let token = getToken()
             let profile_response = await axios.get("http://localhost:5000/profile", { params: { id: token } })
             console.log(profile_response)
             setState({ ...state, userData: profile_response.data })
