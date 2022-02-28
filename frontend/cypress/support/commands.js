@@ -25,3 +25,33 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import "@testing-library/cypress/add-commands"
+import axios from "axios";
+
+Cypress.Commands.add('login', () => {
+    // cy.request({
+    //     method: 'POST',
+    //     url: 'http://localhost:5000/user/login',
+    //     body: {
+    //         email: "u1@gmail.com",
+    //         password: "123456789"
+    //     }
+    // })
+    //     .then((resp) => {
+    //         window.localStorage.setItem(
+    //             'token', JSON.stringify(resp?.data?.user?.id));
+    //     })
+    // let userData = {
+    //     email: "u1@gmail.com",
+    //     password: "123456789"
+    // }
+    // axios.post("http://localhost:5000/user/login", userData)
+    //     .then((res) => {
+    //         window.localStorage.setItem(
+    //             'token', JSON.stringify(res?.data?.user?.id));
+    //     })
+
+    cy.visit('login')
+    cy.get('#emailId').type('u2@gmail.com');
+    cy.get('#passwordId').type('123456789');
+    cy.get('#user-login-button').click();
+})
