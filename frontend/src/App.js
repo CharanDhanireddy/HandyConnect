@@ -11,7 +11,7 @@ import Footer from "./Components/Footer.jsx"
 import Profile from "./Components/Profile.jsx"
 import VendorDashboard from "./Components/VendorDashboard.jsx";
 import Bookings from "./Components/Bookings.jsx";
-
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 function setToken(userToken) {
   localStorage.setItem('token', JSON.stringify(userToken));

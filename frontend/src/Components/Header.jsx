@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 function Header(props) {
     const isLoggedIn = props.isLoggedIn
     // console.log(isLoggedIn)
-    console.log(window.location.pathname);
+    // console.log(window.location.pathname);
 
     const isActive = (ref) => {
         return (window.location.pathname === ref)
@@ -14,7 +14,7 @@ function Header(props) {
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand id = "header-handyconnect" className="py-4" href="/home">HandyConnect</Navbar.Brand>
+                <Navbar.Brand id="header-handyconnect" className="py-4" href="/home">HandyConnect</Navbar.Brand>
                 <Nav className="ml-auto" >
                     {isLoggedIn ?
                         (
