@@ -8,7 +8,7 @@ import {
   Form,
   FormControl
 } from "react-bootstrap";
-
+import { setUserData } from "../util/localStorage";
 import axios from "axios";
 
 function Login(props) {
@@ -52,8 +52,8 @@ function Login(props) {
     let status = res.status
     console.log(data, status)
     // Can use the errors state to show errors from the api
-    let token = data?.user?.id ? data?.user?.id : null
-    props.setToken(token)
+    // let token = data?.user?.id ? data?.user?.id : null
+    setUserData(data?.user)
     navigate('/')
   };
 
@@ -92,7 +92,7 @@ function Login(props) {
               </Form.Control.Feedback>
             </Form.Group>
           </Form>
-          <Button id ="user-login-button" className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Login</Button>
+          <Button id="user-login-button" className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Login</Button>
           <p className="mt-2">
             Don't have account? <Link to="/signup">Signup</Link>
           </p>
