@@ -5,7 +5,7 @@ describe("SignUp page", function () {
 
     beforeEach(() => {
         server = startMirage()
-        cy.visit('signup')
+        cy.visit('/signup')
     })
 
     afterEach(() => {

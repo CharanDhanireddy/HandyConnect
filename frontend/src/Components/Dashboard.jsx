@@ -59,6 +59,7 @@ class Dashboard extends Component {
                                 {serviceList.map(service => (
                                     <Col>
                                         <Card
+                                            id={service.name}
                                             key={service.id}
                                             style={{ height: '6rem', margin: '0 1rem 1rem 0', cursor: 'pointer' }}
                                             className='bg-dark text-white border'
@@ -91,6 +92,7 @@ class Dashboard extends Component {
                     <Modal.Body>
                         <Form>
                             <Form.Select
+                                id="citySelectId"
                                 onChange={(e) => { this.setState({ city: e.target.value }) }}
                             >
                                 <option value={null}>Select</option>
@@ -101,7 +103,7 @@ class Dashboard extends Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" disabled={!city} onClick={this.handleClose}>
+                        <Button id="citySubmitId" variant="primary" disabled={!city} onClick={this.handleClose}>
                             Confirm
                         </Button>
                     </Modal.Footer>
