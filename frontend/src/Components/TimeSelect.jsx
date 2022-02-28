@@ -43,6 +43,12 @@ function TimeSelect(props) {
         else return false;
     }
 
+
+    let handleClose = (e) => {
+        setState(initial_state)
+        props.updateState('service', null)
+    }
+
     let onSubmit = async (e) => {
         if (!isValid()) return
         // let res = await axios.post("http://localhost:5000/booking", {
@@ -80,7 +86,7 @@ function TimeSelect(props) {
                         <hr />
                         <Row xs={1} md={2} lg={3}>
                             {state.timeslotList.map((timeslot, key) => (
-                                <Col>
+                                <Col key={key}>
                                     <Card
 
                                         key={timeslot.id}
@@ -141,6 +147,7 @@ function TimeSelect(props) {
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
                     <Button
                         id="submitId"
                         variant="outline-primary"
