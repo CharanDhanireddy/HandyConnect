@@ -8,7 +8,7 @@ import {
   Form,
   FormControl
 } from "react-bootstrap";
-
+import { setUserData } from "../util/localStorage";
 import axios from "axios";
 
 function VendorSignup(props) {
@@ -51,8 +51,8 @@ function VendorSignup(props) {
     let data = res.data
     let status = res.status
     console.log(data, status)
-    let token = data?.vendor?.id ? data?.vendor?.id : null
-    props.setToken(token)
+    // let token = data?.vendor?.id ? data?.vendor?.id : null
+    setUserData(data?.vendor)
     navigate('/vendorDashboard')
   };
 
