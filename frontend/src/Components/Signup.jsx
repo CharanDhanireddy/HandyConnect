@@ -11,7 +11,7 @@ import {
   // FormLabel,
   // Feedback
 } from "react-bootstrap";
-
+import { setUserData } from "../util/localStorage";
 import axios from "axios";
 
 function Signup(props) {
@@ -89,8 +89,8 @@ function Signup(props) {
     let status = res.status
     console.log(data, status)
     // Can use the errors state to show errors from the api
-    let token = data?.user?.id ? data?.user?.id : null
-    props.setToken(token)
+    // let token = data?.user?.id ? data?.user?.id : null
+    setUserData(data?.user)
     navigate('/')
   };
 
