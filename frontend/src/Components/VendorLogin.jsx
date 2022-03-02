@@ -29,10 +29,12 @@ function VendorLogin(props) {
     let data = res.data
     let status = res.status
     console.log(data, status)
-    // debugger
-    // let token = data?.vendor?.id ? data?.vendor?.id : null
-    setUserData(data?.vendor)
-    navigate('/vendorDashboard')
+
+    setUserData(data && data.vendor ? data?.vendor : null)
+    if (data?.vendor)
+      navigate('/vendorDashboard')
+    else
+      navigate('/')
     // if(data == null)
     // Show Error
     // else
