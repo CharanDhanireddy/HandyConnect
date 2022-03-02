@@ -36,12 +36,12 @@ function Header(props) {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand id="header-handyconnect" className="py-4" href="/home">HandyConnect</Navbar.Brand>
+                    <Navbar.Brand id="header-handyconnect" className="py-4" href="/">HandyConnect</Navbar.Brand>
                     <Nav className="ml-auto" >
                         {props.isLoggedIn ?
                             (
                                 <>
-                                    <Navbar.Brand onClick={() => { setState({ ...state, showModal: true }) }}>
+                                    <Navbar.Brand id="locationSelectId" onClick={() => { setState({ ...state, showModal: true }) }}>
                                         <img
                                             alt=""
                                             src="/location.svg"
@@ -96,7 +96,7 @@ function Header(props) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button id="citySelectCancelId" variant="secondary" onClick={handleClose}>Close</Button>
                     <Button id="citySubmitId" variant="primary" disabled={!state.city} onClick={handleSubmit}>
                         Confirm
                     </Button>

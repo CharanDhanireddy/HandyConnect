@@ -49,7 +49,7 @@ class Dashboard extends Component {
         const { service, serviceList, showToast } = this.state;
         if (!this.props.city) return null
         return (
-            <Container >
+            <Container id="dashboardContainerId">
                 {serviceList ? (
                     <>
                         <h2 className='text-center'>Select a service from the following</h2>
@@ -79,34 +79,7 @@ class Dashboard extends Component {
 
                 <TimeSelect updateState={this.updateState} service={service} city={this.props.city} props={this.props} />
 
-                {/* <Modal
-                    show={showModal}
-                    backdrop="static"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                >
-                    <Modal.Header>
-                        <Modal.Title>Select a city</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Select
-                                id="citySelectId"
-                                onChange={(e) => { this.setState({ city: e.target.value }) }}
-                            >
-                                <option value={null}>Select</option>
-                                {cityList.map(city => (
-                                    <option key={city.id} value={city.name}>{city.name}</option>
-                                ))}
-                            </Form.Select>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button id="citySubmitId" variant="primary" disabled={!city} onClick={this.handleClose}>
-                            Confirm
-                        </Button>
-                    </Modal.Footer>
-                </Modal> */}
+
                 {/* To update later */}
                 <ToastContainer position="top-start">
                     <Toast className="d-inline-block m-1" bg='light' show={showToast}
