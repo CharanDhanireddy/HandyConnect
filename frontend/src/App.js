@@ -41,7 +41,7 @@ function App() {
           <Route path="/vendorsignup" element={<VendorSignup />} />
           <Route path="/vendorlogin" element={<VendorLogin />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     )
   }
