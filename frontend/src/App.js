@@ -17,6 +17,7 @@ import { getCity, setCity, isLoggedIn, removeUserData } from './util/localStorag
 function App() {
   const navigate = useNavigate()
   let loggedIn = isLoggedIn()
+  console.log(loggedIn)
   let city = getCity()
   const [updated, setUpdated] = useState(0)
 
@@ -55,7 +56,7 @@ function App() {
         <Route path="/" element={<Dashboard city={city} />} />
         <Route path="/vendorDashboard" element={<VendorDashboard />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 
