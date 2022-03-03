@@ -1,0 +1,22 @@
+host: localhost:10000
+info:
+  contact: {}
+  title: HandyConnect API documentation
+  version: 1.0.0
+paths:
+  /:
+    get:
+      description: get HomePage
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            type: object
+      summary: Get HomePage
+      tags:
+      - Home
+swagger: "2.0"
