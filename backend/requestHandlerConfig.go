@@ -1,51 +1,52 @@
 package main
 
 import (
+	"handy/requestHandlers"
 	"log"
 	"net/http"
 )
 
 func handleRequests() {
-	http.HandleFunc("/", homePage)
+	http.HandleFunc("/", requestHandlers.HomePage)
 
-	//Get city list
-	http.HandleFunc("/cities", returnCity) //pushing the cities json to cityapi
+//Get city list
+	http.HandleFunc("/cities", requestHandlers.ReturnCity(sqliteDatabase)) //pushing the citiesjson to cityapi
 
-	//Post user login
-	http.HandleFunc("/userLogin", userLogin)
+//Post user login
+	http.HandleFunc("/userLogin", requestHandlers.UserLogin(sqliteDatabase))
 
-	//Post user sign up
-	http.HandleFunc("/customerSignUp", customerSignUp)
+//Post user sign up
+	http.HandleFunc("/customerSignUp", requestHandlers.CustomerSignUp(sqliteDatabase))
 
-	//Post vendor login
-	http.HandleFunc("/vendorLogin", userLogin)
+//Post vendor login
+	http.HandleFunc("/vendorLogin", requestHandlers.UserLogin(sqliteDatabase))
 
-	//Post vendor sign up
-	http.HandleFunc("/vendorSignUp", vendorSignUp)
+//Post vendor sign up
+	http.HandleFunc("/vendorSignUp", requestHandlers.VendorSignUp(sqliteDatabase))
 
-	//Get customer profile
-	http.HandleFunc("/customer", custData)
+//Get customer profile
+	http.HandleFunc("/customer", requestHandlers.CustData(sqliteDatabase))
 
-	//Get Vendor profile
-	http.HandleFunc("/vendor", returnVendor)
+//Get Vendor profile
+	http.HandleFunc("/vendor", requestHandlers.ReturnVendor(sqliteDatabase))
 
-	//Get Services for city
-	http.HandleFunc("/services", returnCity)
+//Get Services for city
+	http.HandleFunc("/services", requestHandlers.ReturnCity(sqliteDatabase))
 
-	//Get dates for service in a city
-	http.HandleFunc("/availability", GetServiceAvailability)
+//Get dates for service in a city
+	http.HandleFunc("/availability", requestHandlers.GetServiceAvailability(sqliteDatabase))
 
-	//Post create booking
-	http.HandleFunc("/booking", CreateBooking)
+//Post create booking
+	http.HandleFunc("/booking", requestHandlers.CreateBooking(sqliteDatabase))
 
-	// //Get bookings of user
-	// http.HandleFunc("/booking", returnCiy)
+// //Get bookings of user
+	// http.HandleFunc("/booking", ReturnCiy(qliteDatabase))
 
-	// //Get bookings of vendor
-	// http.HandleFunc("/booking", returnCiy)
+// //Get bookings of vendor
+	// http.HandleFunc("/booking", ReturnCiy(qliteDatabase))
 
-	http.HandleFunc("/vendorapi", returnVendor)
+http.HandleFunc("/vendorapi", requestHandlers.ReturnVendor(sqliteDatabase))
 
-	log.Fatal(http.ListenAndServe(":10000", nil))
+log.Fatal(http.ListenAndServe(":10000", nil))
 
 }

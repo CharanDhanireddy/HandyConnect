@@ -32,18 +32,3 @@ func newDBConnection() {
 
 	// populateData(sqliteDatabase)
 }
-
-// func createCityTable(db *sql.DB) {
-// 	createCityTableSQL := `CREATE TABLE city (
-// 		"city_id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-// 		"city_name" TEXT
-// 	  );` // SQL Statement for Create Table
-
-// 	log.Println("Create city table...")
-// 	statement, err := db.Prepare(createCityTableSQL) // Prepare SQL Statement
-// 	if err != nil {
-// 		log.Fatal(err.Error())
-// 	}
-// 	statement.Exec() // Execute SQL Statements
-// 	log.Println("city table created")
-// }

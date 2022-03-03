@@ -14,11 +14,11 @@ import (
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 )
 
-func InsertBooking(db *sql.DB, booking schema.BookingSchema) (sql.Result, error) {
+func InsertBooking(db *sql.DB, booking schema.BookingSchema) (string, error) {
 
 	if !CheckAvailability(db, booking.CityId, booking.ServiceId, booking.Day, booking.Month, booking.Year) {
 		fmt.Println("Service not available on date: %d-%d-%d", booking.Month, booking.Day, booking.Year)
-		return nil, errors.New("Service not available on date")
+		return "", errors.New("Service not available on date")
 	}
 
 	log.Println("Inserting booking record ...")
@@ -27,12 +27,12 @@ func InsertBooking(db *sql.DB, booking schema.BookingSchema) (sql.Result, error)
 	// This is good to avoid SQL injections
 	if err != nil {
 		log.Println(err.Error())
-		return nil, err
+		return "", err
 	}
-	response, err := statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId,
-		booking.Day, booking.Month, booking.Year, booking.Year)
+	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId,
+		booking.Day, booking.Month, booking.Year, booking.Address)
 
-	return response, err
+	return "succesfully created booking", err
 }
 
 func CheckAvailability(db *sql.DB, cityId int, serviceId int, day int, month int, year int) bool {
@@ -50,7 +50,6 @@ func CheckAvailability(db *sql.DB, cityId int, serviceId int, day int, month int
 	for row.Next() {
 		row.Scan(&vendorId)
 		vendorIdList = append(vendorIdList, vendorId)
-		fmt.Println(vendorId)
 	}
 	row.Close()
 
