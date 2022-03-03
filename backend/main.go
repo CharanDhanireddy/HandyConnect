@@ -1,6 +1,9 @@
 package main
 
-import "log"
+import (
+	dbConnection "handy/dbConnection"
+	"log"
+)
 
 // "database/sql"
 // "encoding/json"
@@ -13,7 +16,7 @@ import "log"
 func main() {
 	log.Println("Handy Connect server starting....")
 
-	newDBConnection()
+	dbConnection.NewDBConnection()
 
 	handleRequests()
 }

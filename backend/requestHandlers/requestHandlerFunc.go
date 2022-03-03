@@ -1,7 +1,6 @@
 package requestHandlers
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"handy/dbOperations"
@@ -24,30 +23,24 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 //json for city information
 
-func ReturnCity(sqliteDatabase *sql.DB) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+func ReturnCity(w http.ResponseWriter, r *http.Request) {
 
-		fmt.Println("Returning the city search criteria:")
-		cities := dbOperations.DisplayCity(sqliteDatabase)
-		json.NewEncoder(w).Encode(cities)
+	fmt.Println("Returning the city search criteria:")
+	cities := dbOperations.DisplayCity()
+	json.NewEncoder(w).Encode(cities)
 
-	}
 }
 
-func ReturnVendor(sqliteDatabase *sql.DB) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+func ReturnVendor(w http.ResponseWriter, r *http.Request) {
 
-		fmt.Println("Returning the vendor search criteria:")
-		vend_list := dbOperations.DisplayVendorData(sqliteDatabase)
-		json.NewEncoder(w).Encode(vend_list)
-	}
+	fmt.Println("Returning the vendor search criteria:")
+	vend_list := dbOperations.DisplayVendorData()
+	json.NewEncoder(w).Encode(vend_list)
 }
 
-func CustData(sqliteDatabase *sql.DB) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
+func CustData(w http.ResponseWriter, r *http.Request) {
 
-		fmt.Println("Returning the customer data:")
-		cust := dbOperations.DisplayCustData(sqliteDatabase)
-		json.NewEncoder(w).Encode(cust)
-	}
+	fmt.Println("Returning the customer data:")
+	cust := dbOperations.DisplayCustData()
+	json.NewEncoder(w).Encode(cust)
 }
