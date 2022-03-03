@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getToken } from "../util/localStorage";
 import axios from 'axios';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Table } from 'react-bootstrap';
 
 function Bookings(props) {
     const [state, setState] = useState({ bookings: [] })
@@ -17,12 +17,35 @@ function Bookings(props) {
         fetchBookings()
     }, [])
 
+    const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'City']
+
     return (
         <Container className='mt-4'>
-            {state.bookings.map((booking) => (
-                <Row key={booking.id}> {JSON.stringify(booking)}</Row>
-            ))
-            }
+
+            <Table responsive>
+                <thead>
+                    <tr>
+                        {tableHeaders.map((header, key) => (
+                            // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
+                            <th key={key}>{header}</th>
+                        ))
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {state.bookings.map((booking, key) => (
+                        // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
+                        <tr key={key}>
+                            <td>{booking.timeslot.time}</td>
+                            <td>{booking.service}</td>
+                            <td>{booking.vendor}</td>
+                            <td>{booking.city}</td>
+                        </tr>
+                    ))
+
+                    }
+                </tbody>
+            </Table>
         </Container >
     )
 }
