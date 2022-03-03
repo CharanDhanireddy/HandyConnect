@@ -3,13 +3,14 @@ import { Navbar, Nav, NavLink, Modal, Form, Button } from "react-bootstrap";
 
 import { Container } from "react-bootstrap";
 import axios from "axios";
+import { BASE_URL } from "../constants";
 
 function Header(props) {
     const [state, setState] = useState({ city: props.city, cityList: [], showModal: false })
 
     useEffect(() => {
         let fetchData = async () => {
-            let city_response = await axios.get("http://localhost:5000/city")
+            let city_response = await axios.get(BASE_URL + "city")
             setState({ ...state, cityList: city_response.data.cities })
         }
         if (state.showModal) fetchData();
