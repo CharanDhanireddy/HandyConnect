@@ -1,14 +1,22 @@
 package requestHandlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"handy/dbOperations"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func HomePage(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "welcome to the homepage!")
+// HomePage ... HomePage
+// @Summary Get HomePage
+// @Description get HomePage
+// @Tags Home
+// @Success 200 {object} object
+// @Failure 404 {object} object
+// @Router / [get]
+func HomePage(c *gin.Context) {
+	c.JSON(http.StatusOK, "welcome to the homepage!")
 	fmt.Println("Endpoint hit!")
 }
 
@@ -23,24 +31,23 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 //json for city information
 
-func ReturnCity(w http.ResponseWriter, r *http.Request) {
+func ReturnCity(c *gin.Context) {
 
 	fmt.Println("Returning the city search criteria:")
 	cities := dbOperations.DisplayCity()
-	json.NewEncoder(w).Encode(cities)
-
+	c.JSON(http.StatusOK, cities)
 }
 
-func ReturnVendor(w http.ResponseWriter, r *http.Request) {
+func ReturnVendor(c *gin.Context) {
 
 	fmt.Println("Returning the vendor search criteria:")
 	vend_list := dbOperations.DisplayVendorData()
-	json.NewEncoder(w).Encode(vend_list)
+	c.JSON(http.StatusOK, vend_list)
 }
 
-func CustData(w http.ResponseWriter, r *http.Request) {
+func CustData(c *gin.Context) {
 
 	fmt.Println("Returning the customer data:")
 	cust := dbOperations.DisplayCustData()
-	json.NewEncoder(w).Encode(cust)
+	c.JSON(http.StatusOK, cust)
 }
