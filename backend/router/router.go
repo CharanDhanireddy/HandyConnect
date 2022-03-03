@@ -12,16 +12,16 @@ func SetupRouter() *gin.Engine {
 	r.GET("/", requestHandlers.HomePage)
 
 	//Get city list
-	r.GET("/cities", requestHandlers.ReturnCity) //pushing the citiesjson to cityapi
+	r.GET("/cities", requestHandlers.GetCityList)
 
 	//Post user login
-	r.POST("/userLogin", requestHandlers.UserLogin)
+	r.POST("/customerLogin", requestHandlers.CustomerLogin)
 
 	//Post user sign up
 	r.POST("/customerSignUp", requestHandlers.CustomerSignUp)
 
 	//Post vendor login
-	r.POST("/vendorLogin", requestHandlers.UserLogin)
+	r.POST("/vendorLogin", requestHandlers.VendorLogin)
 
 	//Post vendor sign up
 	r.POST("/vendorSignUp", requestHandlers.VendorSignUp)

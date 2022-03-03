@@ -10,7 +10,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserLogin(c *gin.Context) {
+// CustomerLogin
+// @Summary verify username and password of customer
+// @Produce json
+// @Param data body structTypes.LoginRequest true "Login data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Failure 401 {object} object
+// @Router /customerLogin [post]
+func CustomerLogin(c *gin.Context) {
 
 	var request structTypes.LoginRequest
 
@@ -22,7 +30,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	ok, err := verifyUserLogin(request.Username, request.Password)
+	ok, err := verifyCustomerLogin(request.Username, request.Password)
 	if err != nil {
 		log.Printf("Login user DB error, %v", err)
 		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
@@ -37,7 +45,7 @@ func UserLogin(c *gin.Context) {
 	c.JSON(http.StatusOK, "Successfully logged in")
 }
 
-func verifyUserLogin(username string, password string) (bool, error) {
+func verifyCustomerLogin(username string, password string) (bool, error) {
 	if username == "test_user@gmail.com" && password == "test_password" {
 		return true, nil
 	}
@@ -45,6 +53,13 @@ func verifyUserLogin(username string, password string) (bool, error) {
 
 }
 
+// CustomerSignUp
+// @Summary create new customer
+// @Produce json
+// @Param data body schema.CustomerProfileSchema true "customer data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /customerSignUp [post]
 func CustomerSignUp(c *gin.Context) {
 
 	var request schema.CustomerProfileSchema
@@ -62,6 +77,56 @@ func CustomerSignUp(c *gin.Context) {
 	c.JSON(http.StatusOK, "New customer created")
 }
 
+// VendorLogin
+// @Summary verify username and password of vendor
+// @Produce json
+// @Param data body structTypes.LoginRequest true "Login data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Failure 401 {object} object
+// @Router /vendorLogin [post]
+func VendorLogin(c *gin.Context) {
+
+	var request structTypes.LoginRequest
+
+	// Try to decode the request body into the struct. If there is an error,
+	// respond to the client with the error message and a 400 status code.
+	if err := c.BindJSON(&request); err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, "an error occurred while parsing request")
+		return
+	}
+
+	ok, err := verifyVendorLogin(request.Username, request.Password)
+	if err != nil {
+		log.Printf("Login user DB error, %v", err)
+		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
+		return
+	}
+
+	if !ok {
+		log.Printf("Unauthorized access for user: %v", request.Username)
+		c.JSON(http.StatusUnauthorized, "Wrong password or username")
+		return
+	}
+	c.JSON(http.StatusOK, "Successfully logged in")
+}
+
+func verifyVendorLogin(username string, password string) (bool, error) {
+	if username == "test_user@gmail.com" && password == "test_password" {
+		return true, nil
+	}
+	return false, nil
+
+}
+
+// VendorSignUp
+// @Summary create new vendor
+// @Produce json
+// @Param data body schema.VendorProfileSchema true "vendor data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /vendorSignUp [post]
 func VendorSignUp(c *gin.Context) {
 
 	var request schema.VendorProfileSchema

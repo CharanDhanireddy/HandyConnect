@@ -6,6 +6,7 @@
         "version": "1.0.0"
     },
     "host": "localhost:10000",
+    "basePath": "/",
     "paths": {
         "/": {
             "get": {
@@ -27,6 +28,378 @@
                             "type": "object"
                         }
                     }
+                }
+            }
+        },
+        "/availability": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "get service's availability in a city",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "city ID",
+                        "name": "city_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "service ID",
+                        "name": "service_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/structTypes.Date"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/booking": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "create new service booking",
+                "parameters": [
+                    {
+                        "description": "booking data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.BookingSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/cities": {
+            "get": {
+                "description": "get all cities in which services are available",
+                "summary": "Get all cities",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/structTypes.City"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customerLogin": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "verify username and password of customer",
+                "parameters": [
+                    {
+                        "description": "Login data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/customerSignUp": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "create new customer",
+                "parameters": [
+                    {
+                        "description": "customer data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.CustomerProfileSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/vendorLogin": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "verify username and password of vendor",
+                "parameters": [
+                    {
+                        "description": "Login data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/vendorSignUp": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "create new vendor",
+                "parameters": [
+                    {
+                        "description": "vendor data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/schema.VendorProfileSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "schema.BookingSchema": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "city_id": {
+                    "type": "integer"
+                },
+                "customer_id": {
+                    "type": "integer"
+                },
+                "day": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "service_id": {
+                    "type": "integer"
+                },
+                "vendor_id": {
+                    "type": "integer"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "schema.CustomerProfileSchema": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "schema.VendorProfileSchema": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "service1_id": {
+                    "type": "integer"
+                },
+                "service2_id": {
+                    "type": "integer"
+                },
+                "service3_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "structTypes.City": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer"
+                },
+                "city_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structTypes.Date": {
+            "type": "object",
+            "properties": {
+                "day": {
+                    "type": "integer"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "structTypes.LoginRequest": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         }
