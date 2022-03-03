@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
+import { BASE_URL } from '../constants'
 
 function Login(props) {
   const [state, setState] = useState({ email: "", password: "", errors: {} })
@@ -47,7 +48,7 @@ function Login(props) {
       password: state.password
     };
 
-    let res = await axios.post("http://localhost:5000/user/login", userData)
+    let res = await axios.post(BASE_URL + "user/login", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)

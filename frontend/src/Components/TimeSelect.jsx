@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Container, Card, Modal, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import axios from 'axios';
+import { BASE_URL } from '../constants';
 
 const initial_state = {
     timeslot: null,
@@ -17,7 +18,7 @@ function TimeSelect(props) {
 
     useEffect(() => {
         let fetchData = async () => {
-            let timeslot_response = await axios.get("http://localhost:5000/availability",
+            let timeslot_response = await axios.get(BASE_URL + "availability",
                 {
                     params: {
                         service: props.service,
@@ -51,7 +52,7 @@ function TimeSelect(props) {
 
     let onSubmit = async (e) => {
         if (!isValid()) return
-        // let res = await axios.post("http://localhost:5000/booking", {
+        // let res = await axios.post(BASE_URL + "booking", {
         //     ...state,
         //     city: props.city,
         //     service: props.service

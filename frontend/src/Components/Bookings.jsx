@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getToken } from "../util/localStorage";
 import axios from 'axios';
 import { Container, Row, Table } from 'react-bootstrap';
+import { BASE_URL } from '../constants'
 
 function Bookings(props) {
     const [state, setState] = useState({ bookings: [] })
@@ -9,7 +10,7 @@ function Bookings(props) {
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
-            const bookings_response = await axios.get("http://localhost:5000/bookings", { params: { userId: token } })
+            const bookings_response = await axios.get(BASE_URL + "bookings", { params: { userId: token } })
             // Handle errors
             let bookings = bookings_response.data.bookings
             setState({ ...state, bookings })
