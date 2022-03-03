@@ -1,22 +1,22 @@
 package dbOperations
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
+	schema "handy/schema"
+	structTypes "handy/structTypes"
 	"log"
 	"strings"
 	"time"
 
-	schema "handy/schema"
-	structTypes "handy/structTypes"
+	dbConnection "handy/dbConnection"
 
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 )
 
-func InsertBooking(db *sql.DB, booking schema.BookingSchema) (string, error) {
-
-	if !CheckAvailability(db, booking.CityId, booking.ServiceId, booking.Day, booking.Month, booking.Year) {
+func InsertBooking(booking schema.BookingSchema) (string, error) {
+	db := dbConnection.GetDbConnection()
+	if !CheckAvailability(booking.CityId, booking.ServiceId, booking.Day, booking.Month, booking.Year) {
 		fmt.Println("Service not available on date: %d-%d-%d", booking.Month, booking.Day, booking.Year)
 		return "", errors.New("Service not available on date")
 	}
@@ -35,7 +35,8 @@ func InsertBooking(db *sql.DB, booking schema.BookingSchema) (string, error) {
 	return "succesfully created booking", err
 }
 
-func CheckAvailability(db *sql.DB, cityId int, serviceId int, day int, month int, year int) bool {
+func CheckAvailability(cityId int, serviceId int, day int, month int, year int) bool {
+	db := dbConnection.GetDbConnection()
 	var vendorId string
 	var vendorIdList []string
 
@@ -69,7 +70,7 @@ func CheckAvailability(db *sql.DB, cityId int, serviceId int, day int, month int
 	return (len(vendorIdList) * 5) > totalBookings
 }
 
-func ServiceAvailability(db *sql.DB, cityId int, serviceId int) []structTypes.Date {
+func ServiceAvailability(cityId int, serviceId int) []structTypes.Date {
 	now := time.Now()
 
 	availableDates := make([]structTypes.Date, 0)
@@ -77,7 +78,7 @@ func ServiceAvailability(db *sql.DB, cityId int, serviceId int) []structTypes.Da
 	for i := 1; i <= 7; i++ {
 		date := now.AddDate(0, 0, i)
 		year, month, day := date.Date()
-		if CheckAvailability(db, cityId, serviceId, day, int(month), year) {
+		if CheckAvailability(cityId, serviceId, day, int(month), year) {
 			availableDates = append(availableDates, structTypes.Date{Day: day, Month: int(month), Year: year})
 		}
 	}

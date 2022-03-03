@@ -1,4 +1,4 @@
-package main
+package dbConnection
 
 import (
 	"database/sql"
@@ -9,7 +9,7 @@ import (
 
 var sqliteDatabase *sql.DB
 
-func newDBConnection() {
+func NewDBConnection() *sql.DB {
 	// os.Remove("sqlite-database.db") // I delete the file to avoid duplicated records.
 
 	// log.Println("Creating sqlite-database.db...")
@@ -31,4 +31,10 @@ func newDBConnection() {
 	// defer sqliteDatabase.Close()                                    // Defer Closing the database
 
 	// populateData(sqliteDatabase)
+
+	return db
+}
+
+func GetDbConnection() *sql.DB {
+	return sqliteDatabase
 }

@@ -1,16 +1,17 @@
 package dbOperations
 
 import (
-	"database/sql"
+	schema "handy/schema"
 	"log"
 
-	schema "handy/schema"
+	dbConnection "handy/dbConnection"
 
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 )
 
-func InsertCustomer(db *sql.DB, customer schema.CustomerProfileSchema) {
+func InsertCustomer(customer schema.CustomerProfileSchema) {
 	log.Println("Inserting customer record ...")
+	db := dbConnection.GetDbConnection()
 	insertCustomerSQL := `INSERT INTO customer(first_name, last_name, city_id, phone, email, password) VALUES (?,?,?,?,?,?)`
 	statement, err := db.Prepare(insertCustomerSQL) // Prepare statement.
 	// This is good to avoid SQL injections
@@ -24,8 +25,9 @@ func InsertCustomer(db *sql.DB, customer schema.CustomerProfileSchema) {
 	}
 }
 
-func InsertVendor(db *sql.DB, vendor schema.VendorProfileSchema) {
+func InsertVendor(vendor schema.VendorProfileSchema) {
 	log.Println("Inserting vendor record ...")
+	db := dbConnection.GetDbConnection()
 	insertVendorSQL := `INSERT INTO vendor (first_name, last_name, city_id, phone, email, password, service1_id, service2_id, service3_id) VALUES (?,?,?,?,?,?,?,?,?)`
 	statement, err := db.Prepare(insertVendorSQL)
 	if err != nil {

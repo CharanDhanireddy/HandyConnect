@@ -3,14 +3,15 @@ package dbOperations
 import (
 	"database/sql"
 	"fmt"
+	"handy/dbConnection"
 	"handy/structTypes"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
 )
 
-func PopulateData(sqliteDatabase *sql.DB) {
-
+func PopulateData() {
+	sqliteDatabase := dbConnection.GetDbConnection()
 	insertCity(sqliteDatabase, "Gainesville")
 
 	insertVendor(sqliteDatabase, "Aaron", "Smith", 3524513872, "asmith@gmail.com", "plumbing", "carpentry", "electrical")
@@ -61,7 +62,8 @@ func insertVendor(db *sql.DB, first_name string, last_name string, phone int, em
 	}
 }
 
-func DisplayCity(db *sql.DB) []structTypes.City {
+func DisplayCity() []structTypes.City {
+	db := dbConnection.GetDbConnection()
 	var city_id int
 	var city_name string
 
@@ -83,7 +85,8 @@ func DisplayCity(db *sql.DB) []structTypes.City {
 	return city_list
 }
 
-func DisplayCustData(db *sql.DB) []structTypes.Cust {
+func DisplayCustData() []structTypes.Cust {
+	db := dbConnection.GetDbConnection()
 	var f_name string
 	var l_name string
 	var city string
@@ -108,7 +111,8 @@ func DisplayCustData(db *sql.DB) []structTypes.Cust {
 	return cust_data
 }
 
-func DisplayVendorData(db *sql.DB) []structTypes.Vendor {
+func DisplayVendorData() []structTypes.Vendor {
+	db := dbConnection.GetDbConnection()
 	var f_name string
 	var l_name string
 	var city string
