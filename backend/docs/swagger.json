@@ -1,0 +1,34 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "HandyConnect API documentation",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:10000",
+    "paths": {
+        "/": {
+            "get": {
+                "description": "get HomePage",
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Get HomePage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
