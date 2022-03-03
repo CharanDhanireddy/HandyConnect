@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
+import { BASE_URL } from "../constants"
 
 function VendorSignup(props) {
   const [state, setState] = useState({
@@ -27,8 +28,8 @@ function VendorSignup(props) {
 
   useEffect(() => {
     let fetchData = async () => {
-      let city_response = await axios.get("http://localhost:5000/city")
-      let service_response = await axios.get("http://localhost:5000/service")
+      let city_response = await axios.get(BASE_URL + "city")
+      let service_response = await axios.get(BASE_URL + "service")
       setState({ ...state, cityList: city_response.data.cities, serviceList: service_response.data.services })
     }
     fetchData();
@@ -47,7 +48,7 @@ function VendorSignup(props) {
       rePassword: state.rePassword,
     };
 
-    let res = await axios.post("http://localhost:5000/vendor/signup", vendorData)
+    let res = await axios.post(BASE_URL + "vendor/signup", vendorData)
     let data = res.data
     let status = res.status
     console.log(data, status)
