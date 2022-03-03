@@ -43,3 +43,10 @@ func custData(w http.ResponseWriter, r *http.Request) {
 	cust := displayCustData(sqliteDatabase)
 	json.NewEncoder(w).Encode(cust)
 }
+
+func returnServiceList(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println("Returning the list of services in the selected city:")
+	serv_list := displayServiceData(sqliteDatabase)
+	json.NewEncoder(w).Encode(serv_list)
+}
