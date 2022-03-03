@@ -19,49 +19,30 @@ Platform for connecting customers with skilled and experienced professionals pro
 
 ---
 
-# Sprint Plan
-
 ## Sprint 1:
 
-Vendor App:
-- Sign Up with vendor personal details along with service (Selection), and city
-- Database implementation 
+### Frontend with mocked-up backend
+[Frontend Demo video](https://youtu.be/5rjAeEBbr_4)
 
-User App:
-- Sign Up with personal details homecity
+Tasks completed:
 
-Workflow:
-- User selects service, day, location
-- Automatically asssign a vendor
+- Vendor can signup with vendor personal details along with selecting service and city
+- Vendor/Customer can signup with name, email and password
+- Vendor/Customer can login with email and password
+- Customer can select a city before viewing avaliable services
+- Customer can select a service to see available timeslots over a week
+- Customer can select a timeslot and add their address to confirm the booking
 
-## Sprint 2:
+---
 
-Vendor App:
-- Block the time slot for the service during diff times of day
-- Calendar view of the schedule
+### Backend with mocked-up frontend
+[Backend Demo video](https://youtu.be/YhrciuviPqM)
 
-User App:
-- Can select timeslot instead of day
+Tasks completed: (APIs for the below functionality are implemented and tested using Postman (shown in video))
 
-Workflow:
-- User selects service, day, timeslot, location and vendor is automatically selected
-
-## Sprint 3:
-
-Vendor App:
-- Can rate and reviews users based on the service
-- Can accept/reject service request from users
-
-User App:
-- Can rate and reviews vendors based on the service
-
-
-## Sprint 4:
-
-Vendor App:
-- Provide a quotation for the requested job
-- [Optional] Chat with the accepted customer
-
-User App:
-- Create a custom job by selecting multiple jobs OR write details of a job
-- [Optional] Chat with the vendor
+- Customer can sign up with name, email, phone, city, address
+- Vendor can sign up with their name, email, phone, city, services provided
+- Customer/Vendor can log into their account with their email and password (error handling for incorrect password implemented)
+- Customer/Vendor can login and view their profiles to see the data they've used for signing up
+- Customer can get a list of available timeslots for a specific service in a city of their choice
+- Customer can schedule a slot based on the availability of the service in a 1 week period
