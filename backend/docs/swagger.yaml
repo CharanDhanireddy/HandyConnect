@@ -1,3 +1,89 @@
+basePath: /
+definitions:
+  schema.BookingSchema:
+    properties:
+      address:
+        type: string
+      city_id:
+        type: integer
+      customer_id:
+        type: integer
+      day:
+        type: integer
+      id:
+        type: integer
+      month:
+        type: integer
+      service_id:
+        type: integer
+      vendor_id:
+        type: integer
+      year:
+        type: integer
+    type: object
+  schema.CustomerProfileSchema:
+    properties:
+      city_id:
+        type: integer
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+  schema.VendorProfileSchema:
+    properties:
+      city_id:
+        type: integer
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      service1_id:
+        type: integer
+      service2_id:
+        type: integer
+      service3_id:
+        type: integer
+    type: object
+  structTypes.City:
+    properties:
+      city_id:
+        type: integer
+      city_name:
+        type: string
+    type: object
+  structTypes.Date:
+    properties:
+      day:
+        type: integer
+      month:
+        type: integer
+      year:
+        type: integer
+    type: object
+  structTypes.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
 host: localhost:10000
 info:
   contact: {}
@@ -19,4 +105,159 @@ paths:
       summary: Get HomePage
       tags:
       - Home
+  /availability:
+    get:
+      parameters:
+      - description: city ID
+        in: path
+        name: city_id
+        required: true
+        type: string
+      - description: service ID
+        in: path
+        name: service_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/structTypes.Date'
+              type: array
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: get service's availability in a city
+  /booking:
+    post:
+      parameters:
+      - description: booking data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.BookingSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: create new service booking
+  /cities:
+    get:
+      description: get all cities in which services are available
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/structTypes.City'
+              type: array
+            type: array
+      summary: Get all cities
+  /customerLogin:
+    post:
+      parameters:
+      - description: Login data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/structTypes.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+      summary: verify username and password of customer
+  /customerSignUp:
+    post:
+      parameters:
+      - description: customer data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.CustomerProfileSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: create new customer
+  /vendorLogin:
+    post:
+      parameters:
+      - description: Login data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/structTypes.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+      summary: verify username and password of vendor
+  /vendorSignUp:
+    post:
+      parameters:
+      - description: vendor data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/schema.VendorProfileSchema'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: create new vendor
 swagger: "2.0"

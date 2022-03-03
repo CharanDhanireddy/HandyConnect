@@ -62,7 +62,7 @@ func insertVendor(db *sql.DB, first_name string, last_name string, phone int, em
 	}
 }
 
-func DisplayCity() []structTypes.City {
+func DisplayCity() ([]structTypes.City, error) {
 	db := dbConnection.GetDbConnection()
 	var city_id int
 	var city_name string
@@ -71,7 +71,8 @@ func DisplayCity() []structTypes.City {
 
 	row, err := db.Query(sqlStmt, "1")
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Get all cities DB error: %v", err)
+		return nil, err
 	}
 	defer row.Close()
 	var city_list []structTypes.City
@@ -82,10 +83,10 @@ func DisplayCity() []structTypes.City {
 	}
 	row.Close()
 
-	return city_list
+	return city_list, nil
 }
 
-func DisplayCustData() []structTypes.Cust {
+func DisplayCustData() ([]structTypes.Cust, error) {
 	db := dbConnection.GetDbConnection()
 	var f_name string
 	var l_name string
@@ -97,7 +98,8 @@ func DisplayCustData() []structTypes.Cust {
 
 	row, err := db.Query(sqlStmt, "4")
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Get customer data DB error: %v", err)
+		return nil, err
 	}
 	defer row.Close()
 	var cust_data []structTypes.Cust
@@ -108,10 +110,10 @@ func DisplayCustData() []structTypes.Cust {
 	}
 	row.Close()
 
-	return cust_data
+	return cust_data, nil
 }
 
-func DisplayVendorData() []structTypes.Vendor {
+func DisplayVendorData() ([]structTypes.Vendor, error) {
 	db := dbConnection.GetDbConnection()
 	var f_name string
 	var l_name string
@@ -126,7 +128,8 @@ func DisplayVendorData() []structTypes.Vendor {
 
 	row, err := db.Query(sqlStmt, "5")
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Get vendor data DB error: %v", err)
+		return nil, err
 	}
 	defer row.Close()
 
@@ -138,7 +141,7 @@ func DisplayVendorData() []structTypes.Vendor {
 	}
 	row.Close()
 
-	return vend_list
+	return vend_list, nil
 }
 
 func DisplayServiceData() []structTypes.Service {
@@ -167,35 +170,3 @@ func DisplayServiceData() []structTypes.Service {
 
 	return serv_list
 }
-
-// var f_name string
-// var l_name string
-// var email string
-// var service1 string
-// var service2 string
-// var service3 string
-// var phn int
-
-// func displayVendor(db *sql.DB) []vendor {
-// 	var f_name string
-// 	var l_name string
-// 	var phn int
-
-// 	sqlStmt := `SELECT first_name, last_name, phone FROM vendor WHERE service1_id = $1 ;`
-
-// 	row, err := db.Query(sqlStmt, "plumbing")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	defer row.Close()
-
-// 	var vend_list []vendor
-// 	for row.Next() { // Iterate and fetch the records from result cursor
-// 		row.Scan(&f_name, &l_name, &phn)
-// 		vend_list = append(vend_list, vendor{f_name, l_name, phn})
-// 		fmt.Println(f_name, l_name, phn)
-// 	}
-// 	row.Close()
-
-// 	return vend_list
-// }

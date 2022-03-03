@@ -11,6 +11,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetServiceAvailability
+// @Summary get service's availability in a city
+// @Produce json
+// @Param city_id path string true "city ID"
+// @Param service_id path string true "service ID"
+// @Success 200 {array} []structTypes.Date
+// @Failure 400 {object} object
+// @Router /availability [get]
 func GetServiceAvailability(c *gin.Context) {
 	log.Println("Availability API hit!..")
 
@@ -33,6 +41,13 @@ func GetServiceAvailability(c *gin.Context) {
 	c.JSON(http.StatusOK, dbOperations.ServiceAvailability(cityId, serviceId))
 }
 
+// CreateBooking
+// @Summary create new service booking
+// @Produce json
+// @Param data body schema.BookingSchema true "booking data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /booking [post]
 func CreateBooking(c *gin.Context) {
 
 	var request schema.BookingSchema
