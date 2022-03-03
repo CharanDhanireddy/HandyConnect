@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Card, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
 import TimeSelect from "./TimeSelect";
+import { BASE_URL } from "../constants";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ class Dashboard extends Component {
     }
 
     async getServices(city) {
-        let res = await axios.get("http://localhost:5000/service", {
+        let res = await axios.get(BASE_URL + "service", {
             params: {
                 city
             }

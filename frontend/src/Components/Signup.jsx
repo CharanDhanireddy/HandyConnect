@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
+import { BASE_URL } from "../constants";
 
 function Signup(props) {
   const [state, setState] = useState({
@@ -30,7 +31,7 @@ function Signup(props) {
 
   useEffect(() => {
     let fetchData = async () => {
-      let city_response = await axios.get("http://localhost:5000/city")
+      let city_response = await axios.get(BASE_URL + "city")
       setState({ ...state, cityList: city_response.data.cities })
     }
     fetchData();
@@ -84,7 +85,7 @@ function Signup(props) {
       rePassword: state.rePassword,
     };
 
-    let res = await axios.post("http://localhost:5000/user/signup", userData)
+    let res = await axios.post(BASE_URL + "user/signup", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)
