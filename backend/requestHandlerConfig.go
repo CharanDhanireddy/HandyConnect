@@ -30,7 +30,7 @@ func handleRequests() {
 	http.HandleFunc("/vendor", returnVendor)
 
 	//Get Services for city
-	http.HandleFunc("/services", returnCity)
+	http.HandleFunc("/services", returnServiceList)
 
 	//Get dates for service in a city
 	http.HandleFunc("/availability", GetServiceAvailability)

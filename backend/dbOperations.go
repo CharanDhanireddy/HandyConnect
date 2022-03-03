@@ -164,6 +164,33 @@ func displayVendorData(db *sql.DB) []vendor {
 	return vend_list
 }
 
+func displayServiceData(db *sql.DB) []Service {
+
+	var serv_id int
+	var serv_name string
+
+	// var service2 string
+	// var service3 string
+
+	sqlStmt := `SELECT DISTINCT service.id, service.service_name FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE city.id = $1;`
+
+	row, err := db.Query(sqlStmt, "2")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+
+	var serv_list []Service
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&serv_id, &serv_name)
+		serv_list = append(serv_list, Service{serv_id, serv_name})
+		fmt.Println(serv_id, serv_name)
+	}
+	row.Close()
+
+	return serv_list
+}
+
 // var f_name string
 // var l_name string
 // var email string
