@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getToken } from "../util/localStorage";
 import axios from 'axios';
 import { Container, Row, Table } from 'react-bootstrap';
-import { BASE_URL } from '../constants'
+import { BASE_URL } from '../env_setup'
 
 function Bookings(props) {
     const [state, setState] = useState({ bookings: [] })

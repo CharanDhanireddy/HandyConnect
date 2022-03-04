@@ -14,13 +14,13 @@ export function getToken() {
 }
 
 export function getCity() {
-    return getUserData()?.city
+    return { city_id: getUserData().city_id, city_name: getUserData().city_name }
 }
 
 export function setCity(city) {
     const userDataString = localStorage.getItem('userData');
     const userData = JSON.parse(userDataString);
-    localStorage.setItem('userData', JSON.stringify({ ...userData, city }))
+    localStorage.setItem('userData', JSON.stringify({ ...userData, city_id: city.city_id, city_name: city.city_name }))
 }
 
 export function isLoggedIn() {

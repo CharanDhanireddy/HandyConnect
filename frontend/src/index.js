@@ -6,7 +6,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.css";
 
-import './server'
+import { makeServer } from './server'
+
+// if (process.env.NODE_ENV === "development")
+// makeServer({ environment: "development" })
 
 ReactDOM.render(
   <React.StrictMode>
