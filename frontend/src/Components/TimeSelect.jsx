@@ -101,7 +101,7 @@ function TimeSelect(props) {
                                         key={key}
                                         style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
                                         // className='border'
-                                        className={(timeslot.time == state.timeslot ? 'bg-dark text-white' : null)}
+                                        className={(timeslot == state.timeslot ? 'bg-dark text-white' : null)}
                                         onClick={() => { setState({ ...state, timeslot: timeslot }) }}
                                     >
                                         <Card.Body data-cy={key}>

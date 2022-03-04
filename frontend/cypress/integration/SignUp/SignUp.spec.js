@@ -1,10 +1,11 @@
-import { startMirage } from "../../mirage/devServer"
+// import { startMirage } from "../../mirage/devServer"
+import { makeServer } from "../../../src/server"
 
 describe("SignUp page", function () {
     let server
 
     beforeEach(() => {
-        server = startMirage()
+        server = makeServer()
         cy.visit('/signup')
     })
 
