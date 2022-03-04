@@ -134,7 +134,7 @@ func DisplayVendorData(vendorId int) ([]structTypes.Vendor, error) {
 		return nil, err
 	}
 	defer row.Close()
-
+	
 	var vend_list []structTypes.Vendor
 	for row.Next() { // Iterate and fetch the records from result cursor
 		row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1)
