@@ -42,10 +42,10 @@ func SetupRouter() *gin.Engine {
 	r.POST("/booking", requestHandlers.CreateBooking)
 
 	//Post customer booking
-	r.GET("/custbooking", requestHandlers.ReturnBookingCust)
+	r.GET("/customerbooking", requestHandlers.ReturnBookingCust)
 
 	//Post vendor booking
-	r.GET("/vendbooking", requestHandlers.ReturnBookingVend)
+	r.GET("/vendorbooking", requestHandlers.ReturnBookingVend)
 
 	// //Get bookings of user
 	// http.HandleFunc("/booking", ReturnCiy)
