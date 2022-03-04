@@ -43,7 +43,7 @@ export function makeServer({ environment = 'test' }) {
       server.create('booking', { userId: 1, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
 
       floridaCities.forEach((city, key) => server.create('city', { city_name: city, city_id: key }))
-      services.forEach(service => server.create('service', { name: service }))
+      services.forEach((service, key) => server.create('service', { service_name: service, service_id: key }))
     },
     routes() {
       this.urlPrefix = DEV_MOCK_SERVER_BASE_URL
@@ -54,7 +54,7 @@ export function makeServer({ environment = 'test' }) {
 
       })
 
-      this.post('user/login', (schema, request) => {
+      this.post('customerLogin', (schema, request) => {
         let attrs = JSON.parse(request.requestBody)
         // let user = schema.users.findBy({ email: attrs.email });
         // return user
@@ -85,8 +85,8 @@ export function makeServer({ environment = 'test' }) {
         return schema.db.cities
       })
 
-      this.get('service', (schema, request) => {
-        return schema.services.all()
+      this.get('services', (schema, request) => {
+        return schema.db.services
       })
 
       this.get('availability', (schema, request) => {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Card, Modal, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 import { BASE_URL } from '../env_setup';
+import { getToken } from '../util/localStorage';
 
 const initial_state = {
     timeslot: null,
@@ -52,13 +53,20 @@ function TimeSelect(props) {
 
     let onSubmit = async (e) => {
         if (!isValid()) return
-        // let res = await axios.post(BASE_URL + "booking", {
-        //     ...state,
-        //     city: props.city,
-        //     service: props.service
-        // })
-        // let data = res.data
-        // let status = res.status
+        let res = await axios.post(BASE_URL + "booking", {
+            city_id: props.city.city_id,
+            service_id: props.service.service_id,
+            customer_id: getToken(),
+            day: state.timeslot.day,
+            month: state.timeslot.month,
+            year: state.timeslot.year,
+            address: state.address + ' ' + props.city.city_name + ' ' + state.zipcode,
+            // to change
+            vendor_id: 6
+        })
+        let data = res.data
+        let status = res.status
+        debugger
 
         // navigate('/')
         setState(initial_state)
@@ -90,14 +98,14 @@ function TimeSelect(props) {
                                 <Col key={key}>
                                     <Card
 
-                                        key={timeslot.id}
+                                        key={key}
                                         style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
                                         // className='border'
                                         className={(timeslot.time == state.timeslot ? 'bg-dark text-white' : null)}
-                                        onClick={() => { setState({ ...state, timeslot: timeslot.time }) }}
+                                        onClick={() => { setState({ ...state, timeslot: timeslot }) }}
                                     >
                                         <Card.Body data-cy={key}>
-                                            <p className='text-center'>{timeslot.time}</p>
+                                            <p className='text-center'>{timeslot.month + '/' + timeslot.day + '/' + timeslot.year}</p>
                                         </Card.Body>
                                     </Card>
                                 </Col>
