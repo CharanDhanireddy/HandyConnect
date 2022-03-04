@@ -53,7 +53,7 @@ function Login(props) {
     let status = res.status
     console.log(data, status)
     // Can use the errors state to show errors from the api
-    setUserData(data && data.user ? data?.user : null)
+    setUserData(data ? data : null)
     navigate('/')
   };
 

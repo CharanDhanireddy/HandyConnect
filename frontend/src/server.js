@@ -1,6 +1,5 @@
 import {
-  createServer, Model,
-  // RestSerializer 
+  createServer, Model
 } from 'miragejs'
 import { DEV_MOCK_SERVER_BASE_URL } from './env_setup'
 import floridaCities from './Constants/FloridaCities'
@@ -12,9 +11,6 @@ const defaultData = {
 
 export function makeServer({ environment = 'test' }) {
   return createServer({
-    // serializers: {
-    //   application: RestSerializer,
-    // },
     models: {
       user: Model,
       vendor: Model,
@@ -60,8 +56,9 @@ export function makeServer({ environment = 'test' }) {
 
       this.post('user/login', (schema, request) => {
         let attrs = JSON.parse(request.requestBody)
-        let user = schema.users.findBy({ email: attrs.email });
-        return user
+        // let user = schema.users.findBy({ email: attrs.email });
+        // return user
+        return schema.db.users.findBy({ email: defaultData.email })
       })
 
       this.post('vendor/signup', (schema, request) => {
