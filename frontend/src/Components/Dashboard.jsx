@@ -78,7 +78,7 @@ class Dashboard extends Component {
                     </>
                 ) : (null)}
 
-                <TimeSelect updateState={this.updateState} service={service} city={this.props.city} props={this.props} />
+                {service && <TimeSelect updateState={this.updateState} service={service} city={this.props.city} />}
 
 
                 {/* To update later */}
