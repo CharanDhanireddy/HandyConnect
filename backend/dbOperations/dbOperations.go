@@ -86,7 +86,7 @@ func DisplayCity() ([]structTypes.City, error) {
 	return city_list, nil
 }
 
-func DisplayCustData() ([]structTypes.Cust, error) {
+func DisplayCustData(customerId int) ([]structTypes.Cust, error) {
 	db := dbConnection.GetDbConnection()
 	var customer_id int
 	var f_name string
@@ -98,7 +98,7 @@ func DisplayCustData() ([]structTypes.Cust, error) {
 
 	sqlStmt := `SELECT c.id, c.first_name, c.last_name, city.city_name, c.city_id, c.phone, c.email FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
 
-	row, err := db.Query(sqlStmt, "4")
+	row, err := db.Query(sqlStmt, customerId)
 	if err != nil {
 		log.Printf("Get customer data DB error: %v", err)
 		return nil, err
@@ -114,7 +114,7 @@ func DisplayCustData() ([]structTypes.Cust, error) {
 	return cust_data, nil
 }
 
-func DisplayVendorData() ([]structTypes.Vendor, error) {
+func DisplayVendorData(vendorId int) ([]structTypes.Vendor, error) {
 	db := dbConnection.GetDbConnection()
 	var vendor_id int
 	var f_name string
@@ -128,7 +128,7 @@ func DisplayVendorData() ([]structTypes.Vendor, error) {
 
 	sqlStmt := `SELECT v.id, v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
 
-	row, err := db.Query(sqlStmt, "5")
+	row, err := db.Query(sqlStmt, vendorId)
 	if err != nil {
 		log.Printf("Get vendor data DB error: %v", err)
 		return nil, err
