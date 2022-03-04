@@ -170,3 +170,91 @@ func DisplayServiceData() []structTypes.Service {
 
 	return serv_list
 }
+
+func DisplayCustBookings() []structTypes.Booking {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var vend_name string
+	var cust_name string
+	var serv_name string
+	var city string
+	var day int
+	var month int
+	var year int
+	var address string
+
+	// var service2 string
+	// var service3 string
+
+	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address 
+	FROM Booking as b 
+	JOIN vendor as v 
+	ON v.id = b.vendor_id 
+	JOIN city AS city 
+	ON c.city_id = city.id 
+	JOIN service as s
+	ON s.id = b.service_id
+	JOIN customer AS c 
+	ON b.customer_id = c.id  WHERE c.id = $1
+	ORDER BY b.year, b.month, b.day ASC;`
+
+	row, err := db.Query(sqlStmt, "1")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+
+	var cust_book []structTypes.Booking
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &day, &month, &year, &address)
+		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address})
+		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address)
+	}
+	row.Close()
+
+	return cust_book
+}
+
+func DisplayVendBookings() []structTypes.Booking {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var vend_name string
+	var cust_name string
+	var serv_name string
+	var city string
+	var day int
+	var month int
+	var year int
+	var address string
+
+	// var service2 string
+	// var service3 string
+
+	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address 
+	FROM Booking as b 
+	JOIN vendor as v 
+	ON v.id = b.vendor_id 
+	JOIN city AS city 
+	ON c.city_id = city.id 
+	JOIN service as s
+	ON s.id = b.service_id
+	JOIN customer AS c 
+	ON b.customer_id = c.id  WHERE v.id = $1
+	ORDER BY b.year, b.month, b.day ASC;`
+
+	row, err := db.Query(sqlStmt, "5")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+
+	var vend_book []structTypes.Booking
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &day, &month, &year, &address)
+		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address})
+		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address)
+	}
+	row.Close()
+
+	return vend_book
+}
