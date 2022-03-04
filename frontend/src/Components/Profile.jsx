@@ -20,7 +20,7 @@ function Profile(props) {
 
     return (
         <Container className='mt-3'>
-            {Object.keys(state.userData).filter(key => !key.includes('id')).map(key => (
+            {Object.keys(state.userData).filter(key => !key.includes('id') && !key.includes('password')).map(key => (
                 <Row>
                     <Col xs={3}><text className='text-uppercase fw-bold'>{[key]}</text></Col>
                     <Col>{state.userData[key]}</Col>
