@@ -13,13 +13,14 @@ import {
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../env_setup";
 
 function Signup(props) {
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
     phone: "",
+    // storing city_id in city
     city: "",
     email: "",
     password: "",
@@ -31,8 +32,8 @@ function Signup(props) {
 
   useEffect(() => {
     let fetchData = async () => {
-      let city_response = await axios.get(BASE_URL + "city")
-      setState({ ...state, cityList: city_response.data.cities })
+      let city_response = await axios.get(BASE_URL + "cities")
+      setState({ ...state, cityList: city_response.data })
     }
     fetchData();
   }, [])
@@ -76,21 +77,21 @@ function Signup(props) {
   let onSignupClick = async () => {
     if (!isValid()) return
     const userData = {
-      firstName: state.firstName,
-      lastName: state.lastName,
+      first_name: state.firstName,
+      last_name: state.lastName,
       phone: state.phone,
-      city: state.city,
+      city_id: state.city,
+      // city_name: state.cityList.find(city => city.city_id == state.city).city_name,
       email: state.email,
-      password: state.password,
-      rePassword: state.rePassword,
+      password: state.password
     };
 
-    let res = await axios.post(BASE_URL + "user/signup", userData)
+    let res = await axios.post(BASE_URL + "customerSignUp", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)
     // Can use the errors state to show errors from the api
-    setUserData(data && data.user ? data?.user : null)
+    setUserData(data ? data : null)
     navigate('/')
   };
 
@@ -147,13 +148,16 @@ function Signup(props) {
 
             <FormGroup controlId="cityId">
               <Form.Select className="mb-2"
-                onChange={(e) => { setState({ ...state, city: e.target.value }) }}
+                onChange={(e) => {
+                  setState({ ...state, city: e.target.value })
+                }}
                 isInvalid={state.errors.city}
               >
                 <option value={null}>Select homecity</option>
                 {state.cityList.map(city => (
-                  <option key={city.id} value={city.name}>{city.name}</option>
-                ))}
+                  <option key={city.city_id} value={city.city_id}>{city.city_name}</option>
+                )
+                )}
               </Form.Select>
               <FormControl.Feedback type="invalid">
                 {state.errors.city}

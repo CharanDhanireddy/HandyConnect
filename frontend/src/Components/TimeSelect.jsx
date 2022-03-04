@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Container, Card, Modal, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import axios from 'axios';
-import { BASE_URL } from '../constants';
+import { BASE_URL } from '../env_setup';
 
 const initial_state = {
     timeslot: null,

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container, Card, Row, Col, Toast, ToastContainer } from "react-bootstrap";
 import axios from "axios";
 import TimeSelect from "./TimeSelect";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../env_setup";
 
 class Dashboard extends Component {
     constructor(props) {
