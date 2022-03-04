@@ -19,7 +19,7 @@ function Signup(props) {
     lastName: "",
     phone: "",
     // storing city_id in city
-    city: "",
+    city: null,
     email: "",
     password: "",
     rePassword: "",
@@ -78,7 +78,7 @@ function Signup(props) {
       first_name: state.firstName,
       last_name: state.lastName,
       phone: state.phone,
-      city_id: state.city,
+      city_id: parseInt(state.city),
       // city_name: state.cityList.find(city => city.city_id == state.city).city_name,
       email: state.email,
       password: state.password
@@ -87,10 +87,13 @@ function Signup(props) {
     let res = await axios.post(BASE_URL + "customerSignUp", userData)
     let data = res.data
     let status = res.status
-    console.log(data, status)
+    // console.log(data, status)
     // Can use the errors state to show errors from the api
-    setUserData(data ? data : null)
-    navigate('/')
+    // setUserData(data ? data : null)
+    if (status == 200)
+      navigate('/login')
+    else
+      navigate('/')
   };
 
   return (

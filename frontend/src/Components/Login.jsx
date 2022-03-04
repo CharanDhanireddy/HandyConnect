@@ -48,7 +48,7 @@ function Login(props) {
       password: state.password
     };
 
-    let res = await axios.post(BASE_URL + "user/login", userData)
+    let res = await axios.post(BASE_URL + "customerLogin", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)

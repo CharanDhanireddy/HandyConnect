@@ -18,7 +18,7 @@ function Bookings(props) {
         fetchBookings()
     }, [])
 
-    const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'City']
+    const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
 
     return (
         <Container className='mt-4'>
@@ -37,10 +37,11 @@ function Bookings(props) {
                     {state.bookings.map((booking, key) => (
                         // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
                         <tr key={key}>
-                            <td>{booking.timeslot.time}</td>
-                            <td>{booking.service}</td>
-                            <td>{booking.vendor}</td>
-                            <td>{booking.city}</td>
+                            <td>{booking.month + '/' + booking.day + '/' + booking.year}</td>
+                            <td>{booking.service_name}</td>
+                            <td>{booking.vendor_name}</td>
+                            <td>{booking.address}</td>
+                            <td>{booking.city_name}</td>
                         </tr>
                     ))
 
