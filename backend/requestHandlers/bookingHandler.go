@@ -22,7 +22,7 @@ import (
 func GetServiceAvailability(c *gin.Context) {
 	log.Println("Availability API hit!..")
 
-	cityId, err := strconv.Atoi(c.Param("city_id"))
+	cityId, err := strconv.Atoi(c.Query("city_id"))
 	if err != nil {
 		log.Println("stoi error for cityId")
 		fmt.Println(err)
@@ -30,7 +30,7 @@ func GetServiceAvailability(c *gin.Context) {
 		return
 	}
 
-	serviceId, err := strconv.Atoi(c.Param("service_id"))
+	serviceId, err := strconv.Atoi(c.Query("service_id"))
 	if err != nil {
 		log.Println("stoi error for serviceId")
 		fmt.Println(err)
