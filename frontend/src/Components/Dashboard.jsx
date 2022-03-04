@@ -15,12 +15,12 @@ class Dashboard extends Component {
     }
 
     async getServices(city) {
-        let res = await axios.get(BASE_URL + "service", {
+        let res = await axios.get(BASE_URL + "services", {
             params: {
-                city
+                city_id: city["city_id"]
             }
         })
-        return res?.data?.services
+        return res?.data
     }
 
     async componentDidMount() {
@@ -59,14 +59,14 @@ class Dashboard extends Component {
                                 {serviceList.map((service, key) => (
                                     <Col key={key}>
                                         <Card
-                                            id={service.name}
-                                            key={service.id}
+                                            id={service.service_name}
+                                            key={service.service_id}
                                             style={{ height: '6rem', margin: '0 1rem 1rem 0', cursor: 'pointer' }}
                                             className='bg-dark text-white border'
-                                            onClick={() => { this.setState({ service: service.name }) }}
+                                            onClick={() => { this.setState({ service: service }) }}
                                         >
                                             <Card.Body className='mx-auto'>
-                                                <h3 className='text-center'>{service.name}</h3>
+                                                <h3 className='text-center'>{service.service_name}</h3>
                                             </Card.Body>
                                             {/* <Button size="sm" variant="outline-primary">Select</Button> */}
                                         </Card>

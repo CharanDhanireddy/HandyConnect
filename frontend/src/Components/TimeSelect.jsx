@@ -21,11 +21,11 @@ function TimeSelect(props) {
             let timeslot_response = await axios.get(BASE_URL + "availability",
                 {
                     params: {
-                        service: props.service,
-                        city: props.city
+                        service_id: props.service?.service_id,
+                        city_id: props.city?.city_id
                     }
                 })
-            setState({ ...state, timeslotList: timeslot_response.data.timeslots })
+            setState({ ...state, timeslotList: timeslot_response.data })
         }
         fetchData();
     }, [props.service])
@@ -82,7 +82,7 @@ function TimeSelect(props) {
                     <Container >
                         <Row>
                             <Col> Selected Service: </Col>
-                            <Col xs={9}> {props.service}</Col>
+                            <Col xs={9}> {props.service?.service_name}</Col>
                         </Row>
                         <hr />
                         <Row xs={1} md={2} lg={3}>
@@ -125,7 +125,7 @@ function TimeSelect(props) {
                                     type="text"
                                     name="city"
                                     placeholder="City"
-                                    value={props.city}
+                                    value={props.city?.city_name}
                                     disabled={true}
                                 />
                                 <FormControl.Feedback type="invalid"></FormControl.Feedback>

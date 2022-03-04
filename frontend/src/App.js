@@ -17,7 +17,6 @@ import { getCity, setCity, isLoggedIn, removeUserData } from './util/localStorag
 function App() {
   const navigate = useNavigate()
   let loggedIn = isLoggedIn()
-  console.log(loggedIn)
   let city = getCity()
   const [updated, setUpdated] = useState(0)
 
@@ -34,7 +33,10 @@ function App() {
   if (!loggedIn) {
     return (
       <div>
-        <Header isLoggedIn={loggedIn} logOut={logOut} city={city} />
+        <Header isLoggedIn={loggedIn}
+        // logOut={logOut}
+        // city={city} 
+        />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/signup" element={<Signup />} />

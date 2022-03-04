@@ -14,7 +14,8 @@ export function getToken() {
 }
 
 export function getCity() {
-    return { city_id: getUserData().city_id, city_name: getUserData().city_name }
+    const userData = getUserData()
+    return userData ? { city_id: userData?.city_id, city_name: userData?.city_name } : null
 }
 
 export function setCity(city) {
