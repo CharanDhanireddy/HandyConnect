@@ -1,8 +1,8 @@
 package structTypes
 
 type City struct {
-	City_id   int    `json: "city_id"`
-	City_name string `json: "city_name"`
+	City_id   int    `json:"city_id"`
+	City_name string `json:"city_name"`
 }
 
 type Date struct {
@@ -12,12 +12,12 @@ type Date struct {
 }
 
 type Vendor struct {
-	First_name string `json: "first_name"`
-	Last_name  string `json: "last_name"`
+	First_name string `json:"first_name"`
+	Last_name  string `json:"last_name"`
 	City       string `json:"city_name"`
-	Phone      int    `json: "phn"`
-	Email      string `json: "email"`
-	Service1   string `json: "service1"`
+	Phone      int    `json:"phn"`
+	Email      string `json:"email"`
+	Service1   string `json:"service1"`
 	// Service2   string `json: "service2"`
 	// Service3   string `json: "service3"`
 }
@@ -33,4 +33,16 @@ type Cust struct {
 type Service struct {
 	Service_id   int    `json:"serv_id"`
 	Service_name string `json:"serv_name"`
+}
+
+type Booking struct {
+	Id        int    `json:"id"`
+	Vend_name string `json:"vend_name"`
+	Cust_name string `json:"cust_name"`
+	Serv_name string `json:"service_name"`
+	City      string `json:"city"`
+	Day       int    `json:"day"`
+	Month     int    `json:"month"`
+	Year      int    `json:"year"`
+	Address   string `json:"address"`
 }

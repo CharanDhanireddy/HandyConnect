@@ -64,3 +64,15 @@ func ReturnServiceList(c *gin.Context) {
 	serv_list := dbOperations.DisplayServiceData()
 	c.JSON(http.StatusOK, serv_list)
 }
+
+func ReturnBookingCust(c *gin.Context) {
+	fmt.Println("Returning the Bookings for selected customer:")
+	cust_book := dbOperations.DisplayCustBookings()
+	c.JSON(http.StatusOK, cust_book)
+}
+
+func ReturnBookingVend(c *gin.Context) {
+	fmt.Println("Returning the Bookings for selected vendor:")
+	vend_book := dbOperations.DisplayVendBookings()
+	c.JSON(http.StatusOK, vend_book)
+}
