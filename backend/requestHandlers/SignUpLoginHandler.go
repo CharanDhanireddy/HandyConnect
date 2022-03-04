@@ -30,27 +30,24 @@ func CustomerLogin(c *gin.Context) {
 		return
 	}
 
-	ok, err := verifyCustomerLogin(request.Email, request.Password)
+	customer_data, isValid, err := verifyCustomerLogin(request.Email, request.Password)
 	if err != nil {
 		log.Printf("Login user DB error, %v", err)
 		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
 		return
 	}
-
-	if !ok {
+	if !isValid {
 		log.Printf("Unauthorized access for user: %v", request.Email)
 		c.JSON(http.StatusUnauthorized, "Wrong password or email")
 		return
 	}
-	c.JSON(http.StatusOK, "Successfully logged in")
+
+	c.JSON(http.StatusOK, customer_data)
 }
 
-func verifyCustomerLogin(email string, password string) (bool, error) {
-	if email == "test_user@gmail.com" && password == "test_password" {
-		return true, nil
-	}
-	return false, nil
+func verifyCustomerLogin(email string, password string) (structTypes.Cust, bool, error) {
 
+	return dbOperations.VerifyCustomerLogin(email, password)
 }
 
 // CustomerSignUp
@@ -72,9 +69,13 @@ func CustomerSignUp(c *gin.Context) {
 		return
 	}
 
-	dbOperations.InsertCustomer(request)
-
-	c.JSON(http.StatusOK, "New customer created")
+	response, err := dbOperations.InsertCustomer(request)
+	if err != nil {
+		log.Printf("Customer signup DB error, %v", err)
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, response)
 }
 
 // VendorLogin
@@ -97,27 +98,23 @@ func VendorLogin(c *gin.Context) {
 		return
 	}
 
-	ok, err := verifyVendorLogin(request.Email, request.Password)
+	vendor_data, isValid, err := verifyVendorLogin(request.Email, request.Password)
 	if err != nil {
-		log.Printf("Login user DB error, %v", err)
+		log.Printf("Login vendor DB error, %v", err)
 		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
 		return
 	}
-
-	if !ok {
-		log.Printf("Unauthorized access for user: %v", request.Email)
+	if !isValid {
+		log.Printf("Unauthorized access for vendor: %v", request.Email)
 		c.JSON(http.StatusUnauthorized, "Wrong password or email")
 		return
 	}
-	c.JSON(http.StatusOK, "Successfully logged in")
+
+	c.JSON(http.StatusOK, vendor_data)
 }
 
-func verifyVendorLogin(email string, password string) (bool, error) {
-	if email == "test_user@gmail.com" && password == "test_password" {
-		return true, nil
-	}
-	return false, nil
-
+func verifyVendorLogin(email string, password string) (structTypes.Vendor, bool, error) {
+	return dbOperations.VerifyVendorLogin(email, password)
 }
 
 // VendorSignUp
@@ -139,7 +136,11 @@ func VendorSignUp(c *gin.Context) {
 		return
 	}
 
-	dbOperations.InsertVendor(request)
-
-	c.JSON(http.StatusOK, "New vendor created")
+	response, err := dbOperations.InsertVendor(request)
+	if err != nil {
+		log.Printf("Vendor signup DB error, %v", err)
+		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
+		return
+	}
+	c.JSON(http.StatusOK, response)
 }
