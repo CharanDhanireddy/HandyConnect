@@ -10,9 +10,9 @@ function Bookings(props) {
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
-            const bookings_response = await axios.get(BASE_URL + "bookings", { params: { userId: token } })
+            const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
             // Handle errors
-            let bookings = bookings_response.data.bookings
+            let bookings = bookings_response.data
             setState({ ...state, bookings })
         }
         fetchBookings()

@@ -7,9 +7,7 @@ import {
   Col,
   Form,
   FormGroup,
-  FormControl,
-  // FormLabel,
-  // Feedback
+  FormControl
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
