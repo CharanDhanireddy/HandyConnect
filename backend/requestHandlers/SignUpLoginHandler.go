@@ -11,7 +11,7 @@ import (
 )
 
 // CustomerLogin
-// @Summary verify username and password of customer
+// @Summary verify email and password of customer
 // @Produce json
 // @Param data body structTypes.LoginRequest true "Login data"
 // @Success 200 {object} object
@@ -30,7 +30,7 @@ func CustomerLogin(c *gin.Context) {
 		return
 	}
 
-	ok, err := verifyCustomerLogin(request.Username, request.Password)
+	ok, err := verifyCustomerLogin(request.Email, request.Password)
 	if err != nil {
 		log.Printf("Login user DB error, %v", err)
 		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
@@ -38,15 +38,15 @@ func CustomerLogin(c *gin.Context) {
 	}
 
 	if !ok {
-		log.Printf("Unauthorized access for user: %v", request.Username)
-		c.JSON(http.StatusUnauthorized, "Wrong password or username")
+		log.Printf("Unauthorized access for user: %v", request.Email)
+		c.JSON(http.StatusUnauthorized, "Wrong password or email")
 		return
 	}
 	c.JSON(http.StatusOK, "Successfully logged in")
 }
 
-func verifyCustomerLogin(username string, password string) (bool, error) {
-	if username == "test_user@gmail.com" && password == "test_password" {
+func verifyCustomerLogin(email string, password string) (bool, error) {
+	if email == "test_user@gmail.com" && password == "test_password" {
 		return true, nil
 	}
 	return false, nil
@@ -78,7 +78,7 @@ func CustomerSignUp(c *gin.Context) {
 }
 
 // VendorLogin
-// @Summary verify username and password of vendor
+// @Summary verify email and password of vendor
 // @Produce json
 // @Param data body structTypes.LoginRequest true "Login data"
 // @Success 200 {object} object
@@ -97,7 +97,7 @@ func VendorLogin(c *gin.Context) {
 		return
 	}
 
-	ok, err := verifyVendorLogin(request.Username, request.Password)
+	ok, err := verifyVendorLogin(request.Email, request.Password)
 	if err != nil {
 		log.Printf("Login user DB error, %v", err)
 		c.JSON(http.StatusInternalServerError, err.Error()) // Return 500 Internal Server Error.
@@ -105,15 +105,15 @@ func VendorLogin(c *gin.Context) {
 	}
 
 	if !ok {
-		log.Printf("Unauthorized access for user: %v", request.Username)
-		c.JSON(http.StatusUnauthorized, "Wrong password or username")
+		log.Printf("Unauthorized access for user: %v", request.Email)
+		c.JSON(http.StatusUnauthorized, "Wrong password or email")
 		return
 	}
 	c.JSON(http.StatusOK, "Successfully logged in")
 }
 
-func verifyVendorLogin(username string, password string) (bool, error) {
-	if username == "test_user@gmail.com" && password == "test_password" {
+func verifyVendorLogin(email string, password string) (bool, error) {
+	if email == "test_user@gmail.com" && password == "test_password" {
 		return true, nil
 	}
 	return false, nil
