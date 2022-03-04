@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getToken } from "../util/localStorage";
 import axios from 'axios';
 import { Container, Row, Table } from 'react-bootstrap';
+import { BASE_URL } from '../env_setup'
 
 function Bookings(props) {
     const [state, setState] = useState({ bookings: [] })
@@ -9,15 +10,15 @@ function Bookings(props) {
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
-            const bookings_response = await axios.get("http://localhost:5000/bookings", { params: { userId: token } })
+            const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
             // Handle errors
-            let bookings = bookings_response.data.bookings
+            let bookings = bookings_response.data
             setState({ ...state, bookings })
         }
         fetchBookings()
     }, [])
 
-    const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'City']
+    const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
 
     return (
         <Container className='mt-4'>
@@ -36,10 +37,11 @@ function Bookings(props) {
                     {state.bookings.map((booking, key) => (
                         // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
                         <tr key={key}>
-                            <td>{booking.timeslot.time}</td>
-                            <td>{booking.service}</td>
-                            <td>{booking.vendor}</td>
-                            <td>{booking.city}</td>
+                            <td>{booking.month + '/' + booking.day + '/' + booking.year}</td>
+                            <td>{booking.service_name}</td>
+                            <td>{booking.vendor_name}</td>
+                            <td>{booking.address}</td>
+                            <td>{booking.city_name}</td>
                         </tr>
                     ))
 

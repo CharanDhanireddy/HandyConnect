@@ -3,14 +3,15 @@ import { Navbar, Nav, NavLink, Modal, Form, Button } from "react-bootstrap";
 
 import { Container } from "react-bootstrap";
 import axios from "axios";
+import { BASE_URL } from "../env_setup";
 
 function Header(props) {
-    const [state, setState] = useState({ city: props.city, cityList: [], showModal: false })
+    const [state, setState] = useState({ city: props.city?.city_id, cityList: [], showModal: false })
 
     useEffect(() => {
         let fetchData = async () => {
-            let city_response = await axios.get("http://localhost:5000/city")
-            setState({ ...state, cityList: city_response.data.cities })
+            let city_response = await axios.get(BASE_URL + "cities")
+            setState({ ...state, cityList: city_response.data })
         }
         if (state.showModal) fetchData();
     }, [state.showModal])
@@ -19,7 +20,10 @@ function Header(props) {
     const handleSubmit = () => {
         // check if city not null
         if (state.city) {
-            props.setCity(state.city)
+            props.setCity({
+                city_id: state.city,
+                city_name: state.cityList.find(city => city.city_id == state.city).city_name
+            })
             setState({ ...state, showModal: false })
         }
     }
@@ -48,7 +52,7 @@ function Header(props) {
                                             width="30"
                                             height="30"
                                             className="d-inline-block align-top"
-                                        />{props.city}
+                                        />{props.city?.city_name}
                                     </Navbar.Brand>
 
                                     <Nav.Link href="/" className={`nav-item ${isActive('/') ? 'active' : ''}`}>Book a service</Nav.Link>
@@ -90,7 +94,7 @@ function Header(props) {
                         >
                             <option value={null}>Select</option>
                             {state.cityList.map(city => (
-                                <option key={city.id} value={city.name}>{city.name}</option>
+                                <option key={city.city_id} value={city.city_id}>{city.city_name}</option>
                             ))}
                         </Form.Select>
                     </Form>

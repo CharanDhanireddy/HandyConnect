@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Container, Card, Modal, Form, FormControl, Button, Row, Col } from "react-bootstrap";
 import axios from 'axios';
+import { BASE_URL } from '../env_setup';
 
 const initial_state = {
     timeslot: null,
@@ -17,14 +18,14 @@ function TimeSelect(props) {
 
     useEffect(() => {
         let fetchData = async () => {
-            let timeslot_response = await axios.get("http://localhost:5000/availability",
+            let timeslot_response = await axios.get(BASE_URL + "availability",
                 {
                     params: {
-                        service: props.service,
-                        city: props.city
+                        service_id: props.service?.service_id,
+                        city_id: props.city?.city_id
                     }
                 })
-            setState({ ...state, timeslotList: timeslot_response.data.timeslots })
+            setState({ ...state, timeslotList: timeslot_response.data })
         }
         fetchData();
     }, [props.service])
@@ -51,7 +52,7 @@ function TimeSelect(props) {
 
     let onSubmit = async (e) => {
         if (!isValid()) return
-        // let res = await axios.post("http://localhost:5000/booking", {
+        // let res = await axios.post(BASE_URL + "booking", {
         //     ...state,
         //     city: props.city,
         //     service: props.service
@@ -81,7 +82,7 @@ function TimeSelect(props) {
                     <Container >
                         <Row>
                             <Col> Selected Service: </Col>
-                            <Col xs={9}> {props.service}</Col>
+                            <Col xs={9}> {props.service?.service_name}</Col>
                         </Row>
                         <hr />
                         <Row xs={1} md={2} lg={3}>
@@ -124,7 +125,7 @@ function TimeSelect(props) {
                                     type="text"
                                     name="city"
                                     placeholder="City"
-                                    value={props.city}
+                                    value={props.city?.city_name}
                                     disabled={true}
                                 />
                                 <FormControl.Feedback type="invalid"></FormControl.Feedback>

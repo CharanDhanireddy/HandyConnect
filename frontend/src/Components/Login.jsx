@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
+import { BASE_URL } from '../env_setup'
 
 function Login(props) {
   const [state, setState] = useState({ email: "", password: "", errors: {} })
@@ -47,12 +48,12 @@ function Login(props) {
       password: state.password
     };
 
-    let res = await axios.post("http://localhost:5000/user/login", userData)
+    let res = await axios.post(BASE_URL + "customerLogin", userData)
     let data = res.data
     let status = res.status
     console.log(data, status)
     // Can use the errors state to show errors from the api
-    setUserData(data && data.user ? data?.user : null)
+    setUserData(data ? data : null)
     navigate('/')
   };
 
