@@ -6,7 +6,7 @@ import axios from "axios";
 import { BASE_URL } from "../env_setup";
 
 function Header(props) {
-    const [state, setState] = useState({ city: props.city.city_id, cityList: [], showModal: false })
+    const [state, setState] = useState({ city: props.city?.city_id, cityList: [], showModal: false })
 
     useEffect(() => {
         let fetchData = async () => {
