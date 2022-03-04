@@ -18,7 +18,7 @@ import (
 // @Failure 404 {object} object
 // @Router / [get]
 func HomePage(c *gin.Context) {
-	c.JSON(http.StatusOK, "welcome to the homepage!")
+	c.JSON(http.StatusOK, "welcome to the HandyConnect homepage!")
 	fmt.Println("Endpoint hit!")
 }
 
@@ -39,9 +39,14 @@ func GetCityList(c *gin.Context) {
 }
 
 func ReturnVendor(c *gin.Context) {
-
-	fmt.Println("Returning the vendor search criteria:")
-	vend_list, err := dbOperations.DisplayVendorData()
+	vendorId, err := strconv.Atoi(c.Query("vendor_id"))
+	if err != nil {
+		fmt.Println("stoi error for vendor_id")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer vendor_id")
+		return
+	}
+	vend_list, err := dbOperations.DisplayVendorData(vendorId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -50,9 +55,15 @@ func ReturnVendor(c *gin.Context) {
 }
 
 func CustData(c *gin.Context) {
+	customerId, err := strconv.Atoi(c.Query("customer_id"))
+	if err != nil {
+		fmt.Println("stoi error for customer_id")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer customer_id")
+		return
+	}
 
-	fmt.Println("Returning the customer data:")
-	cust, err := dbOperations.DisplayCustData()
+	cust, err := dbOperations.DisplayCustData(customerId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
