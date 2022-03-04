@@ -2,12 +2,13 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	
+	"handy/middleware"
 	"handy/requestHandlers"
 )
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+	r.Use(middleware.CORS())
 
 	r.GET("/", requestHandlers.HomePage)
 
