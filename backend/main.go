@@ -6,7 +6,6 @@ import (
 	"handy/router"
 	"log"
 
-	// swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
