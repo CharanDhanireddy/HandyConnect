@@ -27,8 +27,8 @@ type Cust struct {
 	Id        int    `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
-	CityName    string `json:"city_id"`
-	CityId  int    `json:"city_name"`
+	CityName    string `json:"city_name"`
+	CityId  int    `json:"city_id"`
 	Phone     int    `json:"phone"`
 	Email     string `json:"email"`
 }

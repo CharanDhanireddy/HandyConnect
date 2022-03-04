@@ -22,12 +22,12 @@ func InsertCustomer(customer schema.CustomerProfileSchema) (schema.CustomerProfi
 
 	result, err1 := statement.Exec(customer.FirstName, customer.LastName,
 		customer.CityId, customer.Phone, customer.Email, customer.Password)
-	if err != nil {
+	if err1 != nil {
 		log.Println(err1.Error())
 		return customer, err1
 	}
 	customer_id, err2 := result.LastInsertId()
-	if err != nil {
+	if err2 != nil {
 		log.Println(err2.Error())
 		return customer, err2
 	}
