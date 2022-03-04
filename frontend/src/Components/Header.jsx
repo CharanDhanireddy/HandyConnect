@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Navbar, Nav, NavLink, Modal, Form, Button } from "react-bootstrap";
-
 import { Container } from "react-bootstrap";
 import axios from "axios";
 import { BASE_URL } from "../env_setup";
+import HandyconnectLogo from "../Images/h.png"
 
 function Header(props) {
     const [state, setState] = useState({ city: props.city?.city_id, cityList: [], showModal: false })
@@ -40,7 +40,15 @@ function Header(props) {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand id="header-handyconnect" className="py-4" href="/">HandyConnect</Navbar.Brand>
+                    <Navbar.Brand id="header-handyconnect" className="py-4" href="/">
+                    <img
+                        src= {HandyconnectLogo}
+                        width="40"
+                        height="40"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                    </Navbar.Brand>
                     <Nav className="ml-auto" >
                         {props.isLoggedIn ?
                             (
