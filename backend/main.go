@@ -1,19 +1,29 @@
 package main
 
-import "log"
+import (
+	dbConnection "handy/dbConnection"
+	_ "handy/docs"
+	"handy/router"
+	"log"
 
-// "database/sql"
-// "encoding/json"
-// "fmt"
-// "log"
-// "net/http"
+	// swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+)
 
-// _ "github.com/mattn/go-sqlite3" // Import go-sqlite3 library
+// @title HandyConnect API documentation
+// @version 1.0.0
+// @host localhost:10000
+// @BasePath /
 
 func main() {
 	log.Println("Handy Connect server starting....")
 
-	newDBConnection()
+	dbConnection.NewDBConnection()
 
-	handleRequests()
+	r := router.SetupRouter()
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	r.Run(":10000")
 }

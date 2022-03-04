@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getToken } from "../util/localStorage";
 import { Container, Row, Col } from 'react-bootstrap';
-import { BASE_URL } from '../constants';
+import { BASE_URL } from '../env_setup';
 
 function Profile(props) {
     const [state, setState] = useState({ userData: {} })

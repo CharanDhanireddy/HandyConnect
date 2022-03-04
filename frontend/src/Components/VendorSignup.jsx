@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
-import { BASE_URL } from "../constants"
+import { BASE_URL } from "../env_setup"
 
 function VendorSignup(props) {
   const [state, setState] = useState({
