@@ -88,13 +88,15 @@ func DisplayCity() ([]structTypes.City, error) {
 
 func DisplayCustData() ([]structTypes.Cust, error) {
 	db := dbConnection.GetDbConnection()
+	var customer_id int
 	var f_name string
 	var l_name string
-	var city string
+	var city_name string
+	var city_id int
 	var phn int
 	var email string
 
-	sqlStmt := `SELECT c.first_name, c.last_name, city.city_name, c.phone, c.email FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
+	sqlStmt := `SELECT c.id, c.first_name, c.last_name, city.city_name, c.city_id, c.phone, c.email FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
 
 	row, err := db.Query(sqlStmt, "4")
 	if err != nil {
@@ -104,9 +106,8 @@ func DisplayCustData() ([]structTypes.Cust, error) {
 	defer row.Close()
 	var cust_data []structTypes.Cust
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&f_name, &l_name, &city, &phn, &email)
-		cust_data = append(cust_data, structTypes.Cust{f_name, l_name, city, phn, email})
-
+		row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email)
+		cust_data = append(cust_data, structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email})
 	}
 	row.Close()
 
@@ -115,6 +116,7 @@ func DisplayCustData() ([]structTypes.Cust, error) {
 
 func DisplayVendorData() ([]structTypes.Vendor, error) {
 	db := dbConnection.GetDbConnection()
+	var vendor_id int
 	var f_name string
 	var l_name string
 	var city string
@@ -124,7 +126,7 @@ func DisplayVendorData() ([]structTypes.Vendor, error) {
 	// var service2 string
 	// var service3 string
 
-	sqlStmt := `SELECT v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
+	sqlStmt := `SELECT v.id, v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
 
 	row, err := db.Query(sqlStmt, "5")
 	if err != nil {
@@ -135,8 +137,8 @@ func DisplayVendorData() ([]structTypes.Vendor, error) {
 
 	var vend_list []structTypes.Vendor
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&f_name, &l_name, &city, &phn, &email, &service1)
-		vend_list = append(vend_list, structTypes.Vendor{f_name, l_name, city, phn, email, service1})
+		row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1)
+		vend_list = append(vend_list, structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1})
 		fmt.Println(f_name, l_name, phn)
 	}
 	row.Close()
@@ -144,7 +146,7 @@ func DisplayVendorData() ([]structTypes.Vendor, error) {
 	return vend_list, nil
 }
 
-func DisplayServiceData() []structTypes.Service {
+func DisplayServiceData(cityId int) []structTypes.Service {
 	db := dbConnection.GetDbConnection()
 	var serv_id int
 	var serv_name string
@@ -154,7 +156,7 @@ func DisplayServiceData() []structTypes.Service {
 
 	sqlStmt := `SELECT DISTINCT service.id, service.service_name FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE city.id = $1;`
 
-	row, err := db.Query(sqlStmt, "2")
+	row, err := db.Query(sqlStmt, cityId)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -171,7 +173,7 @@ func DisplayServiceData() []structTypes.Service {
 	return serv_list
 }
 
-func DisplayCustBookings() []structTypes.Booking {
+func DisplayCustBookings(customerId int) []structTypes.Booking {
 	db := dbConnection.GetDbConnection()
 	var id int
 	var vend_name string
@@ -198,7 +200,7 @@ func DisplayCustBookings() []structTypes.Booking {
 	ON b.customer_id = c.id  WHERE c.id = $1
 	ORDER BY b.year, b.month, b.day ASC;`
 
-	row, err := db.Query(sqlStmt, "1")
+	row, err := db.Query(sqlStmt, customerId)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -215,7 +217,7 @@ func DisplayCustBookings() []structTypes.Booking {
 	return cust_book
 }
 
-func DisplayVendBookings() []structTypes.Booking {
+func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	db := dbConnection.GetDbConnection()
 	var id int
 	var vend_name string
@@ -242,7 +244,7 @@ func DisplayVendBookings() []structTypes.Booking {
 	ON b.customer_id = c.id  WHERE v.id = $1
 	ORDER BY b.year, b.month, b.day ASC;`
 
-	row, err := db.Query(sqlStmt, "5")
+	row, err := db.Query(sqlStmt, vendorId)
 	if err != nil {
 		log.Fatal(err)
 	}
