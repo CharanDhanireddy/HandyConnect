@@ -1,8 +1,8 @@
 package structTypes
 
 type City struct {
-	City_id   int    `json:"city_id"`
-	City_name string `json:"city_name"`
+	CityId   int    `json:"city_id"`
+	CityName string `json:"city_name"`
 }
 
 type Date struct {
@@ -12,37 +12,40 @@ type Date struct {
 }
 
 type Vendor struct {
-	First_name string `json:"first_name"`
-	Last_name  string `json:"last_name"`
-	City       string `json:"city_name"`
-	Phone      int    `json:"phn"`
-	Email      string `json:"email"`
-	Service1   string `json:"service1"`
+	Id          int    `json:"id"`
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
+	City        string `json:"city_name"`
+	Phone       int    `json:"phone"`
+	Email       string `json:"email"`
+	ServiceName string `json:"service_name"`
 	// Service2   string `json: "service2"`
 	// Service3   string `json: "service3"`
 }
 
 type Cust struct {
-	First_name string `json:"first_name"`
-	Last_name  string `json:"last_name"`
-	City       string `json:"city_name"`
-	Phone      int    `json:"phn"`
-	Email      string `json:"email"`
+	Id        int    `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	CityId    string `json:"city_id"`
+	CityName  int    `json:"city_name"`
+	Phone     int    `json:"phone"`
+	Email     string `json:"email"`
 }
 
 type Service struct {
-	Service_id   int    `json:"serv_id"`
-	Service_name string `json:"serv_name"`
+	ServiceId   int    `json:"service_id"`
+	ServiceName string `json:"service_name"`
 }
 
 type Booking struct {
-	Id        int    `json:"id"`
-	Vend_name string `json:"vend_name"`
-	Cust_name string `json:"cust_name"`
-	Serv_name string `json:"service_name"`
-	City      string `json:"city"`
-	Day       int    `json:"day"`
-	Month     int    `json:"month"`
-	Year      int    `json:"year"`
-	Address   string `json:"address"`
+	Id           int    `json:"id"`
+	VendorName   string `json:"vendor_name"`
+	CustomerName string `json:"customer_name"`
+	ServiceName  string `json:"service_name"`
+	CityName     string `json:"city_name"`
+	Day          int    `json:"day"`
+	Month        int    `json:"month"`
+	Year         int    `json:"year"`
+	Address      string `json:"address"`
 }

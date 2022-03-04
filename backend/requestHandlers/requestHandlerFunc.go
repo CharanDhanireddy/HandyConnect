@@ -3,7 +3,9 @@ package requestHandlers
 import (
 	"fmt"
 	"handy/dbOperations"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,20 +61,39 @@ func CustData(c *gin.Context) {
 }
 
 func ReturnServiceList(c *gin.Context) {
-
-	fmt.Println("Returning the list of services in the selected city:")
-	serv_list := dbOperations.DisplayServiceData()
+	cityId, err := strconv.Atoi(c.Query("city_id"))
+	if err != nil {
+		log.Println("stoi error for cityId")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer cityId")
+		return
+	}
+	serv_list := dbOperations.DisplayServiceData(cityId)
 	c.JSON(http.StatusOK, serv_list)
 }
 
 func ReturnBookingCust(c *gin.Context) {
-	fmt.Println("Returning the Bookings for selected customer:")
-	cust_book := dbOperations.DisplayCustBookings()
+	customerId, err := strconv.Atoi(c.Query("customer_id"))
+	if err != nil {
+		fmt.Println("stoi error for customer_id")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer customer_id")
+		return
+	}
+	cust_book := dbOperations.DisplayCustBookings(customerId)
 	c.JSON(http.StatusOK, cust_book)
 }
 
 func ReturnBookingVend(c *gin.Context) {
-	fmt.Println("Returning the Bookings for selected vendor:")
-	vend_book := dbOperations.DisplayVendBookings()
+
+	vendorId, err := strconv.Atoi(c.Query("vendor_id"))
+	if err != nil {
+		fmt.Println("stoi error for vendor_id")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer vendor_id")
+		return
+	}
+
+	vend_book := dbOperations.DisplayVendBookings(vendorId)
 	c.JSON(http.StatusOK, vend_book)
 }
