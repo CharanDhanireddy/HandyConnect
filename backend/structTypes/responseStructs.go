@@ -34,3 +34,15 @@ type Service struct {
 	Service_id   int    `json:"serv_id"`
 	Service_name string `json:"serv_name"`
 }
+
+type Booking struct {
+	Id        int    `json:"id"`
+	Vend_name string `json:"vend_name"`
+	Cust_name string `json:"cust_name"`
+	Serv_name string `json:"service_name"`
+	City      string `json:"city"`
+	Day       int    `json:"day"`
+	Month     int    `json:"month"`
+	Year      int    `json:"year"`
+	Address   string `json:"address"`
+}
