@@ -21,6 +21,11 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 		return "", errors.New("Service not available on date")
 	}
 
+	err := assignVendor(&booking)
+	if err != nil {
+		return "", err
+	}
+
 	log.Println("Inserting booking record ...")
 	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address) VALUES (?,?,?,?,?,?,?,?)`
 	statement, err := db.Prepare(insertBookingSQL) // Prepare statement.
@@ -29,8 +34,13 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 		log.Println(err.Error())
 		return "", err
 	}
+
 	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId,
 		booking.Day, booking.Month, booking.Year, booking.Address)
+	if err != nil {
+		log.Println(err.Error())
+		return "", err
+	}
 
 	return "succesfully created booking", err
 }
@@ -68,6 +78,38 @@ func CheckAvailability(cityId int, serviceId int, day int, month int, year int) 
 	row.Close()
 
 	return (len(vendorIdList) * 5) > totalBookings
+}
+
+func assignVendor(booking *schema.BookingSchema) error {
+	db := dbConnection.GetDbConnection()
+	var vendorId int
+
+	sqlStmt := `SELECT vendor.id as booking_count
+				FROM vendor
+				LEFT JOIN 
+				(SELECT id as booking_id, vendor_id FROM booking
+				WHERE booking.day = $1 AND booking.month = $2 AND booking.year = $3 AND booking.service_id = $4 and booking.city_id = $5)
+				
+				ON vendor_id = vendor.id
+				WHERE vendor.service1_id = $4 AND vendor.city_id = $5
+				GROUP BY vendor.id
+				ORDER BY booking_count;`
+
+	row, err := db.Query(sqlStmt, booking.Day, booking.Month, booking.Year, booking.ServiceId, booking.CityId)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	defer row.Close()
+	if row.Next() {
+		row.Scan(&vendorId)
+		booking.VendorId = vendorId
+	} else{
+		return errors.New("No vendor available")
+	}
+	row.Close()
+
+	return nil
 }
 
 func ServiceAvailability(cityId int, serviceId int) []structTypes.Date {

@@ -76,12 +76,12 @@ func InsertVendor(vendor schema.VendorProfileSchema) (schema.VendorProfileSchema
 	}
 	result, err1 := statement.Exec(vendor.FirstName, vendor.LastName, vendor.CityId, vendor.Phone,
 		vendor.Email, vendor.Password, vendor.Service1Id, vendor.Service2Id, vendor.Service3Id)
-		if err != nil {
+		if err1 != nil {
 			log.Println(err1.Error())
 			return vendor, err1
 		}
 		vendor_id, err2 := result.LastInsertId()
-		if err != nil {
+		if err2 != nil {
 			log.Println(err2.Error())
 			return vendor, err2
 		}

@@ -67,9 +67,9 @@ func DisplayCity() ([]structTypes.City, error) {
 	var city_id int
 	var city_name string
 
-	sqlStmt := `SELECT id, city_name FROM City WHERE id = $1;`
+	sqlStmt := `SELECT id, city_name FROM City;`
 
-	row, err := db.Query(sqlStmt, "1")
+	row, err := db.Query(sqlStmt)
 	if err != nil {
 		log.Printf("Get all cities DB error: %v", err)
 		return nil, err
@@ -86,7 +86,7 @@ func DisplayCity() ([]structTypes.City, error) {
 	return city_list, nil
 }
 
-func DisplayCustData(customerId int) ([]structTypes.Cust, error) {
+func DisplayCustData(customerId int) (structTypes.Cust, error) {
 	db := dbConnection.GetDbConnection()
 	var customer_id int
 	var f_name string
@@ -96,25 +96,28 @@ func DisplayCustData(customerId int) ([]structTypes.Cust, error) {
 	var phn int
 	var email string
 
+	var cust_data structTypes.Cust
+
 	sqlStmt := `SELECT c.id, c.first_name, c.last_name, city.city_name, c.city_id, c.phone, c.email FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
 
 	row, err := db.Query(sqlStmt, customerId)
 	if err != nil {
 		log.Printf("Get customer data DB error: %v", err)
-		return nil, err
+		return cust_data, err
 	}
 	defer row.Close()
-	var cust_data []structTypes.Cust
-	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email)
-		cust_data = append(cust_data, structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email})
+
+	if !row.Next() {
+		return cust_data, nil
 	}
+	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email)
+	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email}
 	row.Close()
 
 	return cust_data, nil
 }
 
-func DisplayVendorData(vendorId int) ([]structTypes.Vendor, error) {
+func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 	db := dbConnection.GetDbConnection()
 	var vendor_id int
 	var f_name string
@@ -126,24 +129,27 @@ func DisplayVendorData(vendorId int) ([]structTypes.Vendor, error) {
 	// var service2 string
 	// var service3 string
 
+	var vend_data structTypes.Vendor
+
 	sqlStmt := `SELECT v.id, v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
 
 	row, err := db.Query(sqlStmt, vendorId)
 	if err != nil {
 		log.Printf("Get vendor data DB error: %v", err)
-		return nil, err
+		return vend_data, err
 	}
 	defer row.Close()
-	
-	var vend_list []structTypes.Vendor
-	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1)
-		vend_list = append(vend_list, structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1})
-		fmt.Println(f_name, l_name, phn)
+
+	if !row.Next() {
+		return vend_data, nil
 	}
+	
+	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1)
+	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1}
+	
 	row.Close()
 
-	return vend_list, nil
+	return vend_data, nil
 }
 
 func DisplayServiceData(cityId int) []structTypes.Service {
