@@ -19,6 +19,7 @@ Platform for connecting customers with skilled and experienced professionals pro
 
 ---
 ## Sprint 2:
+[Integration Demo](https://www.youtube.com/watch?v=2YWmvZNdyHM)
 
 ### Frontend with live Golang backend & unit tests and integration tests with Cypress
 
