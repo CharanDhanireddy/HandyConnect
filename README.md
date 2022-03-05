@@ -26,8 +26,9 @@ Platform for connecting customers with skilled and experienced professionals pro
 ![sprint2CypressGif](https://user-images.githubusercontent.com/20516490/156865184-b26d30da-ba5b-4e2f-9c77-fd02d1a21a44.gif)
 
 ### Test log for Back-end Unit Testing
-![Backend_UT_1](https://user-images.githubusercontent.com/89587982/156865944-454e0d27-4a58-4b0f-86c7-ab76ae770109.png)
-![Backend_UT_2](https://user-images.githubusercontent.com/89587982/156865948-06a08d5a-bfa1-497e-97c3-20dd03c8e585.png)
+![Backend_UT_1](https://user-images.githubusercontent.com/89587982/156865983-b6db3102-5457-46d2-a0f3-84301715f408.png)
+![Backend_UT_2](https://user-images.githubusercontent.com/89587982/156865987-266f8cf0-c666-4484-9b34-d69eb24a06e9.png)
+
 
 Tasks completed:
 
