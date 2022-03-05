@@ -21,9 +21,9 @@ function Bookings(props) {
     const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
 
     return (
-        <Container className='mt-4'>
+        <Container id = "booking-table" className='mt-4'>
 
-            <Table responsive>
+            <Table responsive >
                 <thead>
                     <tr>
                         {tableHeaders.map((header, key) => (
@@ -37,11 +37,11 @@ function Bookings(props) {
                     {state.bookings.map((booking, key) => (
                         // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
                         <tr key={key}>
-                            <td>{booking.month + '/' + booking.day + '/' + booking.year}</td>
-                            <td>{booking.service_name}</td>
-                            <td>{booking.vendor_name}</td>
-                            <td>{booking.address}</td>
-                            <td>{booking.city_name}</td>
+                            <td id = "booking-month">{booking.month + '/' + booking.day + '/' + booking.year}</td>
+                            <td id = "service-name" >{booking.service_name}</td>
+                            <td id = "vendor-name" >{booking.vendor_name}</td>
+                            <td id = "address" >{booking.address}</td>
+                            <td id = "city" >{booking.city_name}</td>
                         </tr>
                     ))
 
