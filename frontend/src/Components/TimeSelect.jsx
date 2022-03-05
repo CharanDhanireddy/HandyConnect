@@ -54,7 +54,7 @@ function TimeSelect(props) {
     let onSubmit = async (e) => {
         if (!isValid()) return
         let res = await axios.post(BASE_URL + "booking", {
-            city_id: props.city.city_id,
+            city_id: parseInt(props.city.city_id),
             service_id: props.service.service_id,
             customer_id: getToken(),
             day: state.timeslot.day,
@@ -66,7 +66,6 @@ function TimeSelect(props) {
         })
         let data = res.data
         let status = res.status
-        debugger
 
         // navigate('/')
         setState(initial_state)
