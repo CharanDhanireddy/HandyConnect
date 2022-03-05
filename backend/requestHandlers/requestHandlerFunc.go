@@ -46,12 +46,16 @@ func ReturnVendor(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "need integer vendor_id")
 		return
 	}
-	vend_list, err := dbOperations.DisplayVendorData(vendorId)
+	vend, err := dbOperations.DisplayVendorData(vendorId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, vend_list)
+	if vend.Id == 0 {
+		c.JSON(http.StatusNotFound, "vendor doesn't exist")
+		return
+	}
+	c.JSON(http.StatusOK, vend)
 }
 
 func CustData(c *gin.Context) {
@@ -66,6 +70,10 @@ func CustData(c *gin.Context) {
 	cust, err := dbOperations.DisplayCustData(customerId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+	if cust.Id == 0 {
+		c.JSON(http.StatusNotFound, "customer doesn't exist")
 		return
 	}
 	c.JSON(http.StatusOK, cust)
