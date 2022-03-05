@@ -83,7 +83,7 @@ export function makeServer() {
       this.get('customer', (schema, request) => {
         // let { password, ...user } = schema.users.findBy({ id: request.queryParams.customer_id }).attrs
         // return user
-        return [schema.db.users.findBy({ email: defaultData.email })]
+        return schema.db.users.findBy({ email: defaultData.email })
       })
 
       this.get('customerbooking', (schema, request) => {
