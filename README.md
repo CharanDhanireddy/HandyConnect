@@ -29,6 +29,8 @@ Platform for connecting customers with skilled and experienced professionals pro
 ![Backend_UT_1](https://user-images.githubusercontent.com/89587982/156866040-d6da90bc-e48d-42c8-be9f-838dd9cbc254.png)
 ![Backend_UT_2](https://user-images.githubusercontent.com/89587982/156866041-33524d75-fdba-4e64-b3d4-ac3b1dc36307.png)
 
+Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct/Backend* directory
+
 - TestCityRet - Test for validating City list retrieval success
 - TestCityRet_Absent - Test for validating City list retrieval failure in case of invalid city
 - TestCust - Test for validating successful retreival of Customer Information
