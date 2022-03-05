@@ -27,12 +27,12 @@ Platform for connecting customers with skilled and experienced professionals pro
 
 Tasks completed:
 
-- Vendor can signup with vendor personal details along with selecting service and city
-- Vendor/Customer can signup with name, email and password
-- Vendor/Customer can login with email and password
-- Customer can select a city before viewing avaliable services
-- Customer can select a service to see available timeslots over a week
-- Customer can select a timeslot and add their address to confirm the booking
+- Added unit tests for all UI pages
+- Cypress integration tests for all the workflows
+- Updated API sections of React application to integrate with Live Golang backend
+- Increased fields for SignUp pages to match with latest requirement
+- UX improvements in Dashboard, Header and other pages
+- Revamped UI for city selection
 
 ---
 
