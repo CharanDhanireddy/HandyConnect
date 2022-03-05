@@ -1,10 +1,11 @@
-import { startMirage } from "../../mirage/devServer"
+// import { startMirage } from "../../mirage/devServer"
+import { makeServer } from "../../../src/server"
 
 describe("SignUp page", function () {
     let server
 
     beforeEach(() => {
-        server = startMirage()
+        server = makeServer()
         cy.visit('/signup')
     })
 
@@ -38,7 +39,7 @@ describe("SignUp page", function () {
         cy.get('#phoneId').type('1234567890');
         cy.get("#phoneId").should('have.value', '1234567890')
         cy.get('#cityId').select('Tampa');
-        cy.get("#cityId").should('have.value', 'Tampa')
+        cy.get("#cityId").should('have.value', '2')
         cy.get('#emailId').type('a@b.c');
         cy.get("#emailId").should('have.value', 'a@b.c')
         cy.get('#passwordId').type('12345678');
@@ -48,6 +49,5 @@ describe("SignUp page", function () {
 
         cy.get('#signup-button').click();
         cy.url().should('eq', 'http://localhost:3000/')
-        cy.get('#dashboardContainerId').should('exist')
     })
 })

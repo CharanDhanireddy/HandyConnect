@@ -9,7 +9,7 @@ const defaultData = {
   email: 'u1@gmail.com'
 }
 
-export function makeServer({ environment = 'test' }) {
+export function makeServer() {
   return createServer({
     models: {
       user: Model,
@@ -17,7 +17,8 @@ export function makeServer({ environment = 'test' }) {
       city: Model,
       service: Model,
       timeslot: Model,
-      booking: Model
+      booking: Model,
+      availability: Model
     },
     seeds(server) {
       server.create('user', { first_name: 'u', last_name: '1', city_name: 'Miami', phone: '123456789', email: 'u1@gmail.com', password: 'pwd12345', city_id: 1 })
@@ -35,15 +36,22 @@ export function makeServer({ environment = 'test' }) {
       server.create('timeslot', { time: '2/9/2022' })
       server.create('timeslot', { time: '2/10/2022' })
 
-      server.create('booking', { userId: 4, service: 'Electrician', city: 'Orlando', vendor: 'Barry Allen', timeslot: { time: '2/12/2022' } })
-      server.create('booking', { userId: 4, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
-      server.create('booking', { userId: 2, service: 'Electrician', city: 'Orlando', vendor: 'Barry Allen', timeslot: { time: '2/12/2022' } })
-      server.create('booking', { userId: 2, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
-      server.create('booking', { userId: 3, service: 'Electrician', city: 'Orlando', vendor: 'Barry Allen', timeslot: { time: '2/12/2022' } })
-      server.create('booking', { userId: 1, service: 'Carpenter', city: 'Orlando', vendor: 'Bruce Wayne', timeslot: { time: '2/11/2022' } })
+      server.create('booking', { customer_id: 4, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
+      server.create('booking', { customer_id: 4, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '4000 SW 27 Blvd Orlando 45332' })
+      server.create('booking', { customer_id: 2, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
+      server.create('booking', { customer_id: 2, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '4000 SW 27 Blvd Orlando 45332' })
+      server.create('booking', { customer_id: 3, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
+      server.create('booking', { customer_id: 1, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
+
+      server.create('availability', { day: 5, month: 3, year: 2022 })
+      server.create('availability', { day: 6, month: 3, year: 2022 })
+      server.create('availability', { day: 7, month: 3, year: 2022 })
+      server.create('availability', { day: 8, month: 3, year: 2022 })
+      server.create('availability', { day: 9, month: 3, year: 2022 })
+      server.create('availability', { day: 10, month: 3, year: 2022 })
 
       floridaCities.forEach((city, key) => server.create('city', { city_name: city, city_id: key }))
-      services.forEach(service => server.create('service', { name: service }))
+      services.forEach((service, key) => server.create('service', { service_name: service, service_id: key }))
     },
     routes() {
       this.urlPrefix = DEV_MOCK_SERVER_BASE_URL
@@ -54,7 +62,7 @@ export function makeServer({ environment = 'test' }) {
 
       })
 
-      this.post('user/login', (schema, request) => {
+      this.post('customerLogin', (schema, request) => {
         let attrs = JSON.parse(request.requestBody)
         // let user = schema.users.findBy({ email: attrs.email });
         // return user
@@ -72,25 +80,30 @@ export function makeServer({ environment = 'test' }) {
         return vendor
       })
 
-      this.get('profile', (schema, request) => {
-        let { password, ...user } = schema.users.findBy({ id: request.queryParams.id }).attrs
-        return user
+      this.get('customer', (schema, request) => {
+        // let { password, ...user } = schema.users.findBy({ id: request.queryParams.customer_id }).attrs
+        // return user
+        return [schema.db.users.findBy({ email: defaultData.email })]
       })
 
-      this.get('bookings', (schema, request) => {
-        return schema.bookings.where({ userId: request.queryParams.userId })
+      this.get('customerbooking', (schema, request) => {
+        return schema.db.bookings.where({ customer_id: request.queryParams.customer_id })
       })
 
       this.get('cities', (schema, request) => {
         return schema.db.cities
       })
 
-      this.get('service', (schema, request) => {
-        return schema.services.all()
+      this.get('services', (schema, request) => {
+        return schema.db.services
       })
 
       this.get('availability', (schema, request) => {
-        return schema.timeslots.all()
+        return schema.db.availabilities
+      })
+
+      this.post('booking', (schema, request) => {
+        return {}
       })
     },
   })

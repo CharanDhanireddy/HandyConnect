@@ -53,12 +53,13 @@ class Dashboard extends Component {
             <Container id="dashboardContainerId">
                 {serviceList ? (
                     <>
-                        <h2 className='text-center'>Select a service from the following</h2>
+                        <h2 className='text-center dashboard-header'>Select a service</h2>
+                        <hr className="dashboard-line"></hr>
                         <Container className='mt-4'>
                             <Row xs={2} md={3} lg={4}>
                                 {serviceList.map((service, key) => (
-                                    <Col key={key}>
-                                        <Card
+                                    <Col key={key} className = "card-onhover">
+                                        <Card 
                                             id={service.service_name}
                                             key={service.service_id}
                                             style={{ height: '6rem', margin: '0 1rem 1rem 0', cursor: 'pointer' }}
@@ -66,7 +67,7 @@ class Dashboard extends Component {
                                             onClick={() => { this.setState({ service: service }) }}
                                         >
                                             <Card.Body className='mx-auto'>
-                                                <h3 className='text-center'>{service.service_name}</h3>
+                                                <h3 className='dashboard-card-text '>{service.service_name}</h3>
                                             </Card.Body>
                                             {/* <Button size="sm" variant="outline-primary">Select</Button> */}
                                         </Card>
@@ -78,7 +79,7 @@ class Dashboard extends Component {
                     </>
                 ) : (null)}
 
-                <TimeSelect updateState={this.updateState} service={service} city={this.props.city} props={this.props} />
+                {service && <TimeSelect updateState={this.updateState} service={service} city={this.props.city} />}
 
 
                 {/* To update later */}
