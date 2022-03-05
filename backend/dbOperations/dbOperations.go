@@ -67,9 +67,9 @@ func DisplayCity() ([]structTypes.City, error) {
 	var city_id int
 	var city_name string
 
-	sqlStmt := `SELECT id, city_name FROM City WHERE id = $1;`
+	sqlStmt := `SELECT id, city_name FROM City;`
 
-	row, err := db.Query(sqlStmt, "1")
+	row, err := db.Query(sqlStmt)
 	if err != nil {
 		log.Printf("Get all cities DB error: %v", err)
 		return nil, err
