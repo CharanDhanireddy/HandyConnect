@@ -29,7 +29,13 @@ Platform for connecting customers with skilled and experienced professionals pro
 ![Backend_UT_1](https://user-images.githubusercontent.com/89587982/156866040-d6da90bc-e48d-42c8-be9f-838dd9cbc254.png)
 ![Backend_UT_2](https://user-images.githubusercontent.com/89587982/156866041-33524d75-fdba-4e64-b3d4-ac3b1dc36307.png)
 
-
+- TestCityRet - Test for validating City list retrieval success
+- TestCityRet_Absent - Test for validating City list retrieval failure in case of invalid city
+- TestCust - Test for validating successful retreival of Customer Information
+- TestVend - Test for validating successful retreival of Vendor Information
+- TestServices - Test for validating successful retreival of available services in a city
+- TestBookingCust - Test for validating the retreival of Customer view of their bookings
+- TestBookingVend - Test for validating the retreival of Vendor view of their bookings
 
 Tasks completed:
 
