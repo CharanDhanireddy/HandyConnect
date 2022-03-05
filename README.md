@@ -18,6 +18,37 @@ Platform for connecting customers with skilled and experienced professionals pro
 - Database: Postgres
 
 ---
+## Sprint 2:
+
+### Frontend with live Golang backend & unit tests and integration tests with Cypress
+
+![sprint2CypressGif](https://user-images.githubusercontent.com/20516490/156865184-b26d30da-ba5b-4e2f-9c77-fd02d1a21a44.gif)
+
+
+Tasks completed:
+
+- Vendor can signup with vendor personal details along with selecting service and city
+- Vendor/Customer can signup with name, email and password
+- Vendor/Customer can login with email and password
+- Customer can select a city before viewing avaliable services
+- Customer can select a service to see available timeslots over a week
+- Customer can select a timeslot and add their address to confirm the booking
+
+---
+
+### Backend with mocked-up frontend
+[Backend Demo video](https://youtu.be/YhrciuviPqM)
+
+Tasks completed: (APIs for the below functionality are implemented and tested using Postman (shown in video))
+
+- Customer can sign up with name, email, phone, city, address
+- Vendor can sign up with their name, email, phone, city, services provided
+- Customer/Vendor can log into their account with their email and password (error handling for incorrect password implemented)
+- Customer/Vendor can login and view their profiles to see the data they've used for signing up
+- Customer can get a list of available timeslots for a specific service in a city of their choice
+- Customer can schedule a slot based on the availability of the service in a 1 week period
+
+---
 
 ## Sprint 1:
 
