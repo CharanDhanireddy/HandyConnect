@@ -13,7 +13,7 @@ function Profile(props) {
             let profile_response = await axios.get(BASE_URL + "customer", { params: { customer_id: token } })
             console.log(profile_response)
             // customer response is a list with one element
-            setState({ ...state, userData: profile_response.data[0] })
+            setState({ ...state, userData: profile_response.data })
         }
         fetchData();
     }, [])
