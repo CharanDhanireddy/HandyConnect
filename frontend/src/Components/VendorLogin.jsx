@@ -8,7 +8,7 @@ import {
   Form,
   FormControl
 } from "react-bootstrap";
-import { setUserData } from "../util/localStorage";
+import { setVendorData } from "../util/localStorage";
 import axios from "axios";
 import { BASE_URL } from "../env_setup";
 
@@ -26,13 +26,13 @@ function VendorLogin(props) {
       password: state.password
     };
 
-    let res = await axios.post(BASE_URL + "vendor/login", vendorData)
+    let res = await axios.post(BASE_URL + "vendorLogin", vendorData)
     let data = res.data
     let status = res.status
     console.log(data, status)
 
-    setUserData(data && data.vendor ? data?.vendor : null)
-    if (data?.vendor)
+    setVendorData(data ? data : null)
+    if (data)
       navigate('/vendorDashboard')
     else
       navigate('/')
