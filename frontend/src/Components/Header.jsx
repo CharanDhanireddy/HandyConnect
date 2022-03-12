@@ -41,17 +41,17 @@ function Header(props) {
             <Navbar bg="dark" variant="dark">
                 <Container>
                     <Navbar.Brand id="header-handyconnect" className="py-4" href="/">
-                    <img
-                        src= {HandyconnectLogo}
-                        width="40"
-                        height="40"
-                        className="d-inline-block align-top"
-                        alt="React Bootstrap logo"
-                    />
+                        <img
+                            src={HandyconnectLogo}
+                            width="40"
+                            height="40"
+                            className="d-inline-block align-top"
+                            alt="React Bootstrap logo"
+                        />
                     </Navbar.Brand>
                     <Nav className="ml-auto" >
                         {props.isLoggedIn ?
-                            (
+                            (props.city ? (
                                 <>
                                     <Navbar.Brand id="locationSelectId" onClick={() => { setState({ ...state, showModal: true }) }}>
                                         <img
@@ -68,7 +68,14 @@ function Header(props) {
                                     <Nav.Link href="/bookings" className={`nav-item ${isActive('/bookings') ? 'active' : ''}`}>Bookings</Nav.Link>
                                     <NavLink onClick={() => props.logOut()}>Log out</NavLink>
                                 </>
-                            )
+                            ) : (
+                                <>
+                                    <Nav.Link href="/vendorDashboard" className={`nav-item ${isActive('/vendorDashboard') ? 'active' : ''}`}>Dashboard</Nav.Link>
+                                    <Nav.Link href="/vendorProfile" className={`nav-item ${isActive('/vendorProfile') ? 'active' : ''}`}>Profile</Nav.Link>
+                                    <Nav.Link href="/vendorBookings" className={`nav-item ${isActive('/vendorBookings') ? 'active' : ''}`}>Bookings</Nav.Link>
+                                    <NavLink onClick={() => props.logOut()}>Log out</NavLink>
+                                </>
+                            ))
                             : (
                                 <>
                                     <Nav.Link className="ml-auto" href="/vendorlogin"

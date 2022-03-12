@@ -12,7 +12,7 @@ import Profile from "./Components/Profile.jsx"
 import VendorDashboard from "./Components/VendorDashboard.jsx";
 import Bookings from "./Components/Bookings.jsx";
 
-import { getCity, setCity, isLoggedIn, removeUserData } from './util/localStorage'
+import { getCity, setCity, isLoggedIn, removeLoginData, getUserData, getVendorData } from './util/localStorage'
 
 function App() {
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ function App() {
   }
 
   let logOut = () => {
-    removeUserData()
+    removeLoginData()
     navigate('/');
   }
 
@@ -48,19 +48,36 @@ function App() {
       </div>
     )
   }
+  else {
+    let userData = getUserData()
+    let vendorData = getVendorData()
+    if (userData) {
+      return (
+        <div>
+          <Header isLoggedIn={loggedIn} logOut={logOut} city={city} setCity={updateCity} />
+          <Routes>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="/" element={<Dashboard city={city} />} />
+          </Routes>
+        </div>
+      )
+    }
+    else if (vendorData) {
+      return (
+        <div>
+          <Header isLoggedIn={loggedIn} logOut={logOut} />
+          <Routes>
+            {/* <Route path="/vendorProfile" element={<Profile />} /> */}
+            {/* <Route path="/vendorBookings" element={<Bookings />} /> */}
+            <Route path="/vendorDashboard" element={<VendorDashboard />} />
+          </Routes>
+          {/* <Footer /> */}
+        </div>
+      )
+    }
+  }
 
-  return (
-    <div>
-      <Header isLoggedIn={loggedIn} logOut={logOut} city={city} setCity={updateCity} />
-      <Routes>
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/bookings" element={<Bookings />} />
-        <Route path="/" element={<Dashboard city={city} />} />
-        <Route path="/vendorDashboard" element={<VendorDashboard />} />
-      </Routes>
-      {/* <Footer /> */}
-    </div>
-  );
 
 }
 
