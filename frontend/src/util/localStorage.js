@@ -9,8 +9,21 @@ export function getUserData() {
     return userData
 }
 
+export function setVendorData(vendorData) {
+    localStorage.setItem('vendorData', JSON.stringify(vendorData));
+}
+
+export function getVendorData() {
+    const vendorDataString = localStorage.getItem('vendorData');
+    const vendorData = JSON.parse(vendorDataString);
+    return vendorData
+}
 export function getToken() {
-    return getUserData()?.id
+    let userData = getUserData()
+    let vendorData = getVendorData()
+    if (userData) return userData.id
+    else if (vendorData) return vendorData.id
+    else return null
 }
 
 export function getCity() {
@@ -28,6 +41,7 @@ export function isLoggedIn() {
     return (getToken() != null)
 }
 
-export function removeUserData() {
+export function removeLoginData() {
     localStorage.removeItem('userData');
+    localStorage.removeItem('vendorData');
 }
