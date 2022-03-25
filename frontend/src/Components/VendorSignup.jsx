@@ -28,8 +28,8 @@ function VendorSignup(props) {
 
   useEffect(() => {
     let fetchData = async () => {
-      let city_response = await axios.get(BASE_URL + "city")
-      let service_response = await axios.get(BASE_URL + "service")
+      let city_response = await axios.get(BASE_URL + "cities")
+      let service_response = await axios.get(BASE_URL + "services")
       setState({ ...state, cityList: city_response.data.cities, serviceList: service_response.data.services })
     }
     fetchData();
