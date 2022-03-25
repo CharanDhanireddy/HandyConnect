@@ -9,7 +9,6 @@ import {
   FormGroup,
   FormControl
 } from "react-bootstrap";
-import { setUserData } from "../util/localStorage";
 import axios from "axios";
 import { BASE_URL } from "../env_setup";
 
@@ -27,6 +26,7 @@ function Signup(props) {
     errors: {}
   })
 
+  const navigate = useNavigate()
 
   useEffect(() => {
     let fetchData = async () => {
@@ -35,8 +35,6 @@ function Signup(props) {
     }
     fetchData();
   }, [])
-
-  const navigate = useNavigate()
 
   let onChange = e => {
     setState({ ...state, [e.target.name]: e.target.value })
