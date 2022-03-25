@@ -11,6 +11,7 @@ import Footer from "./Components/Footer.jsx"
 import Profile from "./Components/Profile.jsx"
 import VendorDashboard from "./Components/VendorDashboard.jsx";
 import Bookings from "./Components/Bookings.jsx";
+import VendorProfile from "./Components/Vendorprofile.jsx";
 
 import { getCity, setCity, isLoggedIn, removeLoginData, getUserData, getVendorData } from './util/localStorage'
 
@@ -68,9 +69,10 @@ function App() {
         <div>
           <Header isLoggedIn={loggedIn} logOut={logOut} />
           <Routes>
-            {/* <Route path="/vendorProfile" element={<Profile />} /> */}
+            <Route path="/vendorProfile" element={<VendorProfile />} />
             {/* <Route path="/vendorBookings" element={<Bookings />} /> */}
             <Route path="/vendorDashboard" element={<VendorDashboard />} />
+            
           </Routes>
           {/* <Footer /> */}
         </div>
