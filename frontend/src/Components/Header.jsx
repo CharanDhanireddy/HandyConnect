@@ -72,7 +72,6 @@ function Header(props) {
                                 <>
                                     <Nav.Link href="/vendorDashboard" className={`nav-item ${isActive('/vendorDashboard') ? 'active' : ''}`}>Dashboard</Nav.Link>
                                     <Nav.Link href="/vendorProfile" className={`nav-item ${isActive('/vendorProfile') ? 'active' : ''}`}>Profile</Nav.Link>
-                                    <Nav.Link href="/vendorBookings" className={`nav-item ${isActive('/vendorBookings') ? 'active' : ''}`}>Bookings</Nav.Link>
                                     <NavLink onClick={() => props.logOut()}>Log out</NavLink>
                                 </>
                             ))
