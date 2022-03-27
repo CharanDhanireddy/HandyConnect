@@ -19,14 +19,24 @@ function Profile(props) {
     }, [])
 
     return (
-        <Container className='mt-3'>
-            {Object.keys(state.userData).filter(key => !key.includes('id') && !key.includes('password')).map(key => (
-                <Row data-cy={[key]}>
-                    <Col xs={3} id={[key]}><text className='text-uppercase fw-bold'>{[key]}</text></Col>
-                    <Col id={[key]}>{state.userData[key]}</Col>
-                </Row>
-            ))}
-        </Container>
+        <div className='user-profile-details'>
+            <h3 className='mb-3 mt-4'>{state.userData['first_name']} {state.userData['last_name']}</h3>
+            <table className = "profile-table">
+                <tr>
+                 <th>City</th>
+                 <td>{state.userData['city_name']}</td>   
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>{state.userData['phone']}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{state.userData['email']}</td>
+                </tr>
+            </table>
+
+        </div>
     )
 };
 
