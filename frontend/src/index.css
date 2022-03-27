@@ -139,6 +139,17 @@ code {
   padding-bottom: 5%;
 }
 
+.user-profile-details{
+  border: 2px solid green;
+  border-radius: 5%;
+  text-align: center;
+  background-color: #212529;
+  color: white;
+  width: 40%;
+  margin: auto;
+  margin-top: 10%;
+  padding-bottom: 5%;
+}
 .profile-table{
   font-family: 'Montserrat';
   text-align: center; 

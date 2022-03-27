@@ -20,16 +20,7 @@ function VendorProfile(props) {
 
     return (
 
-        <div>
-                    {/* <Container className='mt-3 vendor-profile-details'>
-            {Object.keys(state.vendorData).filter(key => !key.includes('id') && !key.includes('password')).map(key => (
-                <Row className = "key-vendor-profile-details" data-cy={[key]}>
-                    <Col xs={3} id={[key]}><text className='text-uppercase fw-bold'>{[key]}</text></Col>
-                    <Col id={[key]}>{state.vendorData[key]}</Col>
-                </Row>
-            ))}
-        </Container> */}
-        
+                
         <div className='vendor-profile-details'>
             <h3 className='mb-3'>{state.vendorData['first_name']} {state.vendorData['last_name']}</h3>
             <table className = "profile-table">
@@ -52,11 +43,6 @@ function VendorProfile(props) {
             </table>
 
         </div>
-
-        </div>
-
-
-        
 
     )
 };
