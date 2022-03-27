@@ -31,7 +31,7 @@ function VendorProfile(props) {
         </Container> */}
         
         <div className='vendor-profile-details'>
-
+            <h3 className='mb-3'>{state.vendorData['first_name']} {state.vendorData['last_name']}</h3>
             <table className = "profile-table">
                 <tr>
                  <th>City</th>
