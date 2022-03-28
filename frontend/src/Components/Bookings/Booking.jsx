@@ -6,22 +6,6 @@ import axios from 'axios';
 import { BASE_URL } from '../../env_setup'
 
 function Booking(props) {
-    // const [state, setState] = useState({ bookings: [], bookingKey: null })
-
-    // useEffect(() => {
-    //     let fetchBookings = async () => {
-    //         const token = getToken()
-    //         const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
-    //         // Handle errors
-    //         let bookings = bookings_response.data
-    //         setState({ ...state, bookings })
-    //     }
-    //     fetchBookings()
-    // }, [])
-
-    // const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
-
-    // const setBookingKey = (bookingKey) => setState({ ...state, bookingKey })
 
     let handleClose = (e) => {
         props.setBooking(null)
@@ -42,6 +26,22 @@ function Booking(props) {
             console.log('Error')
         }
         props.setBooking({ ...props.booking, customer_rating: newRating })
+    }
+
+    let cancelBooking = async () => {
+        let bookingDetails = {
+            booking_id: props.booking.id
+        };
+        try {
+            let cancelBookingRes = await axios.delete(BASE_URL + "cancelBooking", {
+                params: bookingDetails
+            })
+            console.log(cancelBookingRes.status)
+        }
+        catch {
+            console.log('Error')
+        }
+        props.setBooking(null)
     }
 
     const BookingData = props.booking ? {
@@ -88,11 +88,14 @@ function Booking(props) {
                             </Col>
                         </Row>
                     }
-                    {/* <hr /> 
-                    <Row>
-                        <Col xs={3} ><text className='text-uppercase fw-bold'>Actions</text></Col>
-                        <Col><Button variant='danger'>Cancel</Button>  <Button variant='warning'>Rescehdule</Button></Col>
-                    </Row>*/}
+                    {(props.booking.status == 'confirmed') &&
+                        <>
+                            <hr />
+                            <Row>
+                                <Col xs={3} ><text className='text-uppercase fw-bold'>Actions</text></Col>
+                                <Col><Button variant='danger' onClick={cancelBooking}>Cancel</Button>  <Button variant='warning'>Rescehdule</Button></Col>
+                            </Row>
+                        </>}
 
                 </Modal.Body>
                 <Modal.Footer>
