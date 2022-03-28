@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Modal, Button } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Card } from 'react-bootstrap';
 // import StarRating from 'react-simple-star-rating';
 import Rating from '@mui/material/Rating';
 import axios from 'axios';
 import { BASE_URL } from '../../env_setup'
 
 function Booking(props) {
+
+    const [state, setState] = useState({ timeslotList: [], timeslot: null })
 
     let handleClose = (e) => {
         props.setBooking(null)
@@ -41,6 +43,34 @@ function Booking(props) {
         catch {
             console.log('Error')
         }
+        props.setBooking(null)
+    }
+
+    let getRescheduleTimeslots = async () => {
+        let timeslot_response = await axios.get(BASE_URL + "availability",
+            {
+                params: {
+                    service_id: props.booking.service_id,
+                    city_id: props.booking.city_id
+                }
+            })
+        setState({ ...state, timeslotList: timeslot_response.data })
+    }
+
+    let rescheduleBooking = async () => {
+        let res = await axios.post(BASE_URL + "rescheduleBooking", {
+            booking_id: props.booking.id,
+            day: state.timeslot.day,
+            month: state.timeslot.month,
+            year: state.timeslot.year
+        })
+        let data = res.data
+        let status = res.status
+        console.log(res)
+        // check if the current day minth year is same as response
+
+        // Show some kind of Popup
+        // setState(initial_state)
         props.setBooking(null)
     }
 
@@ -93,9 +123,42 @@ function Booking(props) {
                             <hr />
                             <Row>
                                 <Col xs={3} ><text className='text-uppercase fw-bold'>Actions</text></Col>
-                                <Col><Button variant='danger' onClick={cancelBooking}>Cancel</Button>  <Button variant='warning'>Rescehdule</Button></Col>
+                                <Col>
+                                    <Button variant='outline-danger'
+                                        onClick={cancelBooking}>Cancel</Button>
+                                    <Button variant={state.timeslotList.length ? 'warning' : 'outline-warning'}
+                                        onClick={getRescheduleTimeslots}
+                                    >Rescehdule</Button></Col>
                             </Row>
                         </>}
+
+                    {state.timeslotList &&
+                        <>
+                            <hr />
+                            <Row xs={1} md={2} lg={3}>
+                                {state.timeslotList.map((timeslot, key) => (
+                                    <Col key={key}>
+                                        <Card
+
+                                            key={key}
+                                            style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
+                                            // className='border'
+                                            className={(timeslot == state.timeslot ? 'bg-dark text-white' : null)}
+                                            onClick={() => { setState({ ...state, timeslot: timeslot }) }}
+                                        >
+                                            <Card.Body data-cy={key}>
+                                                <p className='text-center'>{timeslot.month + '/' + timeslot.day + '/' + timeslot.year}</p>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                ))}
+                            </Row>
+                            {state.timeslot &&
+                                <Button variant='outline-success'
+                                    onClick={rescheduleBooking}>Confirm</Button>
+                            }
+                        </>
+                    }
 
                 </Modal.Body>
                 <Modal.Footer>
