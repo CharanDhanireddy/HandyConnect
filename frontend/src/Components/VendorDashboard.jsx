@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getToken } from "../util/localStorage";
 import axios from 'axios';
-import { Container, Row, Table } from 'react-bootstrap';
+import { Container, Row, Table, Modal, Button } from 'react-bootstrap';
 import { BASE_URL } from '../env_setup'
+import VendorBooking from "./VendorBooking.jsx"
 
 function VendorDashboard(props) {
-    const [state, setState] = useState({ bookings: [] })
+    const [state, setState] = useState({ bookings: [], booking: null})
 
     useEffect(() => {
         let fetchBookings = async () => {
@@ -16,9 +17,16 @@ function VendorDashboard(props) {
             setState({ ...state, bookings })
         }
         fetchBookings()
-    }, [])
+    }, [state.booking])
 
-    const tableHeaders = ['Timeslot', 'Service', 'Customer', 'Address', 'City']
+    const tableHeaders = ['Timeslot', 
+    'Service', 
+    'Customer', 
+    'Address', 
+    // 'City', 
+    'Action']
+
+    const setBooking = (booking) => setState({ ...state, booking })
 
     return (
         <Container id="booking-table" className='mt-4'>
@@ -41,13 +49,15 @@ function VendorDashboard(props) {
                             <td id="service-name" >{booking.service_name}</td>
                             <td id="customer-name" >{booking.customer_name}</td>
                             <td id="address" >{booking.address}</td>
-                            <td id="city" >{booking.city_name}</td>
+                            {/* <td id="city" >{booking.city_name}</td> */}
+                            <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}>View/Modify Booking</Button></td>
                         </tr>
                     ))
 
                     }
                 </tbody>
             </Table>
+            {(state.booking != null) && <VendorBooking booking={state.booking} setBooking={setBooking} />}
         </Container >
     )
 }
