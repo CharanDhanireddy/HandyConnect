@@ -8,6 +8,13 @@ import Booking from './Booking.jsx'
 function Bookings(props) {
     const [state, setState] = useState({ bookings: [], booking: null })
 
+    let statusMap = {
+        confirmed: 'Confirmed',
+        in_progress: 'In progress',
+        completed: 'Completed',
+        cancelled: 'Cancelled'
+    }
+
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
@@ -26,6 +33,7 @@ function Bookings(props) {
         // 'Service Provider', 
         'Address',
         // 'City',
+        'Status',
         'Action']
 
     const setBooking = (booking) => setState({ ...state, booking })
@@ -52,6 +60,7 @@ function Bookings(props) {
                             {/* <td id="vendor-name" >{booking.vendor_name}</td> */}
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
+                            <td id="status" >{statusMap[booking.status]}</td>
                             <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}>View/Modify Booking</Button></td>
                         </tr>
                     ))

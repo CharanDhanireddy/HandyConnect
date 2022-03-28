@@ -46,7 +46,7 @@ export function makeServer() {
         id: 1, customer_id: 1, customer_name: 'u1', service_name: 'Carpenter', city_name: 'Orlando',
         vendor_id: 1, vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022,
         address: '221B Baker Street Orlando 45324',
-        status: 'completed', customer_rating: 0, vendor_rating: 3
+        status: 'confirmed', customer_rating: 0, vendor_rating: 3
       })
 
       server.create('availability', { day: 5, month: 3, year: 2022 })
