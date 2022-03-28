@@ -124,13 +124,15 @@ export function makeServer() {
         return { ...booking, customer_rating: attrs.customer_rating }
       })
 
+      this.delete('cancelBooking', (schema, request) => {
+        return {}
+      })
+
       this.post('vendorRating', (schema, request) => {
         let attrs = JSON.parse(request.requestBody)
         let booking = schema.db.bookings.findBy({ id: attrs.booking_id });
         return { ...booking, vendor_rating: attrs.vendor_rating }
       })
-
-
     },
   })
 }
