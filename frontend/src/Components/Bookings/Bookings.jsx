@@ -52,7 +52,7 @@ function Bookings(props) {
                             {/* <td id="vendor-name" >{booking.vendor_name}</td> */}
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
-                            <td ><Button variant="light" onClick={() => setBooking(booking)}>View/Modify Booking</Button></td>
+                            <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}>View/Modify Booking</Button></td>
                         </tr>
                     ))
 
