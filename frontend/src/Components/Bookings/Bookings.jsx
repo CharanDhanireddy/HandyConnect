@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getToken } from "../util/localStorage";
+import { getToken } from "../../util/localStorage";
 import axios from 'axios';
-import { Container, Row, Table } from 'react-bootstrap';
-import { BASE_URL } from '../env_setup'
+import { Container, Row, Table, Modal, Button } from 'react-bootstrap';
+import { BASE_URL } from '../../env_setup'
+import Booking from './Booking.jsx'
 
 function Bookings(props) {
-    const [state, setState] = useState({ bookings: [] })
+    const [state, setState] = useState({ bookings: [], booking: null })
 
     useEffect(() => {
         let fetchBookings = async () => {
@@ -16,9 +17,18 @@ function Bookings(props) {
             setState({ ...state, bookings })
         }
         fetchBookings()
-    }, [])
+    },
+        // can reduce number of API calls by using another state variable 
+        [state.booking])
 
-    const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
+
+    const tableHeaders = ['Timeslot', 'Service',
+        // 'Service Provider', 
+        'Address',
+        // 'City',
+        'Action']
+
+    const setBooking = (booking) => setState({ ...state, booking })
 
     return (
         <Container id="booking-table" className='mt-4'>
@@ -39,15 +49,17 @@ function Bookings(props) {
                         <tr key={key}>
                             <td id="booking-month">{booking.month + '/' + booking.day + '/' + booking.year}</td>
                             <td id="service-name" >{booking.service_name}</td>
-                            <td id="vendor-name" >{booking.vendor_name}</td>
+                            {/* <td id="vendor-name" >{booking.vendor_name}</td> */}
                             <td id="address" >{booking.address}</td>
-                            <td id="city" >{booking.city_name}</td>
+                            {/* <td id="city" >{booking.city_name}</td> */}
+                            <td ><Button variant="light" onClick={() => setBooking(booking)}>View/Modify Booking</Button></td>
                         </tr>
                     ))
 
                     }
                 </tbody>
             </Table>
+            {(state.booking != null) && <Booking booking={state.booking} setBooking={setBooking} />}
         </Container >
     )
 }
