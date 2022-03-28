@@ -124,6 +124,9 @@ export function makeServer() {
         return { ...booking, customer_rating: attrs.customer_rating }
       })
 
+      this.delete('cancelBooking', (schema, request) => {
+        return {}
+      })
     },
   })
 }
