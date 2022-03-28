@@ -43,7 +43,9 @@ export function makeServer() {
       server.create('booking', { customer_id: 2, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '4000 SW 27 Blvd Orlando 45332' })
       server.create('booking', { customer_id: 3, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
       server.create('booking', {
-        id: 1, customer_id: 1, customer_name: 'u1', service_name: 'Carpenter', city_name: 'Orlando',
+        id: 1, customer_id: 1, customer_name: 'u1',
+        service_id: 1, service_name: 'Carpenter',
+        city_id: 1, city_name: 'Orlando',
         vendor_id: 1, vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022,
         address: '221B Baker Street Orlando 45324',
         status: 'confirmed', customer_rating: 0, vendor_rating: 3
@@ -132,6 +134,12 @@ export function makeServer() {
         let attrs = JSON.parse(request.requestBody)
         let booking = schema.db.bookings.findBy({ id: attrs.booking_id });
         return { ...booking, vendor_rating: attrs.vendor_rating }
+      })
+
+      this.post('rescheduleBooking', (schema, request) => {
+        let attrs = JSON.parse(request.requestBody)
+        let booking = schema.db.bookings.findBy({ id: attrs.booking_id });
+        return { ...booking, day: attrs.day, month: attrs.month, year: attrs.year }
       })
     },
   })
