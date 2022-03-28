@@ -8,6 +8,13 @@ import VendorBooking from "./VendorBooking.jsx"
 function VendorDashboard(props) {
     const [state, setState] = useState({ bookings: [], booking: null})
 
+    let statusMap = {
+        confirmed: 'Confirmed',
+        in_progress: 'In progress',
+        completed: 'Completed',
+        cancelled: 'Cancelled'
+    }
+
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
@@ -24,6 +31,7 @@ function VendorDashboard(props) {
     'Customer', 
     'Address', 
     // 'City', 
+    'Status',
     'Action']
 
     const setBooking = (booking) => setState({ ...state, booking })
@@ -50,6 +58,7 @@ function VendorDashboard(props) {
                             <td id="customer-name" >{booking.customer_name}</td>
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
+                            <td id="status" >{statusMap[booking.status]}</td>
                             <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}>View/Modify Booking</Button></td>
                         </tr>
                     ))
