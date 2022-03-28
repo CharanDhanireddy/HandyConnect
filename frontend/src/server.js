@@ -27,8 +27,8 @@ export function makeServer() {
       server.create('user', { first_name: 'u', last_name: '3', city_name: 'Miami', phone: '123456789', email: 'u3@gmail.com', password: 'pwd12345', city_id: 1 })
       server.create('user', { first_name: 'Aaron', last_name: 'Smith', city_name: 'Orlando', phone: '123456789', email: 'aaronsmith@gmail.com', password: 'pwd12345', city_id: 3 })
 
-      server.create('vendor', { first_name: 'Bruce', last_name: 'Wayne', service: 'Carpenter', city_name: 'Miami', email: 'bw@gmail.com', password: 'pwd12345', city_id: 1 })
-      server.create('vendor', { first_name: 'Barry', last_name: 'Allen', service: 'Electrician', city_name: 'Orlando', email: 'ba@gmail.com', password: 'pwd12345', city_id: 3 })
+      server.create('vendor', { first_name: 'Bruce', last_name: 'Wayne', service_name: 'Carpenter', city_name: 'Miami', phone: '123456789', email: 'bw@gmail.com', password: 'pwd12345', city_id: 1 })
+      server.create('vendor', { first_name: 'Barry', last_name: 'Allen', service_name: 'Electrician', city_name: 'Orlando', phone: '123456789', email: 'ba@gmail.com', password: 'pwd12345', city_id: 3 })
 
       server.create('timeslot', { time: '2/5/2022' })
       server.create('timeslot', { time: '2/6/2022' })
@@ -87,9 +87,11 @@ export function makeServer() {
       })
 
       this.get('customer', (schema, request) => {
-        // let { password, ...user } = schema.users.findBy({ id: request.queryParams.customer_id }).attrs
-        // return user
-        return schema.db.users.findBy({ email: defaultData.email })
+        return schema.db.users.findBy({ email: defaultData.userEmail })
+      })
+
+      this.get('vendor', (schema, request) => {
+        return schema.db.vendors.findBy({ email: defaultData.vendorEmail })
       })
 
       this.get('customerbooking', (schema, request) => {
