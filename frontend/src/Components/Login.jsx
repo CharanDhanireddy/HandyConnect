@@ -6,14 +6,20 @@ import {
   Row,
   Col,
   Form,
-  FormControl
+  FormControl,
+  Alert
 } from "react-bootstrap";
 import { setUserData } from "../util/localStorage";
 import axios from "axios";
 import { BASE_URL } from '../env_setup'
 
 function Login(props) {
-  const [state, setState] = useState({ email: "", password: "", errors: {} })
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+    errors: {},
+    showAlert: false
+  })
   const navigate = useNavigate()
 
   let onChange = e => {
@@ -41,24 +47,57 @@ function Login(props) {
     else return false;
   }
 
+  let redirect = status => {
+    setTimeout(() => {
+      if (status == 200)
+        navigate('/')
+      else
+        setState({ ...state, showAlert: 0 })
+    }, 3000);
+  }
+
   let onLoginClick = async () => {
     if (!isValid()) return
     const userData = {
       email: state.email,
       password: state.password
     };
-
-    let res = await axios.post(BASE_URL + "customerLogin", userData)
-    let data = res.data
-    let status = res.status
+    let data, status
+    try {
+      let res = await axios.post(BASE_URL + "customerLogin", userData)
+      data = res.data
+      status = res.status
+    }
+    catch (error) {
+      data = error.response.data
+      status = error.response.status
+    }
     console.log(data, status)
     // Can use the errors state to show errors from the api
-    setUserData(data ? data : null)
-    navigate('/')
+    redirect(status)
+    let showAlert = 2
+    if (status == 200) {
+      showAlert = 1
+      setUserData(data ? data : null)
+    }
+    setState({ ...state, showAlert })
+
+    // navigate('/')
   };
 
   return (
     <Container className="center" >
+
+      {(state.showAlert > 0) && <Alert variant={(state.showAlert == 1) ? "success" : "danger"}>
+        <Alert.Heading>{(state.showAlert == 1) ? "Successful" : "Error"}</Alert.Heading>
+        <p>
+          {(state.showAlert == 1) ?
+            "You have successfully logged in to Handyconnect" :
+            "Wrong email or password"
+          }
+        </p>
+      </Alert>}
+
       <Row>
         <Col className="mx-auto" md="4 pt-10">
           <h1 className="login-signup-heading">Login</h1>

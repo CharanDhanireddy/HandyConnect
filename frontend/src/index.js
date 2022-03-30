@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import { makeServer } from './server'
 
-makeServer({ environment: "development" })
+// makeServer({ environment: "development" })
 
 ReactDOM.render(
   <React.StrictMode>
