@@ -77,7 +77,8 @@ function Signup(props) {
       if (status == 200)
         navigate('/login')
       else
-        navigate('/')
+        // navigate('/signup')
+        setState({ ...state, showAlert: 0 })
     }, 3000);
   }
 
@@ -117,10 +118,6 @@ function Signup(props) {
             "Email or Phone number already used to signup for Handy Connect"
           }
         </p>
-        {/* <hr />
-        <p className="mb-0">
-          Redirecting you to the login page
-        </p> */}
       </Alert>}
 
       <Row className="">
