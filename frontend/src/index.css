@@ -160,3 +160,18 @@ code {
   width: 70%;
 }
 
+.submit-reschedule-button{
+  margin-right: 2%;
+}
+
+.booking-font{
+  font-family: Montserrat;
+  color: black;
+  font-weight: 900;
+}
+
+.booking-header{
+  font-family: Nunito, Bold;
+  font-size: 1.25rem;
+}
+
