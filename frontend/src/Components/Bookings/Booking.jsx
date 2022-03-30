@@ -88,15 +88,15 @@ function Booking(props) {
                 centered
                 size="lg"
                 show={props.booking != null}>
-                <Modal.Header>
-                    Booking Info
+                <Modal.Header className = "booking-header">
+                    Booking details
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className = "booking-font">
                     {Object.keys(BookingData)
                         // .filter(key => !key.includes('id') && !key.includes('password'))
                         .map(key => (
                             <Row data-cy={[key]}>
-                                <Col xs={3} id={[key]}><text className='text-uppercase fw-bold'>{[key]}</text></Col>
+                                <Col xs={3} id={[key]}><text className='text-uppercase'>  {[key]} </text></Col>
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
@@ -125,10 +125,13 @@ function Booking(props) {
                                 <Col xs={3} ><text className='text-uppercase fw-bold'>Actions</text></Col>
                                 <Col>
                                     <Button variant='outline-danger'
-                                        onClick={cancelBooking}>Cancel</Button>
+                                        onClick={cancelBooking} 
+                                        className = "submit-reschedule-button"
+                                        ><strong>Cancel</strong></Button>    
                                     <Button variant={state.timeslotList.length ? 'warning' : 'outline-warning'}
                                         onClick={getRescheduleTimeslots}
-                                    >Rescehdule</Button></Col>
+                                        className = 'submit-reschedule-button'
+                                    > <strong>Rescehdule</strong></Button></Col>
                             </Row>
                         </>}
 
