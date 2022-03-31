@@ -190,6 +190,9 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	var month int
 	var year int
 	var address string
+	var book_stat string
+	var cust_rating int
+	var vend_rating int
 
 	// var service2 string
 	// var service3 string
@@ -215,7 +218,7 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	var cust_book []structTypes.Booking
 	for row.Next() { // Iterate and fetch the records from result cursor
 		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &day, &month, &year, &address)
-		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address})
+		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address, book_stat, cust_rating, vend_rating})
 		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address)
 	}
 	row.Close()
