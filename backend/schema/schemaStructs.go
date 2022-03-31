@@ -24,15 +24,18 @@ type VendorProfileSchema struct {
 }
 
 type BookingSchema struct {
-	Id         int    `json:"id"`
-	VendorId   int    `json:"vendor_id"`
-	CustomerId int    `json:"customer_id"`
-	ServiceId  int    `json:"service_id"`
-	CityId     int    `json:"city_id"`
-	Day        int    `json:"day"`
-	Month      int    `json:"month"`
-	Year       int    `json:"year"`
-	Address    string `json:"address"`
+	Id            int    `json:"id"`
+	VendorId      int    `json:"vendor_id"`
+	CustomerId    int    `json:"customer_id"`
+	ServiceId     int    `json:"service_id"`
+	CityId        int    `json:"city_id"`
+	Day           int    `json:"day"`
+	Month         int    `json:"month"`
+	Year          int    `json:"year"`
+	Address       string `json:"address"`
+	BookingStatus string `json:"book_status"`
+	CustRating    int    `json:"cust_rating"`
+	VendRating    int    `json:"vend_rating"`
 }
 
 type ServiceSchema struct {
