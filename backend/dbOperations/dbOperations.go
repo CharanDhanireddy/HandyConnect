@@ -143,10 +143,10 @@ func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 	if !row.Next() {
 		return vend_data, nil
 	}
-	
+
 	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1)
 	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1}
-	
+
 	row.Close()
 
 	return vend_data, nil
@@ -234,6 +234,9 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	var month int
 	var year int
 	var address string
+	var book_stat string
+	var cust_rating int
+	var vend_rating int
 
 	// var service2 string
 	// var service3 string
@@ -259,7 +262,7 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	var vend_book []structTypes.Booking
 	for row.Next() { // Iterate and fetch the records from result cursor
 		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &day, &month, &year, &address)
-		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address})
+		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address, book_stat, cust_rating, vend_rating})
 		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address)
 	}
 	row.Close()
