@@ -27,7 +27,7 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 	}
 
 	log.Println("Inserting booking record ...")
-	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address) VALUES (?,?,?,?,?,?,?,?)`
+	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address, booking_status, cust_rating, vend_rating) VALUES (?,?,?,?,?,?,?,?,"Confirmed", 0, 0)`
 	statement, err := db.Prepare(insertBookingSQL) // Prepare statement.
 	// This is good to avoid SQL injections
 	if err != nil {
@@ -35,8 +35,8 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 		return "", err
 	}
 
-	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId,
-		booking.Day, booking.Month, booking.Year, booking.Address)
+	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId, //have to update the cityID when changed on the front-end by a customer
+		booking.Day, booking.Month, booking.Year, booking.Address, booking.BookingStatus, booking.CustRating, booking.VendRating)
 	if err != nil {
 		log.Println(err.Error())
 		return "", err
@@ -104,7 +104,7 @@ func assignVendor(booking *schema.BookingSchema) error {
 	if row.Next() {
 		row.Scan(&vendorId)
 		booking.VendorId = vendorId
-	} else{
+	} else {
 		return errors.New("No vendor available")
 	}
 	row.Close()
