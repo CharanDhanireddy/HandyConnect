@@ -27,8 +27,8 @@ type Cust struct {
 	Id        int    `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
-	CityName    string `json:"city_name"`
-	CityId  int    `json:"city_id"`
+	CityName  string `json:"city_name"`
+	CityId    int    `json:"city_id"`
 	Phone     int    `json:"phone"`
 	Email     string `json:"email"`
 }
@@ -39,13 +39,16 @@ type Service struct {
 }
 
 type Booking struct {
-	Id           int    `json:"id"`
-	VendorName   string `json:"vendor_name"`
-	CustomerName string `json:"customer_name"`
-	ServiceName  string `json:"service_name"`
-	CityName     string `json:"city_name"`
-	Day          int    `json:"day"`
-	Month        int    `json:"month"`
-	Year         int    `json:"year"`
-	Address      string `json:"address"`
+	Id            int    `json:"id"`
+	VendorName    string `json:"vendor_name"`
+	CustomerName  string `json:"customer_name"`
+	ServiceName   string `json:"service_name"`
+	CityName      string `json:"city_name"`
+	Day           int    `json:"day"`
+	Month         int    `json:"month"`
+	Year          int    `json:"year"`
+	Address       string `json:"address"`
+	BookingStatus string `json:"book_stat"`
+	CustRating    int    `json:"cust_rating"`
+	VendRating    int    `json:"vend_rating"`
 }
