@@ -168,7 +168,7 @@ func UpdateCustomerRating(request structTypes.RatingRequest) (string, error) {
 
 	_, _, vendorId := GetBooking(request.BookingId)
 	_, rating, ratingCount := GetVendorRating(vendorId)
-	new_rating := (rating*ratingCount + request.Rating) / (ratingCount + 1)
+	new_rating := (rating*float32(ratingCount) + float32(request.Rating)) / float32((ratingCount + 1))
 
 	updateVendorSQL := `UPDATE vendor SET rating = ?, rating_count = ? WHERE id = ?`
 	statement, err = db.Prepare(updateVendorSQL) // Prepare statement.
@@ -205,7 +205,7 @@ func UpdateVendorRating(request structTypes.RatingRequest) (string, error) {
 
 	_, customerId, _ := GetBooking(request.BookingId)
 	_, rating, ratingCount := GetCustomerRating(customerId)
-	new_rating := (rating*ratingCount + request.Rating) / (ratingCount + 1)
+	new_rating := (rating*float32(ratingCount) + float32(request.Rating)) / float32((ratingCount + 1))
 
 	updateCustomerSQL := `UPDATE customer SET rating = ?, rating_count = ? WHERE id = ?`
 	statement, err = db.Prepare(updateCustomerSQL) // Prepare statement.
