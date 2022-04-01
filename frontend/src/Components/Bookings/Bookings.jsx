@@ -9,10 +9,10 @@ function Bookings(props) {
     const [state, setState] = useState({ bookings: [], booking: null })
 
     let statusMap = {
-        confirmed: 'Confirmed',
-        in_progress: 'In progress',
-        completed: 'Completed',
-        cancelled: 'Cancelled'
+        Confirmed: 'Confirmed',
+        In_progress: 'In progress',
+        Completed: 'Completed',
+        Cancelled: 'Cancelled'
     }
 
     useEffect(() => {
@@ -60,7 +60,7 @@ function Bookings(props) {
                             {/* <td id="vendor-name" >{booking.vendor_name}</td> */}
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
-                            <td id="status" >{statusMap[booking.status]}</td>
+                            <td id="status" >{statusMap[booking.booking_status]}</td>
                             <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}> <strong> View/Modify Booking </strong> </Button></td>
                         </tr>
                     ))
