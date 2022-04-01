@@ -38,6 +38,12 @@ func GetCityList(c *gin.Context) {
 	c.JSON(http.StatusOK, cities)
 }
 
+// Get Vendor data
+// @Summary Get Vendor data
+// @Description Get Vendor by ID
+// @Param vendor_id query string true "vendor_id"
+// @Success 200 {object} structTypes.Vendor
+// @Router /vendor [get]
 func ReturnVendor(c *gin.Context) {
 	vendorId, err := strconv.Atoi(c.Query("vendor_id"))
 	if err != nil {
@@ -58,6 +64,12 @@ func ReturnVendor(c *gin.Context) {
 	c.JSON(http.StatusOK, vend)
 }
 
+// Get Customer data
+// @Summary Get Customer data
+// @Description Get Customer by ID
+// @Param customer_id query string true "customer id"
+// @Success 200 {object} structTypes.Cust
+// @Router /customer [get]
 func CustData(c *gin.Context) {
 	customerId, err := strconv.Atoi(c.Query("customer_id"))
 	if err != nil {

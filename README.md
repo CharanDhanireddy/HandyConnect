@@ -5,12 +5,12 @@ Class project for CEN5035 - Software Engineering
 Platform for connecting customers with skilled and experienced professionals providing services (handymen, salon, applaince repair, etc).
 
 ## Team Members:
-| Name | Gatorlink Email | UFID | Responsibility |
-| :--: | :--: | :--: | :--: |
-| Sai Charan Reddy Dhanireddy | s.dhanireddy@ufl.edu | 33614329 | Frontend |
-| Srikanth Rao Parcha | parcha.srikanthr@ufl.edu | 46324560 | Frontend |
-| Venkata Shiva Reddy Manchala | manchala.v@ufl.edu | 61099624 | Backend |
-| Venkat Dhavaleswarapu | vdhavaleswarapu@ufl.edu | 72167758 |  Backend |
+| Name | Gatorlink Email | Responsibility |
+| :--: | :--: | :--: |
+| Sai Charan Reddy Dhanireddy | s.dhanireddy@ufl.edu | Frontend |
+| Srikanth Rao Parcha | parcha.srikanthr@ufl.edu | Frontend |
+| Venkata Shiva Reddy Manchala | manchala.v@ufl.edu | Backend |
+| Venkat Dhavaleswarapu | vdhavaleswarapu@ufl.edu |  Backend |
 
 ## Stack:
 - Backend: Go Lang
