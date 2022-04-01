@@ -36,7 +36,7 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 	}
 
 	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId, //have to update the cityID when changed on the front-end by a customer
-		booking.Day, booking.Month, booking.Year, booking.Address, booking.BookingStatus, booking.CustomerRating, booking.VendorRating)
+		booking.Day, booking.Month, booking.Year, booking.Address)
 	if err != nil {
 		log.Println(err.Error())
 		return "", err
@@ -45,7 +45,7 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 	return "succesfully created booking", err
 }
 
-func CancelBooking(booking schema.BookingSchema) (string, error) {
+func CancelBooking(bookingId int) (string, error) {
 	db := dbConnection.GetDbConnection()
 
 	log.Println("Updating booking record ...")
@@ -57,7 +57,7 @@ func CancelBooking(booking schema.BookingSchema) (string, error) {
 		return "", err
 	}
 
-	_, err = statement.Exec(booking.Id)
+	_, err = statement.Exec(bookingId)
 	if err != nil {
 		log.Println(err.Error())
 		return "", err
@@ -166,8 +166,8 @@ func UpdateCustomerRating(request structTypes.RatingRequest) (string, error) {
 		return "Error Occurred", err
 	}
 
-	_, _, vendorId := GetBooking(request.BookingId)
-	_, rating, ratingCount := GetVendorRating(vendorId)
+	booking := GetBooking(request.BookingId)
+	_, rating, ratingCount := GetVendorRating(booking.VendorId)
 	new_rating := (rating*float32(ratingCount) + float32(request.Rating)) / float32((ratingCount + 1))
 
 	updateVendorSQL := `UPDATE vendor SET rating = ?, rating_count = ? WHERE id = ?`
@@ -177,7 +177,7 @@ func UpdateCustomerRating(request structTypes.RatingRequest) (string, error) {
 		return "Error Occurred", err
 	}
 
-	_, err = statement.Exec(new_rating, ratingCount+1, vendorId)
+	_, err = statement.Exec(new_rating, ratingCount+1, booking.VendorId)
 	if err != nil {
 		log.Println(err.Error())
 		return "Error Occurred", err
@@ -203,8 +203,8 @@ func UpdateVendorRating(request structTypes.RatingRequest) (string, error) {
 		return "Error Occurred", err
 	}
 
-	_, customerId, _ := GetBooking(request.BookingId)
-	_, rating, ratingCount := GetCustomerRating(customerId)
+	booking := GetBooking(request.BookingId)
+	_, rating, ratingCount := GetCustomerRating(booking.CustomerId)
 	new_rating := (rating*float32(ratingCount) + float32(request.Rating)) / float32((ratingCount + 1))
 
 	updateCustomerSQL := `UPDATE customer SET rating = ?, rating_count = ? WHERE id = ?`
@@ -214,7 +214,7 @@ func UpdateVendorRating(request structTypes.RatingRequest) (string, error) {
 		return "Error Occurred", err
 	}
 
-	_, err = statement.Exec(new_rating, ratingCount+1, customerId)
+	_, err = statement.Exec(new_rating, ratingCount+1, booking.CustomerId)
 	if err != nil {
 		log.Println(err.Error())
 		return "Error Occurred", err
@@ -223,13 +223,23 @@ func UpdateVendorRating(request structTypes.RatingRequest) (string, error) {
 	return "succesfully rated booking", err
 }
 
-func GetBooking(bookingId int) (int, int, int) {
-	db := dbConnection.GetDbConnection()
+func GetBooking(bookingId int) schema.BookingSchema {
+	var booking schema.BookingSchema
 	var id int
-	var customer_id int
-	var vendor_id int
+	var vend_id int
+	var cust_id int
+	var serv_id int
+	var city_id int
+	var day int
+	var month int
+	var year int
+	var address string
+	var book_stat string
+	var cust_rating int
+	var vend_rating int
+	db := dbConnection.GetDbConnection()
 
-	sqlStmt := `SELECT id, customer_id, vendor_id FROM booking WHERE id = $1;`
+	sqlStmt := `SELECT id, vendor_id, customer_id, service_id, city_id, day, month, year, address, booking_status, customer_rating, vendor_rating FROM booking WHERE id = $1;`
 
 	row, err := db.Query(sqlStmt, bookingId)
 	if err != nil {
@@ -238,9 +248,10 @@ func GetBooking(bookingId int) (int, int, int) {
 	defer row.Close()
 
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&id, &customer_id, &vendor_id)
+		row.Scan(&id, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
+		booking = schema.BookingSchema{id, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating}
 	}
 	row.Close()
 
-	return id, customer_id, vendor_id
+	return booking
 }
