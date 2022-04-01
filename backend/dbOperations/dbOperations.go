@@ -190,6 +190,10 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	var cust_name string
 	var serv_name string
 	var city string
+	var vend_id string
+	var cust_id string
+	var serv_id string
+	var city_id string
 	var day int
 	var month int
 	var year int
@@ -201,7 +205,8 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	// var service2 string
 	// var service3 string
 
-	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating 
+	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name,
+	b.vendor_id, b.customer_id, b.service_id, b.city_id, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating
 	FROM Booking as b 
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
@@ -221,8 +226,8 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 
 	var cust_book []structTypes.Booking
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
-		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address, book_stat, cust_rating, vend_rating})
+		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
+		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating})
 		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address, cust_rating)
 	}
 	row.Close()
@@ -237,6 +242,10 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	var cust_name string
 	var serv_name string
 	var city string
+	var vend_id string
+	var cust_id string
+	var serv_id string
+	var city_id string
 	var day int
 	var month int
 	var year int
@@ -248,7 +257,8 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	// var service2 string
 	// var service3 string
 
-	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating
+	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name,
+	b.vendor_id, b.customer_id, b.service_id, b.city_id, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating
 	FROM Booking as b 
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
@@ -268,8 +278,8 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 
 	var vend_book []structTypes.Booking
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
-		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, day, month, year, address, book_stat, cust_rating, vend_rating})
+		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
+		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating})
 		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address, vend_rating)
 	}
 	row.Close()

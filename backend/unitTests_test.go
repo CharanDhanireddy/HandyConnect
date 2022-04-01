@@ -17,8 +17,8 @@ func TestCityRet(t *testing.T) {
 	dbConnection.TestDBConnection()
 
 	rr := httptest.NewRecorder()
-	cityList, _ := gin.CreateTestContext(rr)
-	requestHandlers.GetCityList(cityList)
+	context, _ := gin.CreateTestContext(rr)
+	requestHandlers.GetCityList(context)
 	assert.Equal(t, 200, rr.Code)
 
 	var got []structTypes.City
@@ -28,7 +28,7 @@ func TestCityRet(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"city_id":1,"city_name":"Gainesville"}]`
+	expected := `[{\"city_id\":1,\"city_name\":\"Gainesville\"},{\"city_id\":2,\"city_name\":\"Tampa\"},{\"city_id\":3,\"city_name\":\"Jacksonville\"}]`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -42,8 +42,8 @@ func TestCityRet_Absent(t *testing.T) { //For testing cities that aren't in the 
 	dbConnection.TestDBConnection()
 
 	rr := httptest.NewRecorder()
-	cityList, _ := gin.CreateTestContext(rr)
-	requestHandlers.GetCityList(cityList)
+	context, _ := gin.CreateTestContext(rr)
+	requestHandlers.GetCityList(context)
 	assert.Equal(t, 200, rr.Code)
 
 	var got []structTypes.City
