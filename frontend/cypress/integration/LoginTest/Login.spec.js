@@ -11,14 +11,14 @@ describe('App', () => {
         cy.get('button[id="user-login-button"]').should('exist')
     })
 
-    it('Verify redirect to home if wrong credentials are used', () => {
+    it('Verify and stay at login if wrong credentials are used', () => {
         cy.get('#emailId').type('srikanth@email.com');
         cy.get("#emailId").should('have.value', 'srikanth@email.com')
         cy.get('#passwordId').type('12345678');
         cy.get("#passwordId").should('have.value', '12345678')
 
         cy.get('#user-login-button').click();
-        cy.url().should('eq', 'http://localhost:3000/')
+        cy.url().should('eq', 'http://localhost:3000/login')
     })
 
     it('Verify redirect to dashboard if correct credentials are used', () => {
@@ -33,22 +33,3 @@ describe('App', () => {
 
 
 })
-
-
-// /* ==== Generated with Cypress Studio ==== */
-// cy.get('.row').click();
-// cy.get('#emailId').clear();
-// cy.get('#emailId').type('u1@gmail.com');
-// cy.get('#passwordId').click();
-// cy.get('#passwordId').click();
-// cy.get('#passwordId').clear();
-// cy.get('#passwordId').type('1234567890');
-// cy.get('#user-login-button').click();
-// cy.get('#Electrician > .mx-auto').click();
-// cy.get('[data-cy="0"] > .text-center').click();
-// cy.get('#addressId').clear();
-// cy.get('#addressId').type('4000 SW 37th blvd');
-// cy.get('#zipcodeId').clear();
-// cy.get('#zipcodeId').type('32608');
-// cy.get('#submitId').click();
-// /* ==== End Cypress Studio ==== */
