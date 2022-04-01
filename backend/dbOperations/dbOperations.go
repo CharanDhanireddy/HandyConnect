@@ -211,7 +211,7 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
 	JOIN city AS city 
-	ON c.city_id = city.id 
+	ON b.city_id = city.id 
 	JOIN service as s
 	ON s.id = b.service_id
 	JOIN customer AS c 
@@ -263,7 +263,7 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
 	JOIN city AS city 
-	ON c.city_id = city.id 
+	ON b.city_id = city.id 
 	JOIN service as s
 	ON s.id = b.service_id
 	JOIN customer AS c 
