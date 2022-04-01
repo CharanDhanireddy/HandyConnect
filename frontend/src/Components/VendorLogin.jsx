@@ -6,14 +6,18 @@ import {
   Row,
   Col,
   Form,
-  FormControl
+  FormControl,
+  Alert
 } from "react-bootstrap";
 import { setVendorData } from "../util/localStorage";
 import axios from "axios";
 import { BASE_URL } from "../env_setup";
 
 function VendorLogin(props) {
-  const [state, setState] = useState({ email: "", password: "", errors: {}  })
+  const [state, setState] = useState({
+    email: "", password: "", errors: {},
+    showAlert: false
+  })
   const navigate = useNavigate()
 
   let onChange = e => {
@@ -41,28 +45,15 @@ function VendorLogin(props) {
     else return false;
   }
 
+  let redirect = status => {
+    setTimeout(() => {
+      if (status == 200)
+        navigate('/vendorDashboard')
+      else
+        setState({ ...state, showAlert: 0 })
+    }, 700);
+  }
 
-  // let onLoginClick = async () => {
-  //   const vendorData = {
-  //     email: state.email,
-  //     password: state.password
-  //   };
-
-  //   let res = await axios.post(BASE_URL + "vendorLogin", vendorData)
-  //   let data = res.data
-  //   let status = res.status
-  //   console.log(data, status)
-
-  //   setVendorData(data ? data : null)
-  //   if (data)
-  //     navigate('/vendorDashboard')
-  //   else
-  //     navigate('/')
-  //   // if(data == null)
-  //   // Show Error
-  //   // else
-  //   // redirect to Homepage - with City selection popUp
-  // };
 
   let onLoginClick = async () => {
     if (!isValid()) return
@@ -70,19 +61,44 @@ function VendorLogin(props) {
       email: state.email,
       password: state.password
     };
-
-    let res = await axios.post(BASE_URL + "vendorLogin", vendorData)
-    let data = res.data
-    let status = res.status
+    let data, status
+    try {
+      let res = await axios.post(BASE_URL + "vendorLogin", vendorData)
+      data = res.data
+      status = res.status
+    }
+    catch (error) {
+      data = error.response.data
+      status = error.response.status
+    }
     console.log(data, status)
-    // if(status != 200) ? this.
-    setVendorData(data ? data : null)
-    navigate('/vendorDashboard')
+    redirect(status)
+    let showAlert = 2
+    if (status == 200) {
+      showAlert = 1
+      setVendorData(data ? data : null)
+    }
+    setState({ ...state, showAlert })
+
+    // // if(status != 200) ? this.
+    // setVendorData(data ? data : null)
+    // navigate('/vendorDashboard')
   };
 
 
   return (
     <Container className="center" >
+
+      {(state.showAlert > 0) && <Alert variant={(state.showAlert == 1) ? "success" : "danger"}>
+        <Alert.Heading>{(state.showAlert == 1) ? "Successful" : "Error"}</Alert.Heading>
+        <p>
+          {(state.showAlert == 1) ?
+            "You have successfully logged in to Handyconnect" :
+            "Wrong email or password"
+          }
+        </p>
+      </Alert>}
+
       <Row>
         <Col className="mx-auto" md="4 pt-10">
           <h1 className="login-signup-heading">Service Provider Login</h1>
