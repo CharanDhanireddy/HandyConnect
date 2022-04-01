@@ -50,8 +50,8 @@ function Booking(props) {
         let timeslot_response = await axios.get(BASE_URL + "availability",
             {
                 params: {
-                    service_id: props.booking.service_id,
-                    city_id: props.booking.city_id
+                    service_id: parseInt(props.booking.service_id),
+                    city_id: parseInt(props.booking.city_id)
                 }
             })
         setState({ ...state, timeslotList: timeslot_response.data })
@@ -88,10 +88,10 @@ function Booking(props) {
                 centered
                 size="lg"
                 show={props.booking != null}>
-                <Modal.Header className = "booking-header">
+                <Modal.Header className="booking-header">
                     Booking details
                 </Modal.Header>
-                <Modal.Body className = "booking-font">
+                <Modal.Body className="booking-font">
                     {Object.keys(BookingData)
                         // .filter(key => !key.includes('id') && !key.includes('password'))
                         .map(key => (
@@ -125,12 +125,12 @@ function Booking(props) {
                                 <Col xs={3} ><text className='text-uppercase fw-bold'>Actions</text></Col>
                                 <Col>
                                     <Button variant='outline-danger'
-                                        onClick={cancelBooking} 
-                                        className = "submit-reschedule-button"
-                                        ><strong>Cancel</strong></Button>    
+                                        onClick={cancelBooking}
+                                        className="submit-reschedule-button"
+                                    ><strong>Cancel</strong></Button>
                                     <Button variant={state.timeslotList.length ? 'warning' : 'outline-warning'}
                                         onClick={getRescheduleTimeslots}
-                                        className = 'submit-reschedule-button'
+                                        className='submit-reschedule-button'
                                     > <strong>Rescehdule</strong></Button></Col>
                             </Row>
                         </>}

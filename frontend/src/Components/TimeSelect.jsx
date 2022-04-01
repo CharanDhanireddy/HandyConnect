@@ -99,7 +99,7 @@ function TimeSelect(props) {
                 <p>
                     {(state.showAlert == 1) ?
                         "Booking created! You are being redirected to Login Page" :
-                        "Same service cannot be booked twice for the same location and date!"
+                        "Same service cannot be booked twice for the same date!"
                     }
                 </p>
             </Alert>}
