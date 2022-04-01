@@ -48,6 +48,10 @@ type Booking struct {
 	CustomerName   string `json:"customer_name"`
 	ServiceName    string `json:"service_name"`
 	CityName       string `json:"city_name"`
+	VendorId       string `json:"vendor_id"`
+	CustomerId     string `json:"customer_id"`
+	ServiceId      string `json:"service_id"`
+	CityId         string `json:"city_id"`
 	Day            int    `json:"day"`
 	Month          int    `json:"month"`
 	Year           int    `json:"year"`

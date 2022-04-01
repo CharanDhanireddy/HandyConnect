@@ -85,7 +85,7 @@ func CheckAvailability(cityId int, serviceId int, day int, month int, year int) 
 	}
 	row.Close()
 
-	sqlStmt = `SELECT count(id) FROM booking WHERE vendor_id in ($1) and day = $2 and month = $3 and year = $4;`
+	sqlStmt = `SELECT count(id) FROM booking WHERE vendor_id in ($1) and day = $2 and month = $3 and year = $4 and booking_status != "Cancelled";`
 
 	row, err = db.Query(sqlStmt, strings.Join(vendorIdList, ","), day, month, year)
 	if err != nil {
@@ -109,7 +109,7 @@ func assignVendor(booking *schema.BookingSchema) error {
 				FROM vendor
 				LEFT JOIN 
 				(SELECT id as booking_id, vendor_id FROM booking
-				WHERE booking.day = $1 AND booking.month = $2 AND booking.year = $3 AND booking.service_id = $4 and booking.city_id = $5)
+				WHERE booking.day = $1 AND booking.month = $2 AND booking.year = $3 AND booking.service_id = $4 and booking.city_id = $5 AND booking.booking_status != "Cancelled")
 				
 				ON vendor_id = vendor.id
 				WHERE vendor.service1_id = $4 AND vendor.city_id = $5
