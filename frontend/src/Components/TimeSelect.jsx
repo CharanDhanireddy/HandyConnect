@@ -20,14 +20,16 @@ function TimeSelect(props) {
 
     useEffect(() => {
         let fetchData = async () => {
-            let timeslot_response = await axios.get(BASE_URL + "availability",
-                {
-                    params: {
-                        service_id: props.service?.service_id,
-                        city_id: props.city?.city_id
-                    }
-                })
-            setState({ ...initial_state, timeslotList: timeslot_response.data })
+            if (props.city && props.service) {
+                let timeslot_response = await axios.get(BASE_URL + "availability",
+                    {
+                        params: {
+                            service_id: props.service?.service_id,
+                            city_id: props.city?.city_id
+                        }
+                    })
+                setState({ ...initial_state, timeslotList: timeslot_response.data })
+            }
         }
         fetchData();
     }, [props.service])
