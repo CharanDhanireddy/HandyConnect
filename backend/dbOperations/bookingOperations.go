@@ -49,7 +49,7 @@ func CancelBooking(booking schema.BookingSchema) (string, error) {
 	db := dbConnection.GetDbConnection()
 
 	log.Println("Updating booking record ...")
-	updateBookingSQL := `UPDATE booking SET booking_status = ? WHERE id = ?`
+	updateBookingSQL := `UPDATE booking SET booking_status = "Cancelled" WHERE id = ?`
 	statement, err := db.Prepare(updateBookingSQL) // Prepare statement.
 	// This is good to avoid SQL injections
 	if err != nil {
@@ -57,19 +57,13 @@ func CancelBooking(booking schema.BookingSchema) (string, error) {
 		return "", err
 	}
 
-	_, err = statement.Exec(booking.BookingStatus, booking.Id)
+	_, err = statement.Exec(booking.Id)
 	if err != nil {
 		log.Println(err.Error())
 		return "", err
 	}
 
 	return "succesfully cancelled booking", err
-}
-
-func RescheduleBooking(booking schema.BookingSchema) (string, error) {
-	CancelBooking()
-	InsertBooking()
-	print("succesfully cancelled booking")
 }
 
 func CheckAvailability(cityId int, serviceId int, day int, month int, year int) bool {
