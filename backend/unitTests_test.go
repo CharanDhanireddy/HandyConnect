@@ -2,10 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"handy/requestHandlers"
 	"handy/structTypes"
+	"net/http"
 	"net/http/httptest"
 	"testing"
+	"net/url"
 
 	"handy/dbConnection"
 
@@ -64,17 +67,26 @@ func TestCust(t *testing.T) {
 
 	rr := httptest.NewRecorder()
 	cust_data, _ := gin.CreateTestContext(rr)
+	
+	var params []gin.Param
+	cust_data.Params =  append(params, gin.Param{"customer_id", "1"})
+	var req http.Request
+	cust_data.Request = &req
+	var url url.URL
+	req.URL = &url
+	req.URL.RawQuery = "customer_id=1"
+
 	requestHandlers.CustData(cust_data)
 	assert.Equal(t, 200, rr.Code)
 
-	var got []structTypes.Cust
+	var got structTypes.Cust
 	err := json.Unmarshal(rr.Body.Bytes(), &got)
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"first_name":"customer name","last_name":"last name","city_name":"Gainesville","phn":2222222222,"email":"cusemail@email.com"}]`
+	expected := `{"id":1,"first_name":"customer name","last_name":"last name","city_name":"Gainesville","city_id":1,"phone":2222222222,"email":"cusemail@email.com","rating":0,"rating_count":0}`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
