@@ -116,6 +116,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/cancelBooking": {
+            "delete": {
+                "description": "Cancel a booking by booking ID",
+                "summary": "Cancel a booking",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "booking id",
+                        "name": "booking_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/cities": {
             "get": {
                 "description": "get all cities in which services are available",
@@ -245,6 +268,39 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/schema.CustomerProfileSchema"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/rescheduleBooking": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Reschedule a current booking",
+                "parameters": [
+                    {
+                        "description": "Booking Reschedule Request",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.BookingRescheduleRequest"
                         }
                     }
                 ],
@@ -504,6 +560,23 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "service3_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "structTypes.BookingRescheduleRequest": {
+            "type": "object",
+            "properties": {
+                "booking_id": {
+                    "type": "integer"
+                },
+                "day": {
+                    "type": "integer"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "year": {
                     "type": "integer"
                 }
             }

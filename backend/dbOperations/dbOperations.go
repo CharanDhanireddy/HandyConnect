@@ -96,7 +96,7 @@ func DisplayCustData(customerId int) (structTypes.Cust, error) {
 	var phn int
 	var email string
 	var rating float32
-	var rating_count int 
+	var rating_count int
 
 	var cust_data structTypes.Cust
 
@@ -112,7 +112,7 @@ func DisplayCustData(customerId int) (structTypes.Cust, error) {
 	if !row.Next() {
 		return cust_data, nil
 	}
-	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email, &rating, & rating_count)
+	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email, &rating, &rating_count)
 	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email, rating, rating_count}
 	row.Close()
 
@@ -131,7 +131,7 @@ func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 	// var service2 string
 	// var service3 string
 	var rating float32
-	var rating_count int 
+	var rating_count int
 
 	var vend_data structTypes.Vendor
 
@@ -148,7 +148,7 @@ func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 		return vend_data, nil
 	}
 
-	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1, &rating, & rating_count)
+	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1, &rating, &rating_count)
 	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1, rating, rating_count}
 
 	row.Close()
@@ -201,7 +201,7 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	// var service2 string
 	// var service3 string
 
-	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address 
+	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating 
 	FROM Booking as b 
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
@@ -248,7 +248,7 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	// var service2 string
 	// var service3 string
 
-	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address 
+	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating
 	FROM Booking as b 
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
