@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { Container, Card, Modal, Form, FormControl, Button, Row, Col } from "react-bootstrap";
+import { Container, Card, Modal, Form, FormControl, Button, Row, Col, Alert } from "react-bootstrap";
 import axios from 'axios';
 import { BASE_URL } from '../env_setup';
 import { getToken } from '../util/localStorage';
@@ -10,7 +10,8 @@ const initial_state = {
     timeslotList: [],
     address: null,
     zipcode: null,
-    errors: []
+    errors: [],
+    showAlert: 0
 }
 
 function TimeSelect(props) {
@@ -26,7 +27,7 @@ function TimeSelect(props) {
                         city_id: props.city?.city_id
                     }
                 })
-            setState({ ...state, timeslotList: timeslot_response.data })
+            setState({ ...initial_state, timeslotList: timeslot_response.data })
         }
         fetchData();
     }, [props.service])
@@ -51,30 +52,57 @@ function TimeSelect(props) {
         props.updateState('service', null)
     }
 
+    let redirect = status => {
+        setTimeout(() => {
+            if (status == 200)
+                navigate('/bookings')
+            else
+                setState({ ...state, showAlert: 0 })
+        }, 3000);
+    }
+
     let onSubmit = async (e) => {
         if (!isValid()) return
-        let res = await axios.post(BASE_URL + "booking", {
-            city_id: parseInt(props.city.city_id),
-            service_id: props.service.service_id,
-            customer_id: getToken(),
-            day: state.timeslot.day,
-            month: state.timeslot.month,
-            year: state.timeslot.year,
-            address: state.address + ' ' + props.city.city_name + ' ' + state.zipcode,
-            // to change
-            vendor_id: 6
-        })
-        let data = res.data
-        let status = res.status
-
+        let data, status;
+        try {
+            let res = await axios.post(BASE_URL + "booking", {
+                city_id: parseInt(props.city.city_id),
+                service_id: props.service.service_id,
+                customer_id: getToken(),
+                day: state.timeslot.day,
+                month: state.timeslot.month,
+                year: state.timeslot.year,
+                address: state.address + ' ' + props.city.city_name + ' ' + state.zipcode,
+                // to change
+                vendor_id: 6
+            })
+            data = res.data
+            status = res.status
+        }
+        catch (error) {
+            data = error.response.data
+            status = error.response.status
+        }
+        redirect(status)
+        let showAlert = (status == 200) ? 1 : 2
+        setState({ ...state, showAlert })
         // navigate('/')
-        setState(initial_state)
-        props.updateState('showToast', true)
+        // setState(initial_state)
+        // props.updateState('showToast', true)
         props.updateState('service', null)
     }
 
     return (
         <>
+            {(state.showAlert > 0) && <Alert variant={(state.showAlert == 1) ? "success" : "danger"}>
+                <Alert.Heading>{(state.showAlert == 1) ? "Success" : "Error"}</Alert.Heading>
+                <p>
+                    {(state.showAlert == 1) ?
+                        "Booking created! You are being redirected to Login Page" :
+                        "Same service cannot be booked twice for the same location and date!"
+                    }
+                </p>
+            </Alert>}
             <Modal
                 size="lg"
                 show={props.service}
