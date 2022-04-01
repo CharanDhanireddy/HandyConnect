@@ -27,7 +27,7 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 	}
 
 	log.Println("Inserting booking record ...")
-	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address, booking_status, cust_rating, vend_rating) VALUES (?,?,?,?,?,?,?,?,"Confirmed", 0, 0)`
+	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address, booking_status, customer_rating, vendor_rating) VALUES (?,?,?,?,?,?,?,?,"Confirmed", 0, 0)`
 	statement, err := db.Prepare(insertBookingSQL) // Prepare statement.
 	// This is good to avoid SQL injections
 	if err != nil {
@@ -36,7 +36,7 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 	}
 
 	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId, //have to update the cityID when changed on the front-end by a customer
-		booking.Day, booking.Month, booking.Year, booking.Address, booking.BookingStatus, booking.CustRating, booking.VendRating)
+		booking.Day, booking.Month, booking.Year, booking.Address, booking.BookingStatus, booking.CustomerRating, booking.VendorRating)
 	if err != nil {
 		log.Println(err.Error())
 		return "", err
@@ -147,4 +147,100 @@ func ServiceAvailability(cityId int, serviceId int) []structTypes.Date {
 	}
 
 	return availableDates
+}
+
+func UpdateCustomerRating(request structTypes.RatingRequest) (string, error) {
+	db := dbConnection.GetDbConnection()
+
+	log.Println("Updating Customer rating ...")
+	updateBookingSQL := `UPDATE booking SET customer_rating = ? WHERE id = ?`
+	statement, err := db.Prepare(updateBookingSQL) // Prepare statement.
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	_, err = statement.Exec(request.Rating, request.BookingId)
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	_, _, vendorId := GetBooking(request.BookingId)
+	_, rating, ratingCount := GetVendorRating(vendorId)
+	new_rating := (rating*ratingCount + request.Rating) / (ratingCount + 1)
+
+	updateVendorSQL := `UPDATE vendor SET rating = ?, rating_count = ? WHERE id = ?`
+	statement, err = db.Prepare(updateVendorSQL) // Prepare statement.
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	_, err = statement.Exec(new_rating, ratingCount+1, vendorId)
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	return "succesfully rated booking", err
+}
+
+func UpdateVendorRating(request structTypes.RatingRequest) (string, error) {
+	db := dbConnection.GetDbConnection()
+
+	log.Println("Updating Customer rating ...")
+	updateBookingSQL := `UPDATE booking SET vendor_rating = ? WHERE id = ?`
+	statement, err := db.Prepare(updateBookingSQL) // Prepare statement.
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	_, err = statement.Exec(request.Rating, request.BookingId)
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	_, customerId, _ := GetBooking(request.BookingId)
+	_, rating, ratingCount := GetCustomerRating(customerId)
+	new_rating := (rating*ratingCount + request.Rating) / (ratingCount + 1)
+
+	updateCustomerSQL := `UPDATE customer SET rating = ?, rating_count = ? WHERE id = ?`
+	statement, err = db.Prepare(updateCustomerSQL) // Prepare statement.
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	_, err = statement.Exec(new_rating, ratingCount+1, customerId)
+	if err != nil {
+		log.Println(err.Error())
+		return "Error Occurred", err
+	}
+
+	return "succesfully rated booking", err
+}
+
+func GetBooking(bookingId int) (int, int, int) {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var customer_id int
+	var vendor_id int
+
+	sqlStmt := `SELECT id, customer_id, vendor_id FROM booking WHERE id = $1;`
+
+	row, err := db.Query(sqlStmt, bookingId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&id, &customer_id, &vendor_id)
+	}
+	row.Close()
+
+	return id, customer_id, vendor_id
 }
