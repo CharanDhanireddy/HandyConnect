@@ -75,6 +75,17 @@ definitions:
       service3_id:
         type: integer
     type: object
+  structTypes.BookingRescheduleRequest:
+    properties:
+      booking_id:
+        type: integer
+      day:
+        type: integer
+      month:
+        type: integer
+      year:
+        type: integer
+    type: object
   structTypes.City:
     properties:
       city_id:
@@ -221,6 +232,21 @@ paths:
           schema:
             type: object
       summary: create new service booking
+  /cancelBooking:
+    delete:
+      description: Cancel a booking by booking ID
+      parameters:
+      - description: booking id
+        in: query
+        name: booking_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Cancel a booking
   /cities:
     get:
       description: get all cities in which services are available
@@ -316,6 +342,27 @@ paths:
           schema:
             type: object
       summary: create new customer
+  /rescheduleBooking:
+    post:
+      parameters:
+      - description: Booking Reschedule Request
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/structTypes.BookingRescheduleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: Reschedule a current booking
   /vendor:
     get:
       description: Get Vendor by ID
