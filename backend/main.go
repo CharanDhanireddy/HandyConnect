@@ -14,7 +14,6 @@ import (
 // @version 1.0.0
 // @host localhost:10000
 // @BasePath /
-
 func main() {
 	log.Println("Handy Connect server starting....")
 
