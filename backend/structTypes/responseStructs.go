@@ -21,6 +21,8 @@ type Vendor struct {
 	ServiceName string `json:"service_name"`
 	// Service2   string `json: "service2"`
 	// Service3   string `json: "service3"`
+	Rating string `json:"rating"`
+	RatingCount string `json:"rating_count"`
 }
 
 type Cust struct {
@@ -31,6 +33,8 @@ type Cust struct {
 	CityId    int    `json:"city_id"`
 	Phone     int    `json:"phone"`
 	Email     string `json:"email"`
+	Rating string `json:"rating"`
+	RatingCount string `json:"rating_count"`
 }
 
 type Service struct {
@@ -39,16 +43,16 @@ type Service struct {
 }
 
 type Booking struct {
-	Id            int    `json:"id"`
-	VendorName    string `json:"vendor_name"`
-	CustomerName  string `json:"customer_name"`
-	ServiceName   string `json:"service_name"`
-	CityName      string `json:"city_name"`
-	Day           int    `json:"day"`
-	Month         int    `json:"month"`
-	Year          int    `json:"year"`
-	Address       string `json:"address"`
-	BookingStatus string `json:"book_stat"`
-	CustRating    int    `json:"cust_rating"`
-	VendRating    int    `json:"vend_rating"`
+	Id             int    `json:"id"`
+	VendorName     string `json:"vendor_name"`
+	CustomerName   string `json:"customer_name"`
+	ServiceName    string `json:"service_name"`
+	CityName       string `json:"city_name"`
+	Day            int    `json:"day"`
+	Month          int    `json:"month"`
+	Year           int    `json:"year"`
+	Address        string `json:"address"`
+	BookingStatus  string `json:"booking_status"`
+	CustomerRating int    `json:"customer_rating"`
+	VendorRating   int    `json:"vendor_rating"`
 }

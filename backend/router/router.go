@@ -62,6 +62,10 @@ func SetupRouter() *gin.Engine {
 
 	//Booking reschedule
 	r.POST("/bookingrescheduled", requestHandlers.RescheduleBooking)
+	
+	r.POST("/customerRating", requestHandlers.CustomerRating)
+
+	r.POST("/vendorRating", requestHandlers.VendorRating)
 
 	return r
 }

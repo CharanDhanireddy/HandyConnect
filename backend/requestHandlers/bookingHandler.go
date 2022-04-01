@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"handy/dbOperations"
 	schema "handy/schema"
+	"handy/structTypes"
 	"log"
 	"net/http"
 	"strconv"
@@ -117,4 +118,56 @@ func RescheduleBooking(c *gin.Context) {
 	}
 	fmt.Println(response2)
 	c.JSON(http.StatusOK, response1)
+}
+
+// Rating provided by customer for a service vendor
+// @Summary rating provided by customer for a booking
+// @Produce json
+// @Param data body schemaTypes.RatingRequest true "rating data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /customerRating [post]
+func CustomerRating(c *gin.Context) {
+
+	var request structTypes.RatingRequest
+
+	if err := c.BindJSON(&request); err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, "an error occurred while parsing request")
+		return
+	}
+
+	response, err := dbOperations.UpdateCustomerRating(request)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
+}
+
+// Rating provided by vendor for a customer
+// @Summary rating provided by vendor for a customer
+// @Produce json
+// @Param data body schemaTypes.RatingRequest true "rating data"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /vendorRating [post]
+func VendorRating(c *gin.Context) {
+
+	var request structTypes.RatingRequest
+
+	if err := c.BindJSON(&request); err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, "an error occurred while parsing request")
+		return
+	}
+
+	response, err := dbOperations.UpdateVendorRating(request)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, response)
 }
