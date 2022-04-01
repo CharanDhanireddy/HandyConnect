@@ -72,7 +72,6 @@ function Bookings(props) {
                             <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}> <strong> View/Modify Booking </strong> </Button></td>
                         </tr>
                     ))
-
                     }
                 </tbody>
             </Table>
