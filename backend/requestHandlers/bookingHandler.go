@@ -15,8 +15,8 @@ import (
 // GetServiceAvailability
 // @Summary get service's availability in a city
 // @Produce json
-// @Param city_id path string true "city ID"
-// @Param service_id path string true "service ID"
+// @Param city_id query string true "city ID"
+// @Param service_id query string true "service ID"
 // @Success 200 {array} []structTypes.Date
 // @Failure 400 {object} object
 // @Router /availability [get]
@@ -123,7 +123,7 @@ func RescheduleBooking(c *gin.Context) {
 // Rating provided by customer for a service vendor
 // @Summary rating provided by customer for a booking
 // @Produce json
-// @Param data body schemaTypes.RatingRequest true "rating data"
+// @Param data body structTypes.RatingRequest true "rating data"
 // @Success 200 {object} object
 // @Failure 400 {object} object
 // @Router /customerRating [post]
@@ -149,7 +149,7 @@ func CustomerRating(c *gin.Context) {
 // Rating provided by vendor for a customer
 // @Summary rating provided by vendor for a customer
 // @Produce json
-// @Param data body schemaTypes.RatingRequest true "rating data"
+// @Param data body structTypes.RatingRequest true "rating data"
 // @Success 200 {object} object
 // @Failure 400 {object} object
 // @Router /vendorRating [post]
