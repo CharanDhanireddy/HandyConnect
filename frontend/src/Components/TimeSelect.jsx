@@ -100,7 +100,7 @@ function TimeSelect(props) {
                 <Alert.Heading>{(state.showAlert == 1) ? "Success" : "Error"}</Alert.Heading>
                 <p>
                     {(state.showAlert == 1) ?
-                        "Booking created! You are being redirected to Login Page" :
+                        "Booking created! You are being redirected to Bookings Page" :
                         "Same service cannot be booked twice for the same date!"
                     }
                 </p>

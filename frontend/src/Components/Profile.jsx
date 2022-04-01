@@ -20,17 +20,17 @@ function Profile(props) {
 
     return (
         <div className='user-profile-details'>
-            <h3 className='mb-3 mt-4'>{state.userData['first_name']} {state.userData['last_name']}</h3>
+            <h3 className='mb-3 mt-4' data-cy="name">{state.userData['first_name']} {state.userData['last_name']}</h3>
             <table className = "profile-table">
-                <tr>
+                <tr data-cy="city_name">
                  <th>City</th>
                  <td>{state.userData['city_name']}</td>   
                 </tr>
-                <tr>
+                <tr data-cy="phone">
                     <th>Phone</th>
                     <td>{state.userData['phone']}</td>
                 </tr>
-                <tr>
+                <tr data-cy="email">
                     <th>Email</th>
                     <td>{state.userData['email']}</td>
                 </tr>

@@ -30,7 +30,7 @@ describe("SignUp page", function () {
         cy.get(':nth-child(7) > .invalid-feedback').should('exist')
     })
 
-    it("Verify SignUp API completion and redirected to Homepage", () => {
+    it("Enter existing email or phone number, get error popup and stay on signup page", () => {
         cy.wait(500)
         cy.get('#firstNameId').type('fName');
         cy.get("#firstNameId").should('have.value', 'fName')
@@ -42,12 +42,12 @@ describe("SignUp page", function () {
         cy.get("#cityId").should('have.value', '2')
         cy.get('#emailId').type('a@b.c');
         cy.get("#emailId").should('have.value', 'a@b.c')
-        cy.get('#passwordId').type('12345678');
-        cy.get("#passwordId").should('have.value', '12345678')
-        cy.get('#rePasswordId').type('12345678');
-        cy.get("#rePasswordId").should('have.value', '12345678')
+        cy.get('#passwordId').type('123456789');
+        cy.get("#passwordId").should('have.value', '123456789')
+        cy.get('#rePasswordId').type('123456789');
+        cy.get("#rePasswordId").should('have.value', '123456789')
 
         cy.get('#signup-button').click();
-        cy.url().should('eq', 'http://localhost:3000/')
+        cy.url().should('eq', 'http://localhost:3000/signup')
     })
 })
