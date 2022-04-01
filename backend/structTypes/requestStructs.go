@@ -9,3 +9,10 @@ type RatingRequest struct {
 	BookingId int `json:"booking_id"`
 	Rating    int `json:"rating"`
 }
+
+type BookingRescheduleRequest struct {
+	BookingId int `json:"booking_id"`
+	Day       int `json:"day"`
+	Month     int `json:"month"`
+	Year      int `json:"year"`
+}
