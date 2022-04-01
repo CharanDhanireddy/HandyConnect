@@ -15,6 +15,14 @@ function Bookings(props) {
         Cancelled: 'Cancelled'
     }
 
+    let statusColourMap = {
+        Confirmed: 'black',
+        In_progress: 'orange',
+        Completed: 'green',
+        Cancelled: 'red'
+    }
+    
+
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
@@ -42,7 +50,7 @@ function Bookings(props) {
         <Container id="booking-table" className='mt-4'>
 
             <Table responsive >
-                <thead className="booking-header">
+                <thead className = "booking-header">
                     <tr>
                         {tableHeaders.map((header, key) => (
                             // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
@@ -51,7 +59,7 @@ function Bookings(props) {
                         }
                     </tr>
                 </thead>
-                <tbody className="booking-font">
+                <tbody className = "booking-font">
                     {state.bookings && state.bookings.map((booking, key) => (
                         // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
                         <tr key={key}>
@@ -60,8 +68,8 @@ function Bookings(props) {
                             {/* <td id="vendor-name" >{booking.vendor_name}</td> */}
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
-                            <td id="status" >{statusMap[booking.booking_status]}</td>
-                            <td ><Button variant="outline-secondary" disabled={booking.booking_status == 'Cancelled'} onClick={() => setBooking(booking)}> <strong> Modify Booking </strong> </Button></td>
+                            <td id="status" style = {{color: statusColourMap[booking.booking_status]}}>{statusMap[booking.booking_status]}</td>
+                            <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}> <strong> View/Modify Booking </strong> </Button></td>
                         </tr>
                     ))
 
