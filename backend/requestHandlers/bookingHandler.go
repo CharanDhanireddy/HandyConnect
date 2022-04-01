@@ -71,20 +71,23 @@ func CreateBooking(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// Cancel a booking
+// @Summary Cancel a booking
+// @Description Cancel a booking by booking ID
+// @Param booking_id query string true "booking id"
+// @Success 200 {object} object
+// @Router /cancelBooking [delete]
 func CancelBooking(c *gin.Context) {
 
-	var request schema.BookingSchema
-
-	// Try to decode the request body into the struct. If there is an error,
-	// respond to the client with the error message and a 400 status code.
-
-	if err := c.BindJSON(&request); err != nil {
-		log.Println(err)
-		c.JSON(http.StatusBadRequest, "an error occurred while parsing request")
+	bookingId, err := strconv.Atoi(c.Query("booking_id"))
+	if err != nil {
+		fmt.Println("stoi error for booking_id")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer booking_id")
 		return
 	}
 
-	response, err := dbOperations.CancelBooking(request)
+	response, err := dbOperations.CancelBooking(bookingId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -93,9 +96,16 @@ func CancelBooking(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+// RescheduleBooking
+// @Summary Reschedule a current booking
+// @Produce json
+// @Param data body structTypes.BookingRescheduleRequest true "Booking Reschedule Request"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /rescheduleBooking [post]
 func RescheduleBooking(c *gin.Context) {
 
-	var request schema.BookingSchema
+	var request structTypes.BookingRescheduleRequest
 
 	// Try to decode the request body into the struct. If there is an error,
 	// respond to the client with the error message and a 400 status code.
@@ -106,12 +116,17 @@ func RescheduleBooking(c *gin.Context) {
 		return
 	}
 
-	response1, err := dbOperations.InsertBooking(request)
+	booking := dbOperations.GetBooking(request.BookingId)
+	booking.Day = request.Day
+	booking.Month = request.Month
+	booking.Year = request.Year
+
+	response1, err := dbOperations.InsertBooking(booking)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
-	response2, err := dbOperations.CancelBooking(request)
+	response2, err := dbOperations.CancelBooking(request.BookingId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
