@@ -49,8 +49,6 @@ func SetupRouter() *gin.Engine {
 	//Post vendor booking
 	r.GET("/vendorbooking", requestHandlers.ReturnBookingVend)
 
-	r.GET("/vendorapi", requestHandlers.ReturnVendor)
-
 	//Booking cancellation
 	r.DELETE("/cancelBooking", requestHandlers.CancelBooking)
 
