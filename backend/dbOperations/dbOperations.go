@@ -95,10 +95,12 @@ func DisplayCustData(customerId int) (structTypes.Cust, error) {
 	var city_id int
 	var phn int
 	var email string
+	var rating float32
+	var rating_count int 
 
 	var cust_data structTypes.Cust
 
-	sqlStmt := `SELECT c.id, c.first_name, c.last_name, city.city_name, c.city_id, c.phone, c.email FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
+	sqlStmt := `SELECT c.id, c.first_name, c.last_name, city.city_name, c.city_id, c.phone, c.email, c.rating, c.rating_count FROM customer AS C JOIN city AS city ON c.city_id = city.id WHERE c.id = $1;`
 
 	row, err := db.Query(sqlStmt, customerId)
 	if err != nil {
@@ -110,8 +112,8 @@ func DisplayCustData(customerId int) (structTypes.Cust, error) {
 	if !row.Next() {
 		return cust_data, nil
 	}
-	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email)
-	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email}
+	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email, &rating, & rating_count)
+	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email, rating, rating_count}
 	row.Close()
 
 	return cust_data, nil
@@ -128,10 +130,12 @@ func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 	var service1 string
 	// var service2 string
 	// var service3 string
+	var rating float32
+	var rating_count int 
 
 	var vend_data structTypes.Vendor
 
-	sqlStmt := `SELECT v.id, v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
+	sqlStmt := `SELECT v.id, v.first_name, v.last_name, city.city_name, v.phone, v.email, service.service_name, v.rating, v.rating_count  FROM vendor AS v JOIN city AS city ON v.city_id = city.id JOIN service ON service.id=v.service1_id WHERE v.id = $1;`
 
 	row, err := db.Query(sqlStmt, vendorId)
 	if err != nil {
@@ -144,8 +148,8 @@ func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 		return vend_data, nil
 	}
 
-	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1)
-	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1}
+	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1, &rating, & rating_count)
+	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1, rating, rating_count}
 
 	row.Close()
 

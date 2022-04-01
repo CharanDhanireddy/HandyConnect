@@ -50,14 +50,14 @@ const docTemplate = `{
                         "type": "string",
                         "description": "city ID",
                         "name": "city_id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "service ID",
                         "name": "service_id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],
@@ -136,12 +136,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/customer": {
+            "get": {
+                "description": "Get Customer by ID",
+                "summary": "Get Customer data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "customer id",
+                        "name": "customer_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.Cust"
+                        }
+                    }
+                }
+            }
+        },
         "/customerLogin": {
             "post": {
                 "produces": [
                     "application/json"
                 ],
-                "summary": "verify username and password of customer",
+                "summary": "verify email and password of customer",
                 "parameters": [
                     {
                         "description": "Login data",
@@ -168,6 +191,39 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/customerRating": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "rating provided by customer for a booking",
+                "parameters": [
+                    {
+                        "description": "rating data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.RatingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object"
                         }
@@ -208,12 +264,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/vendor": {
+            "get": {
+                "description": "Get Vendor by ID",
+                "summary": "Get Vendor data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "vendor_id",
+                        "name": "vendor_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.Vendor"
+                        }
+                    }
+                }
+            }
+        },
         "/vendorLogin": {
             "post": {
                 "produces": [
                     "application/json"
                 ],
-                "summary": "verify username and password of vendor",
+                "summary": "verify email and password of vendor",
                 "parameters": [
                     {
                         "description": "Login data",
@@ -240,6 +319,39 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorized",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/vendorRating": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "rating provided by vendor for a customer",
+                "parameters": [
+                    {
+                        "description": "rating data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structTypes.RatingRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "type": "object"
                         }
@@ -288,10 +400,16 @@ const docTemplate = `{
                 "address": {
                     "type": "string"
                 },
+                "booking_status": {
+                    "type": "string"
+                },
                 "city_id": {
                     "type": "integer"
                 },
                 "customer_id": {
+                    "type": "integer"
+                },
+                "customer_rating": {
                     "type": "integer"
                 },
                 "day": {
@@ -307,6 +425,9 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "vendor_id": {
+                    "type": "integer"
+                },
+                "vendor_rating": {
                     "type": "integer"
                 },
                 "year": {
@@ -337,6 +458,12 @@ const docTemplate = `{
                 },
                 "phone": {
                     "type": "string"
+                },
+                "rating": {
+                    "type": "string"
+                },
+                "rating_count": {
+                    "type": "string"
                 }
             }
         },
@@ -364,6 +491,12 @@ const docTemplate = `{
                 "phone": {
                     "type": "string"
                 },
+                "rating": {
+                    "type": "string"
+                },
+                "rating_count": {
+                    "type": "string"
+                },
                 "service1_id": {
                     "type": "integer"
                 },
@@ -386,6 +519,38 @@ const docTemplate = `{
                 }
             }
         },
+        "structTypes.Cust": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer"
+                },
+                "city_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "rating_count": {
+                    "type": "integer"
+                }
+            }
+        },
         "structTypes.Date": {
             "type": "object",
             "properties": {
@@ -403,10 +568,54 @@ const docTemplate = `{
         "structTypes.LoginRequest": {
             "type": "object",
             "properties": {
-                "password": {
+                "email": {
                     "type": "string"
                 },
-                "username": {
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "structTypes.RatingRequest": {
+            "type": "object",
+            "properties": {
+                "booking_id": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "integer"
+                }
+            }
+        },
+        "structTypes.Vendor": {
+            "type": "object",
+            "properties": {
+                "city_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "description": "Service2   string ` + "`" + `json: \"service2\"` + "`" + `\nService3   string ` + "`" + `json: \"service3\"` + "`" + `",
+                    "type": "number"
+                },
+                "rating_count": {
+                    "type": "integer"
+                },
+                "service_name": {
                     "type": "string"
                 }
             }
