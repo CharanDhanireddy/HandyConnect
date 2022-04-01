@@ -100,7 +100,7 @@ function Booking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
-                    {(props.booking.status == 'completed') &&
+                    {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
                             <Col>
@@ -118,7 +118,7 @@ function Booking(props) {
                             </Col>
                         </Row>
                     }
-                    {(props.booking.status == 'confirmed') &&
+                    {(props.booking.booking_status == 'Confirmed') &&
                         <>
                             <hr />
                             <Row>
