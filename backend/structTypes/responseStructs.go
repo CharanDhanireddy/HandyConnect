@@ -21,20 +21,20 @@ type Vendor struct {
 	ServiceName string `json:"service_name"`
 	// Service2   string `json: "service2"`
 	// Service3   string `json: "service3"`
-	Rating string `json:"rating"`
-	RatingCount string `json:"rating_count"`
+	Rating      float32 `json:"rating"`
+	RatingCount int     `json:"rating_count"`
 }
 
 type Cust struct {
-	Id        int    `json:"id"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	CityName  string `json:"city_name"`
-	CityId    int    `json:"city_id"`
-	Phone     int    `json:"phone"`
-	Email     string `json:"email"`
-	Rating string `json:"rating"`
-	RatingCount string `json:"rating_count"`
+	Id          int     `json:"id"`
+	FirstName   string  `json:"first_name"`
+	LastName    string  `json:"last_name"`
+	CityName    string  `json:"city_name"`
+	CityId      int     `json:"city_id"`
+	Phone       int     `json:"phone"`
+	Email       string  `json:"email"`
+	Rating      float32 `json:"rating"`
+	RatingCount int     `json:"rating_count"`
 }
 
 type Service struct {

@@ -4,9 +4,13 @@ definitions:
     properties:
       address:
         type: string
+      booking_status:
+        type: string
       city_id:
         type: integer
       customer_id:
+        type: integer
+      customer_rating:
         type: integer
       day:
         type: integer
@@ -17,6 +21,8 @@ definitions:
       service_id:
         type: integer
       vendor_id:
+        type: integer
+      vendor_rating:
         type: integer
       year:
         type: integer
@@ -37,6 +43,10 @@ definitions:
         type: string
       phone:
         type: string
+      rating:
+        type: string
+      rating_count:
+        type: string
     type: object
   schema.VendorProfileSchema:
     properties:
@@ -54,6 +64,10 @@ definitions:
         type: string
       phone:
         type: string
+      rating:
+        type: string
+      rating_count:
+        type: string
       service1_id:
         type: integer
       service2_id:
@@ -68,6 +82,27 @@ definitions:
       city_name:
         type: string
     type: object
+  structTypes.Cust:
+    properties:
+      city_id:
+        type: integer
+      city_name:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone:
+        type: integer
+      rating:
+        type: number
+      rating_count:
+        type: integer
+    type: object
   structTypes.Date:
     properties:
       day:
@@ -79,9 +114,40 @@ definitions:
     type: object
   structTypes.LoginRequest:
     properties:
+      email:
+        type: string
       password:
         type: string
-      username:
+    type: object
+  structTypes.RatingRequest:
+    properties:
+      booking_id:
+        type: integer
+      rating:
+        type: integer
+    type: object
+  structTypes.Vendor:
+    properties:
+      city_name:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone:
+        type: integer
+      rating:
+        description: |-
+          Service2   string `json: "service2"`
+          Service3   string `json: "service3"`
+        type: number
+      rating_count:
+        type: integer
+      service_name:
         type: string
     type: object
 host: localhost:10000
@@ -109,12 +175,12 @@ paths:
     get:
       parameters:
       - description: city ID
-        in: path
+        in: query
         name: city_id
         required: true
         type: string
       - description: service ID
-        in: path
+        in: query
         name: service_id
         required: true
         type: string
@@ -168,6 +234,21 @@ paths:
               type: array
             type: array
       summary: Get all cities
+  /customer:
+    get:
+      description: Get Customer by ID
+      parameters:
+      - description: customer id
+        in: query
+        name: customer_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structTypes.Cust'
+      summary: Get Customer data
   /customerLogin:
     post:
       parameters:
@@ -192,7 +273,28 @@ paths:
           description: Unauthorized
           schema:
             type: object
-      summary: verify username and password of customer
+      summary: verify email and password of customer
+  /customerRating:
+    post:
+      parameters:
+      - description: rating data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/structTypes.RatingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: rating provided by customer for a booking
   /customerSignUp:
     post:
       parameters:
@@ -214,6 +316,21 @@ paths:
           schema:
             type: object
       summary: create new customer
+  /vendor:
+    get:
+      description: Get Vendor by ID
+      parameters:
+      - description: vendor_id
+        in: query
+        name: vendor_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structTypes.Vendor'
+      summary: Get Vendor data
   /vendorLogin:
     post:
       parameters:
@@ -238,7 +355,28 @@ paths:
           description: Unauthorized
           schema:
             type: object
-      summary: verify username and password of vendor
+      summary: verify email and password of vendor
+  /vendorRating:
+    post:
+      parameters:
+      - description: rating data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/structTypes.RatingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: rating provided by vendor for a customer
   /vendorSignUp:
     post:
       parameters:
