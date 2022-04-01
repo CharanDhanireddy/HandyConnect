@@ -119,3 +119,47 @@ func VerifyVendorLogin(email string, password string) (structTypes.Vendor, bool,
 
 	return vendor_data, true, nil
 }
+
+func GetCustomerRating(customerId int) (int, int, int) {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var rating int
+	var rating_count int
+
+	sqlStmt := `SELECT id, rating, rating_count FROM customer WHERE id = $1;`
+
+	row, err := db.Query(sqlStmt, customerId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&id, &rating, &rating_count)
+	}
+	row.Close()
+
+	return id, rating, rating_count
+}
+
+func GetVendorRating(vendorId int) (int, int, int) {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var rating int
+	var rating_count int
+
+	sqlStmt := `SELECT id, rating, rating_count FROM vendor WHERE id = $1;`
+
+	row, err := db.Query(sqlStmt, vendorId)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+
+	for row.Next() { // Iterate and fetch the records from result cursor
+		row.Scan(&id, &rating, &rating_count)
+	}
+	row.Close()
+
+	return id, rating, rating_count
+}
