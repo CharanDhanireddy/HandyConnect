@@ -46,7 +46,7 @@ func TestDBConnection() *sql.DB {
 	// file.Close()
 	// log.Println("sqlite-database.db created")
 
-	log.Println("Establishing connection to test_database...")
+	log.Println("Establishing connection to test database...")
 	db, err := sql.Open("sqlite3", "./test_db.db?_foreign_keys=on") // Open the created SQLite File
 	if err != nil {
 		log.Fatal(err.Error())
