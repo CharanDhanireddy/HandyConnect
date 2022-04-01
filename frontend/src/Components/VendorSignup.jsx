@@ -34,7 +34,8 @@ function VendorSignup(props) {
   useEffect(() => {
     let fetchData = async () => {
       let city_response = await axios.get(BASE_URL + "cities")
-      let service_response = await axios.get(BASE_URL + "services")
+      // get list of services in Gainesville as a default list of services
+      let service_response = await axios.get(BASE_URL + "services" + '?city_id=1')
       setState({ ...state, cityList: city_response.data, serviceList: service_response.data })
     }
     fetchData();
@@ -82,7 +83,10 @@ function VendorSignup(props) {
       last_name: state.lastName,
       phone: state.phone,
       city_id: parseInt(state.city),
-      service_id: parseInt(state.service),
+      // first service of the vendor
+      service1_id: parseInt(state.service),
+      service2_id: parseInt(state.service),
+      service3_id: parseInt(state.service),
       email: state.email,
       password: state.password
     };

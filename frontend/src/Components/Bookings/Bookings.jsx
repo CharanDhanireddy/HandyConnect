@@ -64,7 +64,6 @@ function Bookings(props) {
                             <td ><Button variant="outline-secondary" disabled={booking.booking_status == 'Cancelled'} onClick={() => setBooking(booking)}> <strong> Modify Booking </strong> </Button></td>
                         </tr>
                     ))
-
                     }
                 </tbody>
             </Table>
