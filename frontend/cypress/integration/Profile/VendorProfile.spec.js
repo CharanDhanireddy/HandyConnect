@@ -4,7 +4,7 @@ describe('App', () => {
     let server
     beforeEach(() => {
         // server = startMirage()
-        cy.login()
+        cy.vendorlogin()
     })
 
     afterEach(() => {
@@ -12,10 +12,11 @@ describe('App', () => {
     })
 
     it('Open Profile and verify all the fields', () => {
-        cy.get('[href="/profile"]').should('exist').click()
+        cy.get('[href="/vendorProfile"]').should('exist').click()
         cy.get('[data-cy="name"]').should('exist')
         cy.get('[data-cy="city_name"]').should('exist')
         cy.get('[data-cy="phone"]').should('exist')
         cy.get('[data-cy="email"]').should('exist')
+        cy.get('[data-cy="service"]').should('exist')
     })
 })

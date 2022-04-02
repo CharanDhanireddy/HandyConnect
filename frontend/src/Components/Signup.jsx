@@ -7,9 +7,9 @@ import {
   Col,
   Form,
   FormGroup,
-  FormControl
+  FormControl,
+  Alert
 } from "react-bootstrap";
-import { setUserData } from "../util/localStorage";
 import axios from "axios";
 import { BASE_URL } from "../env_setup";
 
@@ -24,9 +24,11 @@ function Signup(props) {
     password: "",
     rePassword: "",
     cityList: [],
-    errors: {}
+    errors: {},
+    showAlert: false
   })
 
+  const navigate = useNavigate()
 
   useEffect(() => {
     let fetchData = async () => {
@@ -35,8 +37,6 @@ function Signup(props) {
     }
     fetchData();
   }, [])
-
-  const navigate = useNavigate()
 
   let onChange = e => {
     setState({ ...state, [e.target.name]: e.target.value })
@@ -72,6 +72,16 @@ function Signup(props) {
     else return false;
   }
 
+  let redirect = status => {
+    setTimeout(() => {
+      if (status == 200)
+        navigate('/login')
+      else
+        // navigate('/signup')
+        setState({ ...state, showAlert: 0 })
+    }, 3000);
+  }
+
   let onSignupClick = async () => {
     if (!isValid()) return
     const userData = {
@@ -79,25 +89,37 @@ function Signup(props) {
       last_name: state.lastName,
       phone: state.phone,
       city_id: parseInt(state.city),
-      // city_name: state.cityList.find(city => city.city_id == state.city).city_name,
       email: state.email,
       password: state.password
     };
-
-    let res = await axios.post(BASE_URL + "customerSignUp", userData)
-    let data = res.data
-    let status = res.status
+    let data, status;
+    try {
+      let res = await axios.post(BASE_URL + "customerSignUp", userData)
+      data = res.data
+      status = res.status
+    } catch (error) {
+      data = error.response.data
+      status = error.response.status
+    }
     // console.log(data, status)
-    // Can use the errors state to show errors from the api
-    // setUserData(data ? data : null)
-    if (status == 200)
-      navigate('/login')
-    else
-      navigate('/')
+    redirect(status)
+    let showAlert = (status == 200) ? 1 : 2
+    setState({ ...state, showAlert })
   };
 
   return (
     <Container className="center">
+
+      {(state.showAlert > 0) && <Alert variant={(state.showAlert == 1) ? "success" : "danger"}>
+        <Alert.Heading>{(state.showAlert == 1) ? "Successful" : "Error"}</Alert.Heading>
+        <p>
+          {(state.showAlert == 1) ?
+            "You have successfully signed up for Handyconnect. You are being redirected to Login Page" :
+            "Email or Phone number already used to signup for Handy Connect"
+          }
+        </p>
+      </Alert>}
+
       <Row className="">
         <Col md="4" className="mx-auto ">
           <h1 className="login-signup-heading">Sign up</h1>
