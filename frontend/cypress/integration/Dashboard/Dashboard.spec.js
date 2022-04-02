@@ -39,6 +39,20 @@ describe('App', () => {
         cy.get('#submitId').click();
     })
 
+    it('Book Electrician service in Orlando', () => {
+        cy.get('#locationSelectId').should('exist').click()
+        cy.get('#citySelectId').should('exist').select('Orlando')
+        cy.get('#citySelectCancelId').should('exist')
+        cy.get('#citySubmitId').should('exist').click()
+        cy.get('#Electrician').should('exist').click()
+        cy.get('[data-cy="5"]').click();
+        cy.get('#addressId').clear();
+        cy.get('#addressId').type('235 Bakers St');
+        cy.get('#zipcodeId').clear();
+        cy.get('#zipcodeId').type('53267');
+        cy.get('#submitId').click();
+    })
+
     it('Select city, service and book an appointment and show error when same service is booked for a same day', () => {
         cy.get('#locationSelectId').should('exist').click()
         cy.get('#citySelectId').should('exist').select('Tampa')
