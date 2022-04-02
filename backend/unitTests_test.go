@@ -363,3 +363,72 @@ func TestVendorRating(t *testing.T) {
 	act, _ := json.Marshal(got)
 	assert.Equal(t, expected, string(act))
 }
+
+func TestCancelBooking(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	cust_id, _ := gin.CreateTestContext(rr)
+
+	var params []gin.Param
+	cust_id.Params = append(params, gin.Param{"customer_id", "4"})
+	var req http.Request
+	cust_id.Request = &req
+	var url url.URL
+	req.URL = &url
+	req.URL.RawQuery = "customer_id=4"
+
+	requestHandlers.ReturnBookingCust(cust_id)
+	assert.Equal(t, 200, rr.Code)
+
+	var got []structTypes.Booking
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `[{"id":5,"vendor_name":"Joshua Weissman","customer_name":"v d","service_name":"Carpenter","city_name":"Tampa","vendor_id":"8","customer_id":"4","service_id":"3","city_id":"2","day":10,"month":3,"year":2022,"address":"34 st dj Tampa 19873289","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0}]`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+
+}
+
+func TestRescheduleBooking(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	cust_id, _ := gin.CreateTestContext(rr)
+
+	var params []gin.Param
+	cust_id.Params = append(params, gin.Param{"customer_id", "3"})
+	var req http.Request
+	cust_id.Request = &req
+	var url url.URL
+	req.URL = &url
+	req.URL.RawQuery = "customer_id=3"
+
+	requestHandlers.ReturnBookingCust(cust_id)
+	assert.Equal(t, 200, rr.Code)
+
+	var got []structTypes.Booking
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `[{"id":3,"vendor_name":"John Smith","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"6","customer_id":"3","service_id":"1","city_id":"1","day":7,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Cancelled","customer_rating":4,"vendor_rating":5},{"id":13,"vendor_name":"vendor name vendor lastname","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"5","customer_id":"3","service_id":"1","city_id":"1","day":8,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0}]`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+
+}
+

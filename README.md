@@ -18,12 +18,36 @@ Platform for connecting customers with skilled and experienced professionals pro
 - Database: SQLite3
 
 ---
-## Sprint 3:
-[Integration Demo]
+## How to run
+To properly view the application during development, both the front and backend servers must be running in separate terminals.
 
-### Frontend with live Golang backend & unit tests and integration tests with Cypress
+
+### Backend
+To run the backend, ensure all the proper go packages are installed and run
+- `cd backend`
+- `go run .`
+
+
+### Frontend
+To run the frontend locally, run the following commands
+- `cd frontend`
+- `npm install`
+- `npm start`
+
+To run all cypress tests
+- `npx cypress run`
+
+To develop locally using Mirage mock APIs
+- Use the given [instructions](https://github.com/CharanDhanireddy/HandyConnect/blob/frontend-dev/frontend/README.md)
+---
+
+## Sprint 3:
+[Integration Demo](https://youtu.be/pYkXGBY0N20)
 
 ### Backend Unit Test logs for Sprint 3
+![image](https://user-images.githubusercontent.com/89587982/161361594-6b7cfd88-7b88-4f74-abd2-9f877059d9c7.png)
+![image](https://user-images.githubusercontent.com/89587982/161361597-4fc34f0c-28f4-47ca-b884-4b2e67b9be30.png)
+![image](https://user-images.githubusercontent.com/89587982/161361603-5aa6fdd4-ae89-441a-a02c-3715a003154d.png)
 
 Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct/Backend* directory
 
@@ -42,7 +66,7 @@ Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct
 Tasks completed:
 
 ### Frontend
-- Added unit tests for all UI pages
+- Added unit tests for latest UI changes
 - Cypress integration tests for all the workflows
 - Updated API sections of React application to integrate with Live Golang backend
 - Added pages and functionality for handling ratings and booking rescheduling/cancellations
@@ -131,22 +155,3 @@ Tasks completed: (APIs for the below functionality are implemented and tested us
 - Customer can get a list of available timeslots for a specific service in a city of their choice
 - Customer can schedule a slot based on the availability of the service in a 1 week period
 
----
-
-## Development
-To properly view the application during development, both the front and backend servers must be running in separate terminals.
-
----
-
-### Backend
-To run the backend, ensure all the proper go packages are installed and run
-
-cd backend
-go run .
-
-### Frontend
-To run the frontend locally , navigate to the frontend and directory and run npm run start:
-
-cd frontend
-npm install
-npm run start

@@ -8,7 +8,6 @@ import "bootstrap/dist/css/bootstrap.css";
 
 import { makeServer } from './server'
 
-// if (process.env.NODE_ENV === "development")
 // makeServer({ environment: "development" })
 
 ReactDOM.render(
