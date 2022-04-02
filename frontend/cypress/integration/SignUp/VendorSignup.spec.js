@@ -32,8 +32,6 @@ describe("SignUp page", function () {
     })
 
     it("Enter existing email or phone number, get error popup and stay on signup page", () => {
- 
-        
         cy.get('#firstNameId').type('fName');
         cy.get("#firstNameId").should('have.value', 'fName');
         cy.get('#lastNameId').type('sName');

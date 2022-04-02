@@ -21,7 +21,6 @@ describe("SignUp page", function () {
         cy.get('#emailId').should('exist')
         cy.get('#passwordId').should('exist')
         cy.get('#rePasswordId').should('exist')
-        cy.get('#view-modify-button-vendor').should('exist')
     })
 
     it("Verify SignUp required fields", () => {
