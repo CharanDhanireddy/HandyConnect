@@ -49,8 +49,7 @@ To develop locally using Mirage mock APIs
 ![image](https://user-images.githubusercontent.com/89587982/161361597-4fc34f0c-28f4-47ca-b884-4b2e67b9be30.png)
 ![image](https://user-images.githubusercontent.com/89587982/161361603-5aa6fdd4-ae89-441a-a02c-3715a003154d.png)
 
-Back-end Unit Tests can be executed by running "go test -v"![Uploading image.png…]()
- in the *HandyConenct/Backend* directory
+Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct/Backend* directory
 
 - TestCityRet - Test for validating City list retrieval success
 - TestCityRet_Absent - Test for validating City list retrieval failure in case of invalid city
