@@ -104,7 +104,7 @@ function Booking(props) {
                                 {(props.booking.customer_rating != 0) ?
                                     <Rating precision={0.5} name="read-only" value={props.booking.customer_rating} readOnly />
                                     : <Rating
-                                        data-cy='customer_rating'
+                                        data-cy='rating'
                                         name="simple-controlled"
                                         value={props.booking.customer_rating}
                                         precision={0.5}
