@@ -1,6 +1,6 @@
 import { startMirage } from "../../mirage/devServer"
 
-describe('App', () => {
+describe('All bookings', () => {
     let server
     beforeEach(() => {
         // server = startMirage()
@@ -11,17 +11,13 @@ describe('App', () => {
         // server.shutdown()
     })
 
-    it('Login and check if bookings can be seen and logout', () => {
+    it('Visit the bookings page and check if bookings can be seen', () => {
         cy.get('[href="/bookings"]').should('exist').click()
         cy.get('#booking-table').should('exist')
         cy.get('#booking-month').should('exist')
         cy.get('#service-name').should('exist')
-        // cy.get('#vendor-name').should('exist')
         cy.get('#address').should('exist')
         cy.get('#status').should('exist')
-        // cy.get('#city').should('exist')
-        cy.get('[role="button"]').click();
-        cy.url().should('eq', 'http://localhost:3000/')
     })
 
 })
