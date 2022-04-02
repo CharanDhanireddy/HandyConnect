@@ -305,3 +305,61 @@ func TestVendLoginUnauthorized(t *testing.T) {
 	requestHandlers.VendorLogin(c)
 	assert.Equal(t, 401, rr.Code)
 }
+
+func TestCustomerRating(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(rr)
+	var req http.Request
+	var body = []byte(`{"booking_id":3, "rating":4}`)
+	req = *httptest.NewRequest("POST", "/customerRating", bytes.NewBuffer(body))
+	c.Request = &req
+
+	requestHandlers.CustomerRating(c)
+	assert.Equal(t, 200, rr.Code)
+
+	var got string
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `"succesfully rated booking"`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+}
+
+func TestVendorRating(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(rr)
+	var req http.Request
+	var body = []byte(`{"booking_id":3, "rating":5}`)
+	req = *httptest.NewRequest("POST", "/vendorRating", bytes.NewBuffer(body))
+	c.Request = &req
+
+	requestHandlers.VendorRating(c)
+	assert.Equal(t, 200, rr.Code)
+
+	var got string
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `"succesfully rated booking"`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+}
