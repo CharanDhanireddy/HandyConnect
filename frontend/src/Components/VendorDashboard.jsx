@@ -9,12 +9,17 @@ function VendorDashboard(props) {
     const [state, setState] = useState({ bookings: [], booking: null})
 
     let statusMap = {
-        confirmed: 'Confirmed',
-        in_progress: 'In progress',
-        completed: 'Completed',
-        cancelled: 'Cancelled'
+        Confirmed: 'Confirmed',
+        In_progress: 'In progress',
+        Completed: 'Completed',
+        Cancelled: 'Cancelled'
     }
-
+    let statusColourMap = {
+        Confirmed: 'black',
+        In_progress: 'orange',
+        Completed: 'green',
+        Cancelled: 'red'
+    }
     useEffect(() => {
         let fetchBookings = async () => {
             const token = getToken()
@@ -28,7 +33,7 @@ function VendorDashboard(props) {
 
     const tableHeaders = ['Timeslot', 
     'Service', 
-    'Customer', 
+    // 'Customer', 
     'Address', 
     // 'City', 
     'Status',
@@ -39,7 +44,7 @@ function VendorDashboard(props) {
     return (
         <Container id="booking-table" className='mt-4'>
 
-            <Table responsive >
+            <Table responsive id = "vendor-dashboard-table">
                 <thead className = "booking-header">
                     <tr>
                         {tableHeaders.map((header, key) => (
@@ -55,11 +60,11 @@ function VendorDashboard(props) {
                         <tr key={key}>
                             <td id="booking-month">{booking.month + '/' + booking.day + '/' + booking.year}</td>
                             <td id="service-name" >{booking.service_name}</td>
-                            <td id="customer-name" >{booking.customer_name}</td>
+                            {/* <td id="customer-name" >{booking.customer_name}</td> */}
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
-                            <td id="status" >{statusMap[booking.status]}</td>
-                            <td ><Button variant="outline-secondary" onClick={() => setBooking(booking)}><strong>View/Modify Booking</strong></Button></td>
+                            <td id="status" style = {{color: statusColourMap[booking.booking_status]}}>{statusMap[booking.booking_status]}</td>
+                            <td ><Button id = "view-modify-button-vendor" variant="outline-secondary" onClick={() => setBooking(booking)}><strong>View/Modify Booking</strong></Button></td>
                         </tr>
                     ))
 
