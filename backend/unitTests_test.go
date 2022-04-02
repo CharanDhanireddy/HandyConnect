@@ -261,3 +261,47 @@ func TestCustLoginUnauthorized(t *testing.T) {
 	requestHandlers.CustomerLogin(c)
 	assert.Equal(t, 401, rr.Code)
 }
+
+func TestVendLoginSuccess(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(rr)
+	var req http.Request
+	var body = []byte(`{"email":"vendormail@email.com", "password":"pass"}`)
+	req = *httptest.NewRequest("POST", "/vendorLogin", bytes.NewBuffer(body))
+	c.Request = &req
+
+	requestHandlers.VendorLogin(c)
+	assert.Equal(t, 200, rr.Code)
+
+	var got structTypes.Vendor
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `{"id":5,"first_name":"vendor name","last_name":"vendor lastname","city_name":"Gainesville","phone":3333333333,"email":"vendormail@email.com","service_name":"Electrician","rating":0,"rating_count":0}`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+
+}
+
+func TestVendLoginUnauthorized(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(rr)
+	var req http.Request
+	var body = []byte(`{"email":"vendormail@email.com", "password":"wrong_pass"}`)
+	req = *httptest.NewRequest("POST", "/vendorLogin", bytes.NewBuffer(body))
+	c.Request = &req
+
+	requestHandlers.VendorLogin(c)
+	assert.Equal(t, 401, rr.Code)
+}
