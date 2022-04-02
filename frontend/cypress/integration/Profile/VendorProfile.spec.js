@@ -1,0 +1,22 @@
+import { startMirage } from "../../mirage/devServer"
+
+describe('App', () => {
+    let server
+    beforeEach(() => {
+        // server = startMirage()
+        cy.vendorlogin()
+    })
+
+    afterEach(() => {
+        // server.shutdown()
+    })
+
+    it('Open Profile and verify all the fields', () => {
+        cy.get('[href="/vendorProfile"]').should('exist').click()
+        cy.get('[data-cy="name"]').should('exist')
+        cy.get('[data-cy="city_name"]').should('exist')
+        cy.get('[data-cy="phone"]').should('exist')
+        cy.get('[data-cy="email"]').should('exist')
+        cy.get('[data-cy="service"]').should('exist')
+    })
+})

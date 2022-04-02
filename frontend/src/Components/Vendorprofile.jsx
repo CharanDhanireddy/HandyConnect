@@ -22,21 +22,21 @@ function VendorProfile(props) {
 
                 
         <div className='vendor-profile-details'>
-            <h3 className='mb-3'>{state.vendorData['first_name']} {state.vendorData['last_name']}</h3>
+            <h3 className='mb-3'data-cy="name">{state.vendorData['first_name']} {state.vendorData['last_name']}</h3>
             <table className = "profile-table">
-                <tr>
+                <tr data-cy="city_name">
                  <th>City</th>
                  <td>{state.vendorData['city_name']}</td>   
                 </tr>
-                <tr>
+                <tr data-cy="phone">
                     <th>Phone</th>
                     <td>{state.vendorData['phone']}</td>
                 </tr>
-                <tr>
+                <tr data-cy="email">
                     <th>Email</th>
                     <td>{state.vendorData['email']}</td>
                 </tr>
-                <tr>
+                <tr data-cy="service">
                     <th>Service</th>
                     <td>{state.vendorData['service_name']}</td>
                 </tr>
