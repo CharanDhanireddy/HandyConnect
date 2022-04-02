@@ -17,6 +17,9 @@ Platform for connecting customers with skilled and experienced professionals pro
 - Frontend: ReactJS
 - Database: Postgres
 
+## Setup guide:
+- Frontend: Follow the steps [here](https://github.com/CharanDhanireddy/HandyConnect/tree/frontend-dev/frontend#readme).
+
 ---
 ## Sprint 2:
 [Integration Demo](https://www.youtube.com/watch?v=2YWmvZNdyHM)
