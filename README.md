@@ -25,15 +25,15 @@ To properly view the application during development, both the front and backend 
 ### Backend
 To run the backend, ensure all the proper go packages are installed and run
 
-cd backend
-go run .
+- cd backend
+- go run .
 
 ### Frontend
 To run the frontend locally , navigate to the frontend and directory and run npm run start:
 
-cd frontend
-npm install
-npm run start
+- cd frontend
+- npm install
+- npm run start
 
 ---
 
