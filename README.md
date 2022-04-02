@@ -45,8 +45,12 @@ To develop locally using Mirage mock APIs
 [Integration Demo](https://youtu.be/pYkXGBY0N20)
 
 ### Backend Unit Test logs for Sprint 3
+![image](https://user-images.githubusercontent.com/89587982/161361594-6b7cfd88-7b88-4f74-abd2-9f877059d9c7.png)
+![image](https://user-images.githubusercontent.com/89587982/161361597-4fc34f0c-28f4-47ca-b884-4b2e67b9be30.png)
+![image](https://user-images.githubusercontent.com/89587982/161361603-5aa6fdd4-ae89-441a-a02c-3715a003154d.png)
 
-Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct/Backend* directory
+Back-end Unit Tests can be executed by running "go test -v"![Uploading image.png…]()
+ in the *HandyConenct/Backend* directory
 
 - TestCityRet - Test for validating City list retrieval success
 - TestCityRet_Absent - Test for validating City list retrieval failure in case of invalid city
