@@ -15,14 +15,11 @@ function Booking(props) {
 
     let updateRating = async (newRating) => {
         let newBooking = {
-            booking_id: props.booking.id, customer_rating: newRating
+            booking_id: props.booking.id, rating: newRating
         };
         // Can improve error handling here
         try {
             let bookingRes = await axios.post(BASE_URL + "customerRating", newBooking)
-            if (bookingRes.data.customer_rating == newBooking.customer_rating) {
-                console.log('Rating updated')
-            }
         }
         catch {
             console.log('Error')
