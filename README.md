@@ -18,6 +18,25 @@ Platform for connecting customers with skilled and experienced professionals pro
 - Database: SQLite3
 
 ---
+## Development
+To properly view the application during development, both the front and backend servers must be running in separate terminals.
+
+
+### Backend
+To run the backend, ensure all the proper go packages are installed and run
+
+cd backend
+go run .
+
+### Frontend
+To run the frontend locally , navigate to the frontend and directory and run npm run start:
+
+cd frontend
+npm install
+npm run start
+
+---
+
 ## Sprint 3:
 [Integration Demo]
 
@@ -134,22 +153,3 @@ Tasks completed: (APIs for the below functionality are implemented and tested us
 - Customer can get a list of available timeslots for a specific service in a city of their choice
 - Customer can schedule a slot based on the availability of the service in a 1 week period
 
----
-
-## Development
-To properly view the application during development, both the front and backend servers must be running in separate terminals.
-
----
-
-### Backend
-To run the backend, ensure all the proper go packages are installed and run
-
-cd backend
-go run .
-
-### Frontend
-To run the frontend locally , navigate to the frontend and directory and run npm run start:
-
-cd frontend
-npm install
-npm run start
