@@ -23,7 +23,7 @@ Platform for connecting customers with skilled and experienced professionals pro
 
 ### Frontend with live Golang backend & unit tests and integration tests with Cypress
 
-
+### Backend Unit Test logs for Sprint 3
 
 Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct/Backend* directory
 
@@ -41,6 +41,7 @@ Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct
 
 Tasks completed:
 
+### Frontend
 - Added unit tests for all UI pages
 - Cypress integration tests for all the workflows
 - Updated API sections of React application to integrate with Live Golang backend
@@ -48,17 +49,12 @@ Tasks completed:
 - UX improvements in Dashboard, Header and other pages
 - Fixed bugs from Sprint 2
 
----
-
-### Backend with mocked-up frontend
-[Backend Demo video](https://youtu.be/YhrciuviPqM)
-
-Tasks completed: (APIs for the below functionality are implemented and tested (shown in video))
-
+### Backend
 - Customer can rate a vendor for their service after the completion of a service
 - Customer can cancel an existing booking 
 - Customer can reschedule an existing booking
 - Vendor can rate a customer after the completion of a service
+- Updated Swagger
 
 ---
 ## Sprint 2:
