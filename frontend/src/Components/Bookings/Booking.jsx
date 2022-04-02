@@ -107,6 +107,7 @@ function Booking(props) {
                                 {(props.booking.customer_rating != 0) ?
                                     <Rating precision={0.5} name="read-only" value={props.booking.customer_rating} readOnly />
                                     : <Rating
+                                        data-cy='rating'
                                         name="simple-controlled"
                                         value={props.booking.customer_rating}
                                         precision={0.5}
@@ -125,10 +126,12 @@ function Booking(props) {
                                 <Col xs={3} ><text className='text-uppercase fw-bold'>Actions</text></Col>
                                 <Col>
                                     <Button variant='outline-danger'
+                                        data-cy='cancelButton'
                                         onClick={cancelBooking}
                                         className="submit-reschedule-button"
                                     ><strong>Cancel</strong></Button>
                                     <Button variant={state.timeslotList.length ? 'warning' : 'outline-warning'}
+                                        data-cy='rescheduleButton'
                                         onClick={getRescheduleTimeslots}
                                         className='submit-reschedule-button'
                                     > <strong>Rescehdule</strong></Button></Col>
@@ -158,6 +161,7 @@ function Booking(props) {
                             </Row>
                             {state.timeslot &&
                                 <Button variant='outline-success'
+                                    data-cy='confirmRescheduleButton'
                                     onClick={rescheduleBooking}>Confirm</Button>
                             }
                         </>
@@ -165,7 +169,7 @@ function Booking(props) {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="secondary" data-cy='closeButton' onClick={handleClose}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </Container >
