@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { Container, Card, Row, Col, Toast, ToastContainer } from "react-bootstrap";
+import {
+    Container, Card, Row, Col,
+    // Toast, ToastContainer 
+} from "react-bootstrap";
 import axios from "axios";
 import TimeSelect from "./TimeSelect";
 import { BASE_URL } from "../env_setup";
@@ -10,7 +13,7 @@ class Dashboard extends Component {
         this.state = {
             serviceList: null,
             service: null,
-            showToast: false
+            // showToast: false
         }
     }
 
@@ -47,7 +50,9 @@ class Dashboard extends Component {
     }
 
     render() {
-        const { service, serviceList, showToast } = this.state;
+        const { service, serviceList,
+            // showToast
+        } = this.state;
         if (!this.props.city) return null
         return (
             <Container id="dashboardContainerId">
@@ -58,8 +63,8 @@ class Dashboard extends Component {
                         <Container className='mt-4'>
                             <Row xs={2} md={3} lg={4}>
                                 {serviceList.map((service, key) => (
-                                    <Col key={key} className = "card-onhover">
-                                        <Card 
+                                    <Col key={key} className="card-onhover">
+                                        <Card
                                             id={service.service_name}
                                             key={service.service_id}
                                             style={{ height: '6rem', margin: '0 1rem 1rem 0', cursor: 'pointer' }}
@@ -79,11 +84,13 @@ class Dashboard extends Component {
                     </>
                 ) : (null)}
 
-                {service && <TimeSelect updateState={this.updateState} service={service} city={this.props.city} />}
+                {/* {service &&  */}
+                <TimeSelect updateState={this.updateState} service={service} city={this.props.city} />
+                {/* } */}
 
 
                 {/* To update later */}
-                <ToastContainer position="top-start">
+                {/* <ToastContainer position="top-start">
                     <Toast className="d-inline-block m-1" bg='light' show={showToast}
                         // delay={3000} 
                         autohide>
@@ -93,7 +100,7 @@ class Dashboard extends Component {
                             Booking Successful!
                         </Toast.Body>
                     </Toast>
-                </ToastContainer>
+                </ToastContainer> */}
 
             </Container>
         );

@@ -29,7 +29,14 @@ import axios from "axios";
 
 Cypress.Commands.add('login', () => {
     cy.visit('login')
-    cy.get('#emailId').type('u2@gmail.com');
-    cy.get('#passwordId').type('123456789');
+    cy.get('#emailId').type('u1@gmail.com');
+    cy.get('#passwordId').type('1234567890');
     cy.get('#user-login-button').click();
+})
+
+Cypress.Commands.add('vendorlogin', () => {
+    cy.visit('vendorlogin')
+    cy.get('#emailId').type('thomas.edison@gmail.com');
+    cy.get('#passwordId').type('123456789');
+    cy.get('#vendor-login-button').click();
 })
