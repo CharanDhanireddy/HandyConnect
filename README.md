@@ -18,29 +18,31 @@ Platform for connecting customers with skilled and experienced professionals pro
 - Database: SQLite3
 
 ---
-## Development
+## How to run
 To properly view the application during development, both the front and backend servers must be running in separate terminals.
 
 
 ### Backend
 To run the backend, ensure all the proper go packages are installed and run
+- `cd backend`
+- `go run .`
 
-- cd backend
-- go run .
 
 ### Frontend
-To run the frontend locally , navigate to the frontend and directory and run npm run start:
+To run the frontend locally, run the following commands
+- `cd frontend`
+- `npm install`
+- `npm start`
 
-- cd frontend
-- npm install
-- npm run start
+To run all cypress tests
+- `npx cypress run`
 
+To develop locally using Mirage mock APIs
+- Use the given [instructions](https://github.com/CharanDhanireddy/HandyConnect/blob/frontend-dev/frontend/README.md)
 ---
 
 ## Sprint 3:
-[Integration Demo]
-
-### Frontend with live Golang backend & unit tests and integration tests with Cypress
+[Integration Demo](https://youtu.be/pYkXGBY0N20)
 
 ### Backend Unit Test logs for Sprint 3
 
@@ -61,7 +63,7 @@ Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct
 Tasks completed:
 
 ### Frontend
-- Added unit tests for all UI pages
+- Added unit tests for latest UI changes
 - Cypress integration tests for all the workflows
 - Updated API sections of React application to integrate with Live Golang backend
 - Added pages and functionality for handling ratings and booking rescheduling/cancellations
@@ -74,9 +76,6 @@ Tasks completed:
 - Customer can reschedule an existing booking
 - Vendor can rate a customer after the completion of a service
 - Updated Swagger
-
-## Setup guide:
-- Frontend: Follow the steps [here](https://github.com/CharanDhanireddy/HandyConnect/tree/frontend-dev/frontend#readme).
 
 ---
 ## Sprint 2:
