@@ -44,25 +44,22 @@ Tasks completed:
 - Added unit tests for all UI pages
 - Cypress integration tests for all the workflows
 - Updated API sections of React application to integrate with Live Golang backend
-- Increased fields for SignUp pages to match with latest requirement
+- Added pages and functionality for handling ratings and booking rescheduling/cancellations
 - UX improvements in Dashboard, Header and other pages
-- Revamped UI for city selection
+- Fixed bugs from Sprint 2
 
 ---
 
 ### Backend with mocked-up frontend
 [Backend Demo video](https://youtu.be/YhrciuviPqM)
 
-Tasks completed: (APIs for the below functionality are implemented and tested using Postman (shown in video))
+Tasks completed: (APIs for the below functionality are implemented and tested (shown in video))
 
-- Customer can sign up with name, email, phone, city, address
-- Vendor can sign up with their name, email, phone, city, services provided
-- Customer/Vendor can log into their account with their email and password (error handling for incorrect password implemented)
-- Customer/Vendor can login and view their profiles to see the data they've used for signing up
-- Customer can get a list of available timeslots for a specific service in a city of their choice
-- Customer can schedule a slot based on the availability of the service in a 1 week period
+- Customer can rate a vendor for their service after the completion of a service
+- Customer can cancel an existing booking 
+- Customer can reschedule an existing booking
+- Vendor can rate a customer after the completion of a service
 
----
 ---
 ## Sprint 2:
 [Integration Demo](https://www.youtube.com/watch?v=2YWmvZNdyHM)
@@ -99,7 +96,7 @@ Tasks completed:
 ### Backend with mocked-up frontend
 [Backend Demo video](https://youtu.be/YhrciuviPqM)
 
-Tasks completed: (APIs for the below functionality are implemented and tested using Postman (shown in video))
+Tasks completed: (APIs for the below functionality are implemented and tested (shown in video))
 
 - Customer can sign up with name, email, phone, city, address
 - Vendor can sign up with their name, email, phone, city, services provided
