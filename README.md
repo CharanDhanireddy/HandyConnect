@@ -15,7 +15,46 @@ Platform for connecting customers with skilled and experienced professionals pro
 ## Stack:
 - Backend: Go Lang
 - Frontend: ReactJS
-- Database: Postgres
+- Database: SQLite3
+
+---
+## Sprint 3:
+[Integration Demo]
+
+### Frontend with live Golang backend & unit tests and integration tests with Cypress
+
+### Backend Unit Test logs for Sprint 3
+
+Back-end Unit Tests can be executed by running "go test -v" in the *HandyConenct/Backend* directory
+
+- TestCityRet - Test for validating City list retrieval success
+- TestCityRet_Absent - Test for validating City list retrieval failure in case of invalid city
+- TestCust - Test for validating successful retreival of Customer Information
+- TestVend - Test for validating successful retreival of Vendor Information
+- TestServices - Test for validating successful retreival of available services in a city
+- TestBookingCust - Test for validating the retreival of Customer view of their bookings
+- TestBookingVend - Test for validating the retreival of Vendor view of their bookings
+- TestCancelBooking - Test for validating the cancellation of a booking
+- TestRescheduleBooking - Test for validating the successful rescheduling of a booking
+- TestCustomerRating - Test for validating the Customer rating functionality
+- TestVendorRating - Test for validating the Vendor rating functionality
+
+Tasks completed:
+
+### Frontend
+- Added unit tests for all UI pages
+- Cypress integration tests for all the workflows
+- Updated API sections of React application to integrate with Live Golang backend
+- Added pages and functionality for handling ratings and booking rescheduling/cancellations
+- UX improvements in Dashboard, Header and other pages
+- Fixed bugs from Sprint 2
+
+### Backend
+- Customer can rate a vendor for their service after the completion of a service
+- Customer can cancel an existing booking 
+- Customer can reschedule an existing booking
+- Vendor can rate a customer after the completion of a service
+- Updated Swagger
 
 ## Setup guide:
 - Frontend: Follow the steps [here](https://github.com/CharanDhanireddy/HandyConnect/tree/frontend-dev/frontend#readme).
@@ -56,7 +95,7 @@ Tasks completed:
 ### Backend with mocked-up frontend
 [Backend Demo video](https://youtu.be/YhrciuviPqM)
 
-Tasks completed: (APIs for the below functionality are implemented and tested using Postman (shown in video))
+Tasks completed: (APIs for the below functionality are implemented and tested (shown in video))
 
 - Customer can sign up with name, email, phone, city, address
 - Vendor can sign up with their name, email, phone, city, services provided
@@ -94,3 +133,23 @@ Tasks completed: (APIs for the below functionality are implemented and tested us
 - Customer/Vendor can login and view their profiles to see the data they've used for signing up
 - Customer can get a list of available timeslots for a specific service in a city of their choice
 - Customer can schedule a slot based on the availability of the service in a 1 week period
+
+---
+
+## Development
+To properly view the application during development, both the front and backend servers must be running in separate terminals.
+
+---
+
+### Backend
+To run the backend, ensure all the proper go packages are installed and run
+
+cd backend
+go run .
+
+### Frontend
+To run the frontend locally , navigate to the frontend and directory and run npm run start:
+
+cd frontend
+npm install
+npm run start
