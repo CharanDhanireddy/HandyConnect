@@ -59,7 +59,7 @@ function TimeSelect(props) {
             if (status == 200)
                 navigate('/bookings')
             else
-                setState({ ...state, showAlert: 0 })
+                setState({ ...initial_state, showAlert: 0 })
         }, 3000);
     }
 
@@ -87,7 +87,7 @@ function TimeSelect(props) {
         }
         redirect(status)
         let showAlert = (status == 200) ? 1 : 2
-        setState({ ...state, showAlert })
+        setState({ ...initial_state, showAlert })
         // navigate('/')
         // setState(initial_state)
         // props.updateState('showToast', true)
