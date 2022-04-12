@@ -89,6 +89,17 @@ code {
 .card-onhover{
   /* font-family: "Times New Roman", Times, serif; */
   font-family: Montserrat;
+  font-weight: bolder;
+}
+
+.timeselect-card-onhover:hover{
+  transform: scale(1.05);
+  /* box-shadow: 0 3px 8px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06); */
+}
+.timeselect-card-onhover{
+  /* font-family: "Times New Roman", Times, serif; */
+  font-family: Montserrat;
+  font-weight: bolder;
 }
 
 .dashboard-card-text{

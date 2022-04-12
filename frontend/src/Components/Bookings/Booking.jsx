@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Modal, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col, Modal, Button, Card, Alert } from 'react-bootstrap';
 import Rating from '@mui/material/Rating';
 import axios from 'axios';
 import { BASE_URL } from '../../env_setup'
 
 function Booking(props) {
 
-    const [state, setState] = useState({ timeslotList: [], timeslot: null })
+    const [state, setState] = useState({ timeslotList: [], timeslot: null, showAlert: 0, showModal: true })
 
     let handleClose = (e) => {
         props.setBooking(null)
@@ -25,20 +25,35 @@ function Booking(props) {
         props.setBooking({ ...props.booking, customer_rating: newRating })
     }
 
+    let closeAlert = () => {
+        setTimeout(() => {
+            setState({ ...state, showAlert: 0 })
+            props.setBooking(null)
+        }, 2000)
+    }
+
     let cancelBooking = async () => {
         let bookingDetails = {
             booking_id: props.booking.id
         };
+        let data, status;
         try {
             let cancelBookingRes = await axios.delete(BASE_URL + "cancelBooking", {
                 params: bookingDetails
             })
             console.log(cancelBookingRes.status)
+            data = cancelBookingRes.data
+            status = cancelBookingRes.status
         }
-        catch {
+        catch (error) {
+            data = error.response.data
+            status = error.response.status
             console.log('Error')
         }
-        props.setBooking(null)
+        closeAlert()
+        let showAlert = (status == 200) ? 1 : 2
+        setState({ ...state, showAlert, showModal: false })
+
     }
 
     let getRescheduleTimeslots = async () => {
@@ -78,10 +93,19 @@ function Booking(props) {
 
     return (
         <Container id="booking" className='mt-4'>
+            {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert == 1) ? "success" : "danger"}>
+                <Alert.Heading>{(state.showAlert == 1) ? "Success" : "Error"}</Alert.Heading>
+                <p>
+                    {(state.showAlert == 1) ?
+                        "Booking cancelled!" :
+                        "Error while cancelling the booking!"
+                    }
+                </p>
+            </Alert>}
             <Modal
                 centered
                 size="lg"
-                show={props.booking != null}>
+                show={props.booking != null && state.showModal}>
                 <Modal.Header className="booking-header">
                     Booking details
                 </Modal.Header>

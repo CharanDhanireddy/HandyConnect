@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
-    Container, Card, Row, Col,
-    // Toast, ToastContainer 
+    Container, Card, Row, Col
 } from "react-bootstrap";
 import axios from "axios";
 import TimeSelect from "./TimeSelect";
@@ -13,7 +12,6 @@ class Dashboard extends Component {
         this.state = {
             serviceList: null,
             service: null,
-            // showToast: false
         }
     }
 
@@ -51,7 +49,6 @@ class Dashboard extends Component {
 
     render() {
         const { service, serviceList,
-            // showToast
         } = this.state;
         if (!this.props.city) return null
         return (
@@ -74,7 +71,6 @@ class Dashboard extends Component {
                                             <Card.Body className='mx-auto'>
                                                 <h3 className='dashboard-card-text '>{service.service_name}</h3>
                                             </Card.Body>
-                                            {/* <Button size="sm" variant="outline-primary">Select</Button> */}
                                         </Card>
                                     </Col>
                                 )
@@ -88,19 +84,6 @@ class Dashboard extends Component {
                 <TimeSelect updateState={this.updateState} service={service} city={this.props.city} />
                 {/* } */}
 
-
-                {/* To update later */}
-                {/* <ToastContainer position="top-start">
-                    <Toast className="d-inline-block m-1" bg='light' show={showToast}
-                        // delay={3000} 
-                        autohide>
-                        <Toast.Body
-                        // className={variant === 'Dark' && 'text-white'}
-                        >
-                            Booking Successful!
-                        </Toast.Body>
-                    </Toast>
-                </ToastContainer> */}
 
             </Container>
         );
