@@ -16,9 +16,9 @@ function Bookings(props) {
     }
 
     let statusColourMap = {
-        Confirmed: 'black',
+        Confirmed: 'green',
         In_progress: 'orange',
-        Completed: 'green',
+        Completed: 'blue',
         Cancelled: 'red'
     }
 
