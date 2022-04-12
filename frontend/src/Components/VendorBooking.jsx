@@ -58,10 +58,10 @@ function VendorBooking(props) {
                 centered
                 size="lg"
                 show={props.booking != null}>
-                <Modal.Header className = "booking-header">
+                <Modal.Header className="booking-header">
                     Booking details
                 </Modal.Header>
-                <Modal.Body className = "booking-font">
+                <Modal.Body className="booking-font">
                     {Object.keys(BookingData)
                         // .filter(key => !key.includes('id') && !key.includes('password'))
                         .map(key => (
