@@ -27,13 +27,11 @@ function Bookings(props) {
         let fetchBookings = async () => {
             const token = getToken()
             const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
-            // Handle errors
             let bookings = bookings_response.data?.reverse()
             setState({ ...state, bookings })
         }
         fetchBookings()
     },
-        // can reduce number of API calls by using another state variable 
         [state.booking])
 
 
