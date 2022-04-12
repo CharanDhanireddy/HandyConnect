@@ -28,7 +28,7 @@ function Bookings(props) {
             const token = getToken()
             const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
             // Handle errors
-            let bookings = bookings_response.data
+            let bookings = bookings_response.data?.reverse()
             setState({ ...state, bookings })
         }
         fetchBookings()
