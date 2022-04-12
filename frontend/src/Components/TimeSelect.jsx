@@ -110,13 +110,13 @@ function TimeSelect(props) {
                 centered
             >
                 <Modal.Header>
-                    <Modal.Title className='text-center'>Select a timeslot</Modal.Title>
+                    <Modal.Title className='text-center booking-header'><strong>Select a timeslot</strong></Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body >
                     <Container >
-                        <Row>
-                            <Col> Selected Service: </Col>
-                            <Col xs={9}> {props.service?.service_name}</Col>
+                        <Row >
+                            <Col className = "booking-header"> Selected Service: </Col>
+                            <Col className = "booking-font" xs={9}> {props.service?.service_name}</Col>
                         </Row>
                         <hr />
                         <Row xs={1} md={2} lg={3}>
@@ -125,11 +125,12 @@ function TimeSelect(props) {
                                     <Card
 
                                         key={key}
-                                        style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
+                                        style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }} 
                                         // className='border'
-                                        className={(timeslot == state.timeslot ? 'bg-dark text-white' : null)}
+                                        className={(timeslot == state.timeslot ? 'bg-dark text-white timeselect-card-onhover' : 'timeselect-card-onhover')}  
+                                        
                                         onClick={() => { setState({ ...state, timeslot: timeslot }) }}
-                                    >
+                                    >   
                                         <Card.Body data-cy={key}>
                                             <p className='text-center'>{timeslot.month + '/' + timeslot.day + '/' + timeslot.year}</p>
                                         </Card.Body>
@@ -139,7 +140,7 @@ function TimeSelect(props) {
                         </Row>
                         <span className='text-danger'>{state.errors.timeslot}</span>
                         <hr />
-                        <Form>
+                        <Form >
                             <Form.Group controlId="addressId" className="timeSelect-address-field">
                                 <Form.Control
                                     className="timeSelect-address-field mb-2"
@@ -181,15 +182,15 @@ function TimeSelect(props) {
                         </Form>
                     </Container>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                <Modal.Footer className = "booking-font">
+                    <Button variant="secondary" onClick={handleClose}><strong>Close</strong></Button>
                     <Button
                         id="submitId"
-                        variant="outline-primary"
+                        variant="outline-success"
                         // disabled={!(state.timeslot & state.zipcode & state.address)}
                         onClick={onSubmit}
                     >
-                        Confirm
+                        <strong>Submit</strong>
                     </Button>
                 </Modal.Footer>
             </Modal>
