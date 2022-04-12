@@ -38,9 +38,7 @@ function Bookings(props) {
 
 
     const tableHeaders = ['Timeslot', 'Service',
-        // 'Service Provider', 
         'Address',
-        // 'City',
         'Status',
         'Action']
 
@@ -53,7 +51,6 @@ function Bookings(props) {
                 <thead className="booking-header">
                     <tr>
                         {tableHeaders.map((header, key) => (
-                            // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
                             <th key={key}>{header}</th>
                         ))
                         }
@@ -61,13 +58,10 @@ function Bookings(props) {
                 </thead>
                 <tbody className="booking-font">
                     {state.bookings && state.bookings.map((booking, key) => (
-                        // <Row key={booking.id}> {JSON.stringify(booking)}</Row>
                         <tr key={key}>
                             <td id="booking-month">{booking.month + '/' + booking.day + '/' + booking.year}</td>
                             <td id="service-name" >{booking.service_name}</td>
-                            {/* <td id="vendor-name" >{booking.vendor_name}</td> */}
                             <td id="address" >{booking.address}</td>
-                            {/* <td id="city" >{booking.city_name}</td> */}
                             <td id="status" style={{ color: statusColourMap[booking.booking_status] }}>
                                 <span data-cy={booking.month + '/' + booking.day + '/' + booking.year}>
                                     {statusMap[booking.booking_status]}
