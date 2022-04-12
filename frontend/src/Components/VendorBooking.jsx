@@ -58,10 +58,10 @@ function VendorBooking(props) {
                 centered
                 size="lg"
                 show={props.booking != null}>
-                <Modal.Header className = "booking-header">
+                <Modal.Header className="booking-header">
                     Booking details
                 </Modal.Header>
-                <Modal.Body className = "booking-font">
+                <Modal.Body className="booking-font">
                     {Object.keys(BookingData)
                         // .filter(key => !key.includes('id') && !key.includes('password'))
                         .map(key => (
@@ -70,13 +70,14 @@ function VendorBooking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
-                    {(props.booking.status == 'completed') &&
+                    {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
                             <Col>
                                 {(props.booking.vendor_rating != 0) ?
                                     <Rating precision={0.5} name="read-only" value={props.booking.vendor_rating} readOnly />
                                     : <Rating
+                                        data-cy='rating'
                                         name="simple-controlled"
                                         value={props.booking.vendor_rating}
                                         precision={0.5}
