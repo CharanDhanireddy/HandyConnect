@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Modal, Button, Card } from 'react-bootstrap';
-// import StarRating from 'react-simple-star-rating';
 import Rating from '@mui/material/Rating';
 import axios from 'axios';
 import { BASE_URL } from '../../env_setup'
@@ -17,7 +16,6 @@ function Booking(props) {
         let newBooking = {
             booking_id: props.booking.id, rating: newRating
         };
-        // Can improve error handling here
         try {
             let bookingRes = await axios.post(BASE_URL + "customerRating", newBooking)
         }
@@ -75,7 +73,6 @@ function Booking(props) {
         Timeslot: props.booking.month + '/' + props.booking.day + '/' + props.booking.year,
         Service: props.booking['service_name'],
         Address: props.booking['address'],
-        // City: props.booking['city_name'],
         Vendor: props.booking['vendor_name'],
     } : []
 
@@ -145,7 +142,6 @@ function Booking(props) {
 
                                             key={key}
                                             style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
-                                            // className='border'
                                             className={(timeslot == state.timeslot ? 'bg-dark text-white' : null)}
                                             onClick={() => { setState({ ...state, timeslot: timeslot }) }}
                                         >
