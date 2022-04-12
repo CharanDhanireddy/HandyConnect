@@ -88,9 +88,6 @@ function TimeSelect(props) {
         redirect(status)
         let showAlert = (status == 200) ? 1 : 2
         setState({ ...initial_state, showAlert })
-        // navigate('/')
-        // setState(initial_state)
-        // props.updateState('showToast', true)
         props.updateState('service', null)
     }
 
