@@ -141,6 +141,13 @@ export function makeServer() {
         let booking = schema.db.bookings.findBy({ id: attrs.booking_id });
         return { ...booking, day: attrs.day, month: attrs.month, year: attrs.year }
       })
+
+      this.post('startService', (schema, request) => {
+        let attrs = JSON.parse(request.requestBody)
+        let booking = schema.db.bookings.findBy({ id: attrs.booking_id });
+        return { ...booking, booking_status: 'In_progress' }
+      })
+
     },
   })
 }
