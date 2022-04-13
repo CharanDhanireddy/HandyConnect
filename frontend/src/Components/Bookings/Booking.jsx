@@ -91,6 +91,10 @@ function Booking(props) {
         Vendor: props.booking['vendor_name'],
     } : []
 
+    if (props.booking.otp && props.booking.booking_status == 'Confirmed') {
+        BookingData.OTP = props.booking.otp
+    }
+
     return (
         <Container id="booking" className='mt-4'>
             {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert == 1) ? "success" : "danger"}>
