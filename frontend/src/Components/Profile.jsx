@@ -21,10 +21,10 @@ function Profile(props) {
     return (
         <div className='user-profile-details'>
             <h3 className='mb-3 mt-4' data-cy="name">{state.userData['first_name']} {state.userData['last_name']}</h3>
-            <table className = "profile-table">
+            <table className="profile-table">
                 <tr data-cy="city_name">
-                 <th>City</th>
-                 <td>{state.userData['city_name']}</td>   
+                    <th>City</th>
+                    <td>{state.userData['city_name']}</td>
                 </tr>
                 <tr data-cy="phone">
                     <th>Phone</th>
@@ -34,6 +34,10 @@ function Profile(props) {
                     <th>Email</th>
                     <td>{state.userData['email']}</td>
                 </tr>
+                {state.userData?.rating != 0 && <tr data-cy="rating">
+                    <th>Rating</th>
+                    <td>{state.userData.rating}</td>
+                </tr>}
             </table>
 
         </div>

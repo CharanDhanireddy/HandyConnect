@@ -12,7 +12,7 @@ function VendorProfile(props) {
             let token = getToken()
             let profile_response = await axios.get(BASE_URL + "vendor", { params: { vendor_id: token } })
             console.log(profile_response)
-            // customer response is a list with one element
+            // Vendor response is a list with one element
             setState({ ...state, vendorData: profile_response.data })
         }
         fetchData();
@@ -20,13 +20,13 @@ function VendorProfile(props) {
 
     return (
 
-                
+
         <div className='vendor-profile-details'>
-            <h3 className='mb-3'data-cy="name">{state.vendorData['first_name']} {state.vendorData['last_name']}</h3>
-            <table className = "profile-table">
+            <h3 className='mb-3' data-cy="name">{state.vendorData['first_name']} {state.vendorData['last_name']}</h3>
+            <table className="profile-table">
                 <tr data-cy="city_name">
-                 <th>City</th>
-                 <td>{state.vendorData['city_name']}</td>   
+                    <th>City</th>
+                    <td>{state.vendorData['city_name']}</td>
                 </tr>
                 <tr data-cy="phone">
                     <th>Phone</th>
@@ -40,6 +40,10 @@ function VendorProfile(props) {
                     <th>Service</th>
                     <td>{state.vendorData['service_name']}</td>
                 </tr>
+                {state.vendorData?.rating != 0 && <tr data-cy="rating">
+                    <th>Rating</th>
+                    <td>{state.vendorData.rating}</td>
+                </tr>}
             </table>
 
         </div>
