@@ -101,6 +101,10 @@ function Booking(props) {
         BookingData.OTP = props.booking.otp
     }
 
+    if (props.booking.vendor_phone) {
+        BookingData.VendorPhone = props.booking.vendor_phone
+    }
+
     return (
         <Container id="booking" className='mt-4'>
             {/* Alert where 1 -> booking cancelled
@@ -133,6 +137,11 @@ function Booking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
+                        {props.booking.vendor_phone &&
+                        <Row data-cy='vendor-phone'>
+                                <Col xs={3} id = 'vendor-phone'><text className='text-uppercase'>  Contact </text></Col>
+                                <Col id = 'vendor-phone-no'>{BookingData['VendorPhone']}</Col>
+                            </Row>}
                     {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
