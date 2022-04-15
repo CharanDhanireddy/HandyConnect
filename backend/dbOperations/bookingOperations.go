@@ -6,6 +6,8 @@ import (
 	schema "handy/schema"
 	structTypes "handy/structTypes"
 	"log"
+	"math/rand"
+	"strconv"
 	"strings"
 	"time"
 
@@ -26,8 +28,11 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 		return "", err
 	}
 
+	ranNum := 100000 + rand.Intn(900000)
+	ranNumString := strconv.Itoa(ranNum)
+
 	log.Println("Inserting booking record ...")
-	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address, booking_status, customer_rating, vendor_rating) VALUES (?,?,?,?,?,?,?,?,"Confirmed", 0, 0)`
+	insertBookingSQL := `INSERT INTO booking (vendor_id, customer_id, service_id, city_id, day, month, year, address, otp, booking_status, customer_rating, vendor_rating) VALUES (?,?,?,?,?,?,?,?,?,"Confirmed", 0, 0)`
 	statement, err := db.Prepare(insertBookingSQL) // Prepare statement.
 	// This is good to avoid SQL injections
 	if err != nil {
@@ -36,7 +41,7 @@ func InsertBooking(booking schema.BookingSchema) (string, error) {
 	}
 
 	_, err = statement.Exec(booking.VendorId, booking.CustomerId, booking.ServiceId, booking.CityId, //have to update the cityID when changed on the front-end by a customer
-		booking.Day, booking.Month, booking.Year, booking.Address)
+		booking.Day, booking.Month, booking.Year, booking.Address, ranNumString)
 	if err != nil {
 		log.Println(err.Error())
 		return "", err

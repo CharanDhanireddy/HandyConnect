@@ -59,4 +59,5 @@ type Booking struct {
 	BookingStatus  string `json:"booking_status"`
 	CustomerRating int    `json:"customer_rating"`
 	VendorRating   int    `json:"vendor_rating"`
+	Otp            string `json:"otp"`
 }
