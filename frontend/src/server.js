@@ -27,8 +27,8 @@ export function makeServer() {
       server.create('user', { first_name: 'u', last_name: '3', city_name: 'Miami', phone: '123456789', email: 'u3@gmail.com', password: 'pwd12345', city_id: 1 })
       server.create('user', { first_name: 'Aaron', last_name: 'Smith', city_name: 'Orlando', phone: '123456789', email: 'aaronsmith@gmail.com', password: 'pwd12345', city_id: 3 })
 
-      server.create('vendor', { first_name: 'Bruce', last_name: 'Wayne', service_name: 'Carpenter', city_name: 'Miami', phone: '123456789', email: 'bw@gmail.com', password: 'pwd12345', city_id: 1 })
-      server.create('vendor', { first_name: 'Barry', last_name: 'Allen', service_name: 'Electrician', city_name: 'Orlando', phone: '123456789', email: 'ba@gmail.com', password: 'pwd12345', city_id: 3 })
+      server.create('vendor', { first_name: 'Bruce', last_name: 'Wayne', service_name: 'Carpenter', city_name: 'Miami', phone: '123456789', email: 'bw@gmail.com', password: '123456789', city_id: 1 })
+      server.create('vendor', { first_name: 'Barry', last_name: 'Allen', service_name: 'Electrician', city_name: 'Orlando', phone: '123456789', email: 'ba@gmail.com', password: '123456789', city_id: 3 })
 
       server.create('timeslot', { time: '2/5/2022' })
       server.create('timeslot', { time: '2/6/2022' })
@@ -38,7 +38,7 @@ export function makeServer() {
       server.create('timeslot', { time: '2/10/2022' })
 
       server.create('booking', { customer_id: 8, booking_status: 'Confirmed', otp: 23421, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
-      server.create('booking', { customer_id: 8, booking_status: 'Confirmed', otp: 23421, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '4000 SW 27 Blvd Orlando 45332' })
+      server.create('booking', { customer_id: 8, booking_status: 'In_progress', otp: 23421, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '4000 SW 27 Blvd Orlando 45332' })
       server.create('booking', { customer_id: 2, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
       server.create('booking', { customer_id: 2, service_name: 'Carpenter', city_name: 'Orlando', vendor_name: 'Bruce Wayne', day: 2, month: 3, year: 2022, address: '4000 SW 27 Blvd Orlando 45332' })
       server.create('booking', { customer_id: 3, service_name: 'Electrician', city_name: 'Orlando', vendor_name: 'Barry Allen', day: 2, month: 3, year: 2022, address: '221B Baker Street Orlando 45324' })
@@ -148,6 +148,11 @@ export function makeServer() {
         return { ...booking, booking_status: 'In_progress' }
       })
 
+      this.post('startService', (schema, request) => {
+        let attrs = JSON.parse(request.requestBody)
+        let booking = schema.db.bookings.findBy({ id: attrs.booking_id });
+        return { ...booking, booking_status: 'Completed' }
+      })
     },
   })
 }

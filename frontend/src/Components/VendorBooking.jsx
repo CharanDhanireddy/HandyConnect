@@ -27,6 +27,27 @@ function VendorBooking(props) {
         setState({ ...state, [e.target.name]: e.target.value })
     };
 
+    let handleEndService = async () => {
+        let bookingData = { booking_id: props.booking.id }
+        let data, status;
+        try {
+            let endRes = await axios.post(BASE_URL + "endService", bookingData)
+            data = endRes.data
+            status = endRes.status
+            if (data.booking_status == 'Completed') {
+                console.log('Completed the service!')
+            }
+            else {
+                console.log('Error while ending service', data, status)
+            }
+        }
+        catch (error) {
+            data = error.response.data
+            status = error.response.status
+            console.log(error)
+        }
+    }
+
     // To
     let handleOTPSubmit = async () => {
         let newBooking = {
@@ -154,6 +175,13 @@ function VendorBooking(props) {
                                         onClick={handleOTPSubmit}
                                     // className='submit-OTP-button'
                                     > <strong>Submit</strong></Button></Col>
+                            </Row>
+                        </>}
+                    {(props.booking.booking_status == 'In_progress') &&
+                        <>
+                            <Row>
+                                <Col xs='3'> <text className='text-uppercase fw-bold'>Action </text></Col>
+                                <Col><Button variant='danger' onClick={handleEndService}>End Service</Button></Col>
                             </Row>
                         </>}
 
