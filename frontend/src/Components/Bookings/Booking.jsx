@@ -51,7 +51,7 @@ function Booking(props) {
             console.log('Error')
         }
         closeAlert()
-        let showAlert = (status == 200) ? 1 : 2
+        let showAlert = (status == 200) ? 1 : 3
         setState({ ...state, showAlert, showModal: false })
 
     }
@@ -68,20 +68,26 @@ function Booking(props) {
     }
 
     let rescheduleBooking = async () => {
-        let res = await axios.post(BASE_URL + "rescheduleBooking", {
-            booking_id: props.booking.id,
-            day: state.timeslot.day,
-            month: state.timeslot.month,
-            year: state.timeslot.year
-        })
-        let data = res.data
-        let status = res.status
-        console.log(res)
-        // check if the current day minth year is same as response
-
-        // Show some kind of Popup
-        // setState(initial_state)
-        props.setBooking(null)
+        let data, status;
+        try {
+            let res = await axios.post(BASE_URL + "rescheduleBooking", {
+                booking_id: props.booking.id,
+                day: state.timeslot.day,
+                month: state.timeslot.month,
+                year: state.timeslot.year
+            })
+            data = res.data
+            status = res.status
+            console.log(res)
+        }
+        catch (error) {
+            data = error.response.data
+            status = error.response.status
+            console.log('Error', error)
+        }
+        closeAlert()
+        let showAlert = (status == 200) ? 2 : 3
+        setState({ ...state, showAlert, showModal: false })
     }
 
     const BookingData = props.booking ? {
@@ -91,14 +97,23 @@ function Booking(props) {
         Vendor: props.booking['vendor_name'],
     } : []
 
+    if (props.booking.otp && props.booking.booking_status == 'Confirmed') {
+        BookingData.OTP = props.booking.otp
+    }
+
     return (
         <Container id="booking" className='mt-4'>
+            {/* Alert where 1 -> booking cancelled
+            2 -> booking rescheduled
+            3 -> Error */}
             {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert == 1) ? "success" : "danger"}>
                 <Alert.Heading>{(state.showAlert == 1) ? "Success" : "Error"}</Alert.Heading>
                 <p>
                     {(state.showAlert == 1) ?
                         "Booking cancelled!" :
-                        "Error while cancelling the booking!"
+                        (state.showAlert == 2) ?
+                            "Booking rescheduled!" :
+                            "Error while modifying the booking!"
                     }
                 </p>
             </Alert>}
