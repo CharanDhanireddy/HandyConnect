@@ -106,6 +106,10 @@ function VendorBooking(props) {
         Customer: props.booking['customer_name'],
     } : []
 
+    if (props.booking.customer_phone) {
+        BookingData.CustomerPhone = props.booking.customer_phone
+    }
+
     return (
         <Container id="booking" className='mt-4'>
             <Modal
@@ -124,6 +128,13 @@ function VendorBooking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
+
+                        {props.booking.customer_phone &&
+                        <Row data-cy='customer-phone'>
+                                <Col xs={3} id = 'customer-phone'><text className='text-uppercase'>  Contact </text></Col>
+                                <Col id = 'customer-phone-no'>{BookingData['CustomerPhone']}</Col>
+                            </Row>}
+
                     {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
