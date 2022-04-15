@@ -190,7 +190,7 @@ function Booking(props) {
 
                                             key={key}
                                             style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
-                                            className={(timeslot == state.timeslot ? 'bg-dark text-white' : null)}
+                                            className={(timeslot == state.timeslot ? 'bg-dark text-white timeselect-card-onhover' : 'timeselect-card-onhover')}
                                             onClick={() => { setState({ ...state, timeslot: timeslot }) }}
                                         >
                                             <Card.Body data-cy={key}>
