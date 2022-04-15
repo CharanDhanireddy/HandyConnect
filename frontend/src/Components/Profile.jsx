@@ -34,10 +34,10 @@ function Profile(props) {
                     <th>Email</th>
                     <td>{state.userData['email']}</td>
                 </tr>
-                {state.userData?.rating != 0 && <tr data-cy="rating">
+                <tr data-cy = "rating">
                     <th>Rating</th>
-                    <td>{state.userData.rating}</td>
-                </tr>}
+                    <td> {state.userData['rating_count'] == 0 ? 'Not ratings yet' : state.userData['rating']}  </td>
+                </tr>
             </table>
 
         </div>
