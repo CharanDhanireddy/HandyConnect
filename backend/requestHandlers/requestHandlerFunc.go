@@ -128,3 +128,30 @@ func ReturnBookingVend(c *gin.Context) {
 	vend_book := dbOperations.DisplayVendBookings(vendorId)
 	c.JSON(http.StatusOK, vend_book)
 }
+
+func StartSevice(c *gin.Context) {
+
+	pass, err := strconv.Atoi(c.Query("otp"))
+	if err != nil {
+		fmt.Println("stoi error for otp")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer otp")
+		return
+	}
+
+	start_service := dbOperations.BeginService(pass)
+	c.JSON(http.StatusOK, start_service)
+}
+
+func FinishService(c *gin.Context) {
+	bid, err := strconv.Atoi(c.Query("id"))
+	if err != nil {
+		fmt.Println("stoi error for booking_id")
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, "need integer booking_id")
+		return
+	}
+
+	finish_service := dbOperations.EndService(bid)
+	c.JSON(http.StatusOK, finish_service)
+}
