@@ -295,7 +295,7 @@ func BeginService(pass int) string {
 	var otp string
 	// var booking_status string
 
-	sqlStmt := `SELECT id, otp, booking_status FROM booking WHERE id = $1 and otp = $2 and booking_status = "Confirmed"`
+	sqlStmt := `SELECT id, otp FROM booking WHERE id = $1 and otp = $2 and booking_status = "Confirmed"`
 	row1, err := db.Query(sqlStmt, id, otp)
 	if err != nil {
 		log.Fatal(err)
@@ -320,7 +320,7 @@ func EndService(pass int) string {
 	// var otp string
 	// var booking_status string
 
-	sqlStmt := `SELECT id, booking_status FROM booking WHERE id = $1 and booking_status = "In-Progress"`
+	sqlStmt := `SELECT id FROM booking WHERE id = $1 and booking_status = "In-Progress"`
 	row1, err := db.Query(sqlStmt, id)
 	if err != nil {
 		log.Fatal(err)
