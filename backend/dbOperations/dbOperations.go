@@ -288,3 +288,53 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 
 	return vend_book
 }
+
+func BeginService(pass int) string {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var otp string
+	// var booking_status string
+
+	sqlStmt := `SELECT id, otp, booking_status FROM booking WHERE id = $1 and otp = $2 and booking_status = "Confirmed"`
+	row1, err := db.Query(sqlStmt, id, otp)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if row1.Next() {
+		sqlStmt := `UPDATE booking SET booking_status = "In-Progress" WHERE id = ?`
+		row2, err := db.Query(sqlStmt, id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		row2.Close()
+
+	}
+	row1.Close()
+	return "Service Started"
+}
+
+func EndService(pass int) string {
+	db := dbConnection.GetDbConnection()
+	var id int
+	// var otp string
+	// var booking_status string
+
+	sqlStmt := `SELECT id, booking_status FROM booking WHERE id = $1 and booking_status = "In-Progress"`
+	row1, err := db.Query(sqlStmt, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if row1.Next() {
+		sqlStmt := `UPDATE booking SET booking_status = "Completed" WHERE id = ?`
+		row2, err := db.Query(sqlStmt, id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		row2.Close()
+
+	}
+	row1.Close()
+	return "Service Complete"
+}
