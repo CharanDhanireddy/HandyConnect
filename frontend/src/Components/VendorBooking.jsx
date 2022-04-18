@@ -51,7 +51,7 @@ function VendorBooking(props) {
     // To
     let handleOTPSubmit = async () => {
         let newBooking = {
-            booking_id: props.booking.id, otp: state.otp
+            booking_id: props.booking.id, otp: parseInt(state.otp)
         };
         // Can improve error handling here
         let data, status;
@@ -129,11 +129,11 @@ function VendorBooking(props) {
                             </Row>
                         ))}
 
-                        {props.booking.customer_phone &&
+                    {props.booking.customer_phone &&
                         <Row data-cy='customer-phone'>
-                                <Col xs={3} id = 'customer-phone'><text className='text-uppercase'>  Contact </text></Col>
-                                <Col id = 'customer-phone-no'>{BookingData['CustomerPhone']}</Col>
-                            </Row>}
+                            <Col xs={3} id='customer-phone'><text className='text-uppercase'>  Contact </text></Col>
+                            <Col id='customer-phone-no'>{BookingData['CustomerPhone']}</Col>
+                        </Row>}
 
                     {(props.booking.booking_status == 'Completed') &&
                         <Row>

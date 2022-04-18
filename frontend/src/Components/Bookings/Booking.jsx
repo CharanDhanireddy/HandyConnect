@@ -110,8 +110,8 @@ function Booking(props) {
             {/* Alert where 1 -> booking cancelled
             2 -> booking rescheduled
             3 -> Error */}
-            {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert == 1) ? "success" : "danger"}>
-                <Alert.Heading>{(state.showAlert == 1) ? "Success" : "Error"}</Alert.Heading>
+            {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert <= 2) ? "success" : "danger"}>
+                <Alert.Heading>{(state.showAlert <= 2) ? "Success" : "Error"}</Alert.Heading>
                 <p>
                     {(state.showAlert == 1) ?
                         "Booking cancelled!" :
@@ -137,11 +137,11 @@ function Booking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
-                        {props.booking.vendor_phone &&
+                    {props.booking.vendor_phone &&
                         <Row data-cy='vendor-phone'>
-                                <Col xs={3} id = 'vendor-phone'><text className='text-uppercase'>  Contact </text></Col>
-                                <Col id = 'vendor-phone-no'>{BookingData['VendorPhone']}</Col>
-                            </Row>}
+                            <Col xs={3} id='vendor-phone'><text className='text-uppercase'>  Contact </text></Col>
+                            <Col id='vendor-phone-no'>{BookingData['VendorPhone']}</Col>
+                        </Row>}
                     {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
