@@ -22,8 +22,10 @@ code {
 }
 
 .login-signup-heading {
+  margin-top: 5%;
   margin-bottom: 10%;
   text-align: center;
+  position: relative;
 }
 
 .loginpage-email-field {
@@ -186,3 +188,6 @@ code {
   font-size: 1.25rem;
 }
 
+.header-position{
+  position: fixed;
+}
