@@ -16,3 +16,8 @@ type BookingRescheduleRequest struct {
 	Month     int `json:"month"`
 	Year      int `json:"year"`
 }
+
+type UpdateStatus struct {
+	Id  int `json:"id"`
+	Otp int `json:"otp"`
+}

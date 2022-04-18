@@ -201,12 +201,13 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 	var book_stat string
 	var cust_rating int
 	var vend_rating int
+	var otp string
 
 	// var service2 string
 	// var service3 string
 
 	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name,
-	b.vendor_id, b.customer_id, b.service_id, b.city_id, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating
+	b.vendor_id, b.customer_id, b.service_id, b.city_id, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating, b.otp
 	FROM Booking as b 
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
@@ -226,9 +227,9 @@ func DisplayCustBookings(customerId int) []structTypes.Booking {
 
 	var cust_book []structTypes.Booking
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
-		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating})
-		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address, cust_rating)
+		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating, &otp)
+		cust_book = append(cust_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating, otp})
+		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address, cust_rating, otp)
 	}
 	row.Close()
 
@@ -253,12 +254,13 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	var book_stat string
 	var cust_rating int
 	var vend_rating int
+	var otp string
 
 	// var service2 string
 	// var service3 string
 
 	sqlStmt := `SELECT b.id, v.first_name||' ' || v.last_name AS vend_name, c.first_name|| ' ' || c.last_name AS cust_name, s.service_name, city.city_name,
-	b.vendor_id, b.customer_id, b.service_id, b.city_id, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating
+	b.vendor_id, b.customer_id, b.service_id, b.city_id, b.day, b.month, b.year, b.address, b.booking_status, b.customer_rating, b.vendor_rating, b.otp
 	FROM Booking as b 
 	JOIN vendor as v 
 	ON v.id = b.vendor_id 
@@ -278,11 +280,61 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 
 	var vend_book []structTypes.Booking
 	for row.Next() { // Iterate and fetch the records from result cursor
-		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating)
-		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating})
-		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address, vend_rating)
+		row.Scan(&id, &vend_name, &cust_name, &serv_name, &city, &vend_id, &cust_id, &serv_id, &city_id, &day, &month, &year, &address, &book_stat, &cust_rating, &vend_rating, &otp)
+		vend_book = append(vend_book, structTypes.Booking{id, vend_name, cust_name, serv_name, city, vend_id, cust_id, serv_id, city_id, day, month, year, address, book_stat, cust_rating, vend_rating, otp})
+		fmt.Println(id, vend_name, cust_name, serv_name, city, day, month, year, address, vend_rating, otp)
 	}
 	row.Close()
 
 	return vend_book
+}
+
+func BeginService(pass int) string {
+	db := dbConnection.GetDbConnection()
+	var id int
+	var otp string
+	// var booking_status string
+
+	sqlStmt := `SELECT id, otp FROM booking WHERE id = $1 and otp = $2 and booking_status = "Confirmed"`
+	row1, err := db.Query(sqlStmt, id, otp)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if row1.Next() {
+		sqlStmt := `UPDATE booking SET booking_status = "In-Progress" WHERE id = ?`
+		row2, err := db.Query(sqlStmt, id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		row2.Close()
+
+	}
+	row1.Close()
+	return "Service Started"
+}
+
+func EndService(pass int) string {
+	db := dbConnection.GetDbConnection()
+	var id int
+	// var otp string
+	// var booking_status string
+
+	sqlStmt := `SELECT id FROM booking WHERE id = $1 and booking_status = "In-Progress"`
+	row1, err := db.Query(sqlStmt, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if row1.Next() {
+		sqlStmt := `UPDATE booking SET booking_status = "Completed" WHERE id = ?`
+		row2, err := db.Query(sqlStmt, id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		row2.Close()
+
+	}
+	row1.Close()
+	return "Service Complete"
 }
