@@ -79,7 +79,7 @@ function Signup(props) {
       else
         // navigate('/signup')
         setState({ ...state, showAlert: 0 })
-    }, 3000);
+    }, 1200);
   }
 
   let onSignupClick = async () => {
