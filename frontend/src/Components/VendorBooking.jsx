@@ -59,7 +59,7 @@ function VendorBooking(props) {
             let otpRes = await axios.post(BASE_URL + "startService", newBooking)
             data = otpRes.data
             status = otpRes.status
-            if (data.booking_status == 'In_progress') {
+            if (data.booking_status == 'In-Progress') {
                 console.log('OTP correct and status updated')
                 props.setBooking({ ...props.booking, booking_status: data.booking_status })
             }
@@ -188,7 +188,7 @@ function VendorBooking(props) {
                                     > <strong>Submit</strong></Button></Col>
                             </Row>
                         </>}
-                    {(props.booking.booking_status == 'In_progress') &&
+                    {(props.booking.booking_status == 'In-Progress') &&
                         <>
                             <Row>
                                 <Col xs='3'> <text className='text-uppercase fw-bold'>Action </text></Col>
