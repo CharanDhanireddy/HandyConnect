@@ -38,7 +38,7 @@ function Header(props) {
 
     return (
         <>
-            <Navbar bg="dark" variant="dark">
+            <Navbar bg="dark" variant="dark" className = "header-position">
                 <Container>
                     <Navbar.Brand id="header-handyconnect" className="py-4" href="/">
                         <img
