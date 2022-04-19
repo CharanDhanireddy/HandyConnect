@@ -289,7 +289,7 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	return vend_book
 }
 
-func BeginService(pass int) string {
+func BeginService(pass string) string {
 	db := dbConnection.GetDbConnection()
 	var id int
 	var otp string
@@ -314,7 +314,7 @@ func BeginService(pass int) string {
 	return "Service Started"
 }
 
-func EndService(pass int) string {
+func EndService(pass string) string {
 	db := dbConnection.GetDbConnection()
 	var id int
 	// var otp string

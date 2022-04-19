@@ -8,21 +8,6 @@ import { BASE_URL } from '../env_setup'
 function VendorBooking(props) {
     const [state, setState] = useState({ otp: '', errors: {} })
 
-    // useEffect(() => {
-    //     let fetchBookings = async () => {
-    //         const token = getToken()
-    //         const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
-    //         // Handle errors
-    //         let bookings = bookings_response.data
-    //         setState({ ...state, bookings })
-    //     }
-    //     fetchBookings()
-    // }, [])
-
-    // const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
-
-    // const setBookingKey = (bookingKey) => setState({ ...state, bookingKey })
-
     let onChange = e => {
         setState({ ...state, [e.target.name]: e.target.value })
     };
@@ -34,7 +19,7 @@ function VendorBooking(props) {
             let endRes = await axios.post(BASE_URL + "endService", bookingData)
             data = endRes.data
             status = endRes.status
-            if (data.booking_status == 'Completed') {
+            if (status == 200) {
                 console.log('Completed the service!')
             }
             else {
@@ -59,9 +44,9 @@ function VendorBooking(props) {
             let otpRes = await axios.post(BASE_URL + "startService", newBooking)
             data = otpRes.data
             status = otpRes.status
-            if (data.booking_status == 'In-Progress') {
+            if (status == 200) {
                 console.log('OTP correct and status updated')
-                props.setBooking({ ...props.booking, booking_status: data.booking_status })
+                props.setBooking({ ...props.booking, booking_status: 'In-Progress' })
             }
             else {
                 console.log('OTP wrong')
