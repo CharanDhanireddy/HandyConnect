@@ -8,21 +8,6 @@ import { BASE_URL } from '../env_setup'
 function VendorBooking(props) {
     const [state, setState] = useState({ otp: '', errors: {} })
 
-    // useEffect(() => {
-    //     let fetchBookings = async () => {
-    //         const token = getToken()
-    //         const bookings_response = await axios.get(BASE_URL + "customerbooking", { params: { customer_id: token } })
-    //         // Handle errors
-    //         let bookings = bookings_response.data
-    //         setState({ ...state, bookings })
-    //     }
-    //     fetchBookings()
-    // }, [])
-
-    // const tableHeaders = ['Timeslot', 'Service', 'Service Provider', 'Address', 'City']
-
-    // const setBookingKey = (bookingKey) => setState({ ...state, bookingKey })
-
     let onChange = e => {
         setState({ ...state, [e.target.name]: e.target.value })
     };
@@ -34,7 +19,7 @@ function VendorBooking(props) {
             let endRes = await axios.post(BASE_URL + "endService", bookingData)
             data = endRes.data
             status = endRes.status
-            if (data.booking_status == 'Completed') {
+            if (status == 200) {
                 console.log('Completed the service!')
             }
             else {
@@ -51,7 +36,7 @@ function VendorBooking(props) {
     // To
     let handleOTPSubmit = async () => {
         let newBooking = {
-            booking_id: props.booking.id, otp: state.otp
+            booking_id: props.booking.id, otp: parseInt(state.otp)
         };
         // Can improve error handling here
         let data, status;
@@ -59,9 +44,9 @@ function VendorBooking(props) {
             let otpRes = await axios.post(BASE_URL + "startService", newBooking)
             data = otpRes.data
             status = otpRes.status
-            if (data.booking_status == 'In_progress') {
+            if (status == 200) {
                 console.log('OTP correct and status updated')
-                props.setBooking({ ...props.booking, booking_status: data.booking_status })
+                props.setBooking({ ...props.booking, booking_status: 'In-Progress' })
             }
             else {
                 console.log('OTP wrong')
@@ -106,6 +91,10 @@ function VendorBooking(props) {
         Customer: props.booking['customer_name'],
     } : []
 
+    if (props.booking.customer_phone) {
+        BookingData.CustomerPhone = props.booking.customer_phone
+    }
+
     return (
         <Container id="booking" className='mt-4'>
             <Modal
@@ -124,6 +113,13 @@ function VendorBooking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
+
+                    {props.booking.customer_phone &&
+                        <Row data-cy='customer-phone'>
+                            <Col xs={3} id='customer-phone'><text className='text-uppercase'>  Contact </text></Col>
+                            <Col id='customer-phone-no'>{BookingData['CustomerPhone']}</Col>
+                        </Row>}
+
                     {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
@@ -177,7 +173,7 @@ function VendorBooking(props) {
                                     > <strong>Submit</strong></Button></Col>
                             </Row>
                         </>}
-                    {(props.booking.booking_status == 'In_progress') &&
+                    {(props.booking.booking_status == 'In-Progress') &&
                         <>
                             <Row>
                                 <Col xs='3'> <text className='text-uppercase fw-bold'>Action </text></Col>

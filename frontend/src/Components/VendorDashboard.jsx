@@ -10,13 +10,13 @@ function VendorDashboard(props) {
 
     let statusMap = {
         Confirmed: 'Confirmed',
-        In_progress: 'In progress',
+        'In-Progress': 'In progress',
         Completed: 'Completed',
         Cancelled: 'Cancelled'
     }
     let statusColourMap = {
         Confirmed: 'black',
-        In_progress: 'orange',
+        'In-Progress': 'orange',
         Completed: 'green',
         Cancelled: 'red'
     }

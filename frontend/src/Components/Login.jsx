@@ -53,7 +53,7 @@ function Login(props) {
         navigate('/')
       else
         setState({ ...state, showAlert: 0 })
-    }, 700);
+    }, 1200);
   }
 
   let onLoginClick = async () => {

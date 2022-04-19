@@ -101,13 +101,17 @@ function Booking(props) {
         BookingData.OTP = props.booking.otp
     }
 
+    if (props.booking.vendor_phone) {
+        BookingData.VendorPhone = props.booking.vendor_phone
+    }
+
     return (
         <Container id="booking" className='mt-4'>
             {/* Alert where 1 -> booking cancelled
             2 -> booking rescheduled
             3 -> Error */}
-            {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert == 1) ? "success" : "danger"}>
-                <Alert.Heading>{(state.showAlert == 1) ? "Success" : "Error"}</Alert.Heading>
+            {(state.showAlert > 0) && <Alert style={{ zIndex: -1 }} variant={(state.showAlert <= 2) ? "success" : "danger"}>
+                <Alert.Heading>{(state.showAlert <= 2) ? "Success" : "Error"}</Alert.Heading>
                 <p>
                     {(state.showAlert == 1) ?
                         "Booking cancelled!" :
@@ -133,6 +137,11 @@ function Booking(props) {
                                 <Col id={[key]}>{BookingData[key]}</Col>
                             </Row>
                         ))}
+                    {props.booking.vendor_phone &&
+                        <Row data-cy='vendor-phone'>
+                            <Col xs={3} id='vendor-phone'><text className='text-uppercase'>  Contact </text></Col>
+                            <Col id='vendor-phone-no'>{BookingData['VendorPhone']}</Col>
+                        </Row>}
                     {(props.booking.booking_status == 'Completed') &&
                         <Row>
                             <Col xs={3} ><text className='text-uppercase fw-bold'>Rating</text></Col>
@@ -181,7 +190,7 @@ function Booking(props) {
 
                                             key={key}
                                             style={{ height: '4rem', margin: '0 0.5rem 0.5rem 0', cursor: 'pointer' }}
-                                            className={(timeslot == state.timeslot ? 'bg-dark text-white' : null)}
+                                            className={(timeslot == state.timeslot ? 'bg-dark text-white timeselect-card-onhover' : 'timeselect-card-onhover')}
                                             onClick={() => { setState({ ...state, timeslot: timeslot }) }}
                                         >
                                             <Card.Body data-cy={key}>

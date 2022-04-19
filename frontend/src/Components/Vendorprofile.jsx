@@ -40,10 +40,11 @@ function VendorProfile(props) {
                     <th>Service</th>
                     <td>{state.vendorData['service_name']}</td>
                 </tr>
-                {state.vendorData?.rating != 0 && <tr data-cy="rating">
+                <tr data-cy = "rating">
                     <th>Rating</th>
-                    <td>{state.vendorData.rating}</td>
-                </tr>}
+                    <td> {state.vendorData['rating_count'] == 0 ? 'Not ratings yet' : state.vendorData['rating']}  </td>
+                </tr>
+
             </table>
 
         </div>
