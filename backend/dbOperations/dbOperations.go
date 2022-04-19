@@ -303,11 +303,17 @@ func BeginService(pass string) string {
 
 	if row1.Next() {
 		sqlStmt := `UPDATE booking SET booking_status = "In-Progress" WHERE id = ?`
-		row2, err := db.Query(sqlStmt, id)
+		statement, err := db.Prepare(sqlStmt) // Prepare statement.
+		// row2, err := db.Query(sqlStmt, id)
 		if err != nil {
 			log.Fatal(err)
 		}
-		row2.Close()
+		_, err = statement.Exec(id)
+		if err != nil {
+			log.Println(err.Error())
+			return ""
+		}
+		// row2.Close()
 
 	}
 	row1.Close()
@@ -328,12 +334,16 @@ func EndService(pass string) string {
 
 	if row1.Next() {
 		sqlStmt := `UPDATE booking SET booking_status = "Completed" WHERE id = ?`
-		row2, err := db.Query(sqlStmt, id)
+		statement, err := db.Prepare(sqlStmt) // Prepare statement.
+		// row2, err := db.Query(sqlStmt, id)
 		if err != nil {
 			log.Fatal(err)
 		}
-		row2.Close()
-
+		_, err = statement.Exec(id)
+		if err != nil {
+			log.Println(err.Error())
+			return ""
+		}
 	}
 	row1.Close()
 	return "Service Complete"
