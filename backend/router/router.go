@@ -62,7 +62,7 @@ func SetupRouter() *gin.Engine {
 	r.POST("/vendorRating", requestHandlers.VendorRating)
 
 	//For vendor to start a service
-	r.POST("/startService", requestHandlers.StartSevice)
+	r.POST("/startService", requestHandlers.StartService)
 
 	//For vendor to end a service
 	r.POST("/endService", requestHandlers.FinishService)
