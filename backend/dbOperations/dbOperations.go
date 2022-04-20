@@ -289,41 +289,47 @@ func DisplayVendBookings(vendorId int) []structTypes.Booking {
 	return vend_book
 }
 
-func BeginService(pass string) string {
+func BeginService(id string, pass string) string {
 	db := dbConnection.GetDbConnection()
-	var id int
-	var otp string
+	book_id := id
+	otp := pass
+	fmt.Print(book_id, "is the id", otp, "is the pass")
+
 	// var booking_status string
 
 	sqlStmt := `SELECT id, otp FROM booking WHERE id = $1 and otp = $2 and booking_status = "Confirmed"`
-	row1, err := db.Query(sqlStmt, id, otp)
+	row1, err := db.Query(sqlStmt, id, pass)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer row1.Close()
 
-	if row1.Next() {
+	if row1 != nil {
+		fmt.Println("Updating booking status")
 		sqlStmt := `UPDATE booking SET booking_status = "In-Progress" WHERE id = ?`
 		statement, err := db.Prepare(sqlStmt) // Prepare statement.
 		// row2, err := db.Query(sqlStmt, id)
+
 		if err != nil {
 			log.Fatal(err)
 		}
 		_, err = statement.Exec(id)
+		fmt.Println("Updated booking status")
 		if err != nil {
 			log.Println(err.Error())
 			return ""
 		}
-		// row2.Close()
 
 	}
 	row1.Close()
+	fmt.Println("Started")
 	return "Service Started"
+
 }
 
-func EndService(pass string) string {
+func EndService(id string) string {
 	db := dbConnection.GetDbConnection()
-	var id int
+	// var id int
 	// var otp string
 	// var booking_status string
 
@@ -334,7 +340,7 @@ func EndService(pass string) string {
 	}
 	defer row1.Close()
 
-	if row1.Next() {
+	if row1 != nil {
 		sqlStmt := `UPDATE booking SET booking_status = "Completed" WHERE id = ?`
 		statement, err := db.Prepare(sqlStmt) // Prepare statement.
 		// row2, err := db.Query(sqlStmt, id)

@@ -8,8 +8,7 @@ class Home extends Component {
     return (
       <Container>
         <HomeJumbotron />
-        <Features/ >
-        
+        <Features />
       </Container>
     );
   }
