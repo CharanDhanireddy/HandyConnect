@@ -340,7 +340,7 @@ func EndService(pass string) string {
 	}
 	defer row1.Close()
 
-	if row1.Next() {
+	if row1 != nil {
 		sqlStmt := `UPDATE booking SET booking_status = "Completed" WHERE id = ?`
 		statement, err := db.Prepare(sqlStmt) // Prepare statement.
 		// row2, err := db.Query(sqlStmt, id)
