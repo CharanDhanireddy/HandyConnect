@@ -327,9 +327,9 @@ func BeginService(id string, pass string) string {
 
 }
 
-func EndService(pass string) string {
+func EndService(id string) string {
 	db := dbConnection.GetDbConnection()
-	var id int
+	// var id int
 	// var otp string
 	// var booking_status string
 
