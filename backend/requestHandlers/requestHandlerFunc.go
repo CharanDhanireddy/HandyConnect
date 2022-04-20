@@ -132,14 +132,15 @@ func ReturnBookingVend(c *gin.Context) {
 func StartService(c *gin.Context) {
 
 	pass := c.Query("otp")
+	id := (c.Query("id"))
 	// if err != nil {
-	// 	fmt.Println("stoi error for otp")
+	// 	fmt.Println("stoi error for id")
 	// 	fmt.Println(err)
-	// 	c.JSON(http.StatusBadRequest, "need integer otp")
+	// 	c.JSON(http.StatusBadRequest, "need integer id")
 	// 	return
 	// }
 
-	start_service := dbOperations.BeginService(pass)
+	start_service := dbOperations.BeginService(id, pass)
 	c.JSON(http.StatusOK, start_service)
 }
 
