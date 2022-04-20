@@ -49,7 +49,9 @@ type Booking struct {
 	ServiceName    string `json:"service_name"`
 	CityName       string `json:"city_name"`
 	VendorId       string `json:"vendor_id"`
+	VendorPhone    string `json:"vendor_phone"`
 	CustomerId     string `json:"customer_id"`
+	CustomerPhone  string `json:"customer_phone"`
 	ServiceId      string `json:"service_id"`
 	CityId         string `json:"city_id"`
 	Day            int    `json:"day"`
@@ -61,5 +63,3 @@ type Booking struct {
 	VendorRating   int    `json:"vendor_rating"`
 	Otp            string `json:"otp"`
 }
-
-
