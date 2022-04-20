@@ -300,8 +300,9 @@ func BeginService(pass string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer row1.Close()
 
-	if row1 != nil {
+	if row1.Next() {
 		sqlStmt := `UPDATE booking SET booking_status = "In-Progress" WHERE id = ?`
 		statement, err := db.Prepare(sqlStmt) // Prepare statement.
 		// row2, err := db.Query(sqlStmt, id)
@@ -331,8 +332,9 @@ func EndService(pass string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer row1.Close()
 
-	if row1 != nil {
+	if row1.Next() {
 		sqlStmt := `UPDATE booking SET booking_status = "Completed" WHERE id = ?`
 		statement, err := db.Prepare(sqlStmt) // Prepare statement.
 		// row2, err := db.Query(sqlStmt, id)
