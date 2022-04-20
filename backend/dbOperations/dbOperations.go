@@ -307,7 +307,7 @@ func BeginService(id string, pass string) string {
 		log.Fatal(err)
 	}
 	defer row1.Close()
-
+	fmt.Println(row1, "this is row1")
 	if row1 != nil {
 		fmt.Println("Updating booking status")
 		sqlStmt := `UPDATE booking SET booking_status = "In-Progress" WHERE id = ?`
