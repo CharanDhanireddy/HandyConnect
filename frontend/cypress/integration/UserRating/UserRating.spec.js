@@ -3,7 +3,7 @@ describe("user journey", function () {
     it("abc", () => {
         cy.visit('/login')
         cy.get('#emailId').clear();
-        cy.get('#emailId').type('tendulka@email.com');
+        cy.get('#emailId').type('cristiano@email.com');
         cy.get('#passwordId').clear();
         cy.get('#passwordId').type('123456789');
         cy.get('#user-login-button').click();

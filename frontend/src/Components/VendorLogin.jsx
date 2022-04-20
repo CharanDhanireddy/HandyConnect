@@ -130,7 +130,7 @@ function VendorLogin(props) {
               {state.errors.password}
             </Form.Group>
           </Form>
-          <Button id="vendor-login-button" className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Vendor Login</Button>
+          <Button id="vendor-login-button" className="mt-3 w-100 btn btn-lg btn" variant="outline-dark" color="primary" onClick={onLoginClick}>Login</Button>
           <p className="mt-2">
             Don't have account? <Link to="/vendorsignup">Vendor Signup</Link>
           </p>
