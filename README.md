@@ -44,9 +44,29 @@ To develop locally using Mirage mock APIs
 
 ## Sprint 4:
 
-[Project board](https://github.com/CharanDhanireddy/HandyConnect/projects/4)
 
+## [Project board](https://github.com/CharanDhanireddy/HandyConnect/projects/4)
 
+## Deliverables
+
+### Frontend
+- Added functionality for showing rating in user and vendor profiles
+- User can see the OTP requested by the vendor for verification on the booking page
+- Vendor can use the OTP to start the service i.e. mark it as in-progress
+- Vendor can end the service and give rating to user, and user can also rate the vendor on the completed service 
+- User and vendor can see each other's contact information on booking page
+- UX improvements in Homepage, Profile, Booking and Reschedule, Cancellation pages
+- Fixed final bugs (Login latency, prepopulated address fields etc.)
+- Added unit tests for sprint 4 UI changes
+- Cypress integration tests for complete workflows
+
+### Backend
+- Customer and vendor can see their aggregate rating on their profile
+- Customer gets OTP along with each booking in confirmed state to provide to vendor for verification
+- Vendor can use OTP given by a customer to move the service to in-progress (start the service)
+- Vendor can end the service i.e. mark the service as completed
+- Added unit tests for sprint 4 backend changes
+- Updated Swagger
 ---
 
 ## Sprint 3:
