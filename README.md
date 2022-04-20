@@ -51,6 +51,12 @@ https://user-images.githubusercontent.com/20516490/164339011-85d60b66-6f63-420e-
 
 For better video quality checkout this [Youtube link](https://youtu.be/N0Hx74m27YI)
 
+## Back-end Unit Tests
+
+
+https://user-images.githubusercontent.com/89587982/164342402-c2efe9d4-4222-4d6f-9cc7-eed79aa4a5cc.mp4
+
+
 ## [Project board](https://github.com/CharanDhanireddy/HandyConnect/projects/4)
 
 ## Deliverables
@@ -68,11 +74,11 @@ For better video quality checkout this [Youtube link](https://youtu.be/N0Hx74m27
 
 ### Backend
 - Customer and vendor can see their aggregate rating on their profile
-- Customer gets OTP along with each booking in confirmed state to provide to vendor for verification
-- Vendor can use OTP given by a customer to move the service to in-progress (start the service)
-- Vendor can end the service i.e. mark the service as completed
-- Added unit tests for sprint 4 backend changes
-- Updated Swagger
+- Customer gets OTP along with each booking in confirmed state to provide to vendor for verification at the time of starting a service
+- Vendor can use OTP given by a customer to move the service to In-Progress (start the service)
+- Vendor can end the service i.e. mark the service as completed after completion of service
+- Added unit tests for sprint 4 backend changes and updated previous UTs according to Database changes
+- Updated Swagger and API documentation
 ---
 
 ## Sprint 3:
