@@ -177,7 +177,9 @@ function VendorBooking(props) {
                         <>
                             <Row>
                                 <Col xs='3'> <text className='text-uppercase fw-bold'>Action </text></Col>
-                                <Col><Button variant='danger' onClick={handleEndService}>End Service</Button></Col>
+                                <Col><Button variant='danger' onClick={handleEndService}>
+                                    <strong> End Service </strong>
+                                </Button></Col>
                             </Row>
                         </>}
 

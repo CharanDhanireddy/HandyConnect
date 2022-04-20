@@ -10,10 +10,10 @@ describe("user journey", function () {
             cy.get('#lastNameId').clear();
             cy.get('#lastNameId').type('Tendulkar');
             cy.get('#phoneId').clear();
-            cy.get('#phoneId').type('657897448');
+            cy.get('#phoneId').type('65789746788');
             cy.get('#cityId').select('2');
             cy.get('#emailId').clear();
-            cy.get('#emailId').type('tendulka@email.com');
+            cy.get('#emailId').type('tendulk@email.com');
             cy.get('#passwordId').clear();
             cy.get('#passwordId').type('123456789');
             cy.get('#rePasswordId').clear();
@@ -21,7 +21,7 @@ describe("user journey", function () {
             cy.get('#signup-button').click();
             cy.wait(5000)
             cy.get('#emailId').clear();
-            cy.get('#emailId').type('tendulka@email.com');
+            cy.get('#emailId').type('tendulk@email.com');
             cy.get('#passwordId').clear();
             cy.get('#passwordId').type('123456789');
             cy.get('#user-login-button').click();
@@ -64,7 +64,7 @@ describe("user journey", function () {
             cy.wait(1500)
             cy.get('#submitId > strong').click();
             cy.wait(5000)
-            cy.get(':nth-child(5) > [data-cy="4/23/2022"]').click();
+            cy.get(':nth-child(5) > [data-cy="4/25/2022"]').click();
             cy.wait(1500)
             cy.get('[data-cy="rescheduleButton"] > strong').click();
             cy.get('[data-cy="6"] > .text-center').click();
