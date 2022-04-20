@@ -44,6 +44,12 @@ To develop locally using Mirage mock APIs
 
 ## Sprint 4:
 
+## Cypress Test Video 89sec
+
+
+https://user-images.githubusercontent.com/20516490/164339011-85d60b66-6f63-420e-8cc5-e136d3bee6b7.mov
+
+For better video quality checkout this [Youtube link](https://youtu.be/N0Hx74m27YI)
 
 ## [Project board](https://github.com/CharanDhanireddy/HandyConnect/projects/4)
 
