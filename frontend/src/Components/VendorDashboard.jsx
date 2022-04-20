@@ -64,7 +64,7 @@ function VendorDashboard(props) {
                             <td id="address" >{booking.address}</td>
                             {/* <td id="city" >{booking.city_name}</td> */}
                             <td id="status" style={{ color: statusColourMap[booking.booking_status] }}>{statusMap[booking.booking_status]}</td>
-                            <td ><Button id="view-modify-button-vendor" variant="outline-secondary" onClick={() => setBooking(booking)}><strong>View/Modify Booking</strong></Button></td>
+                            <td ><Button id="view-modify-button-vendor" variant="outline-secondary" onClick={() => setBooking(booking)}><strong>View/Start/End Booking</strong></Button></td>
                         </tr>
                     ))
 
