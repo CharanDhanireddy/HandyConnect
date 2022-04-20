@@ -101,7 +101,7 @@ function VendorLogin(props) {
 
       <Row>
         <Col className="mx-auto" md="4 pt-10">
-          <h1 className="login-signup-heading">Service Provider Login</h1>
+          <h1 className="login-signup-heading">Vendor Login</h1>
           <Form noValidate>
             <Form.Group controlId="emailId" className="loginpage-email-field">
               <Form.Control

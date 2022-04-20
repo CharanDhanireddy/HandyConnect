@@ -13,10 +13,10 @@ function VendorBooking(props) {
     };
 
     let handleEndService = async () => {
-        let bookingData = { booking_id: props.booking.id }
+        let bookingData = { id: props.booking.id }
         let data, status;
         try {
-            let endRes = await axios.post(BASE_URL + "endService", bookingData)
+            let endRes = await axios.post(BASE_URL + "endService", null, { params: bookingData })
             data = endRes.data
             status = endRes.status
             if (status == 200) {
@@ -36,12 +36,12 @@ function VendorBooking(props) {
     // To
     let handleOTPSubmit = async () => {
         let newBooking = {
-            booking_id: props.booking.id, otp: parseInt(state.otp)
+            id: props.booking.id, otp: parseInt(state.otp)
         };
         // Can improve error handling here
         let data, status;
         try {
-            let otpRes = await axios.post(BASE_URL + "startService", newBooking)
+            let otpRes = await axios.post(BASE_URL + "startService", null, { params: newBooking })
             data = otpRes.data
             status = otpRes.status
             if (status == 200) {
