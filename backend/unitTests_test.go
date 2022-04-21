@@ -431,3 +431,72 @@ func TestRescheduleBooking(t *testing.T) {
 	assert.Equal(t, expected, string(act))
 
 }
+
+func TestStartService(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(rr)
+
+	var params []gin.Param
+	ctx.Params = append(params, gin.Param{"id", "16"})
+	ctx.Params = append(params, gin.Param{"otp", "731847"})
+	var req http.Request
+	ctx.Request = &req
+	var url url.URL
+	req.URL = &url
+	req.URL.RawQuery = "id=16&otp=731847"
+
+	requestHandlers.StartService(ctx)
+	assert.Equal(t, 200, rr.Code)
+
+	var got string
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `"Service Started"`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+
+}
+
+func TestEndService(t *testing.T) {
+	dbConnection.TestDBConnection()
+
+	rr := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(rr)
+
+	var params []gin.Param
+	ctx.Params = append(params, gin.Param{"id", "16"})
+	var req http.Request
+	ctx.Request = &req
+	var url url.URL
+	req.URL = &url
+	req.URL.RawQuery = "id=16"
+
+	requestHandlers.FinishService(ctx)
+	assert.Equal(t, 200, rr.Code)
+
+	var got string
+	err := json.Unmarshal(rr.Body.Bytes(), &got)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check the response body is what we expect.
+	expected := `"Service Complete"`
+	if rr.Body.String() != expected {
+		t.Errorf("handler returned unexpected body: got %v want %v",
+			rr.Body.String(), expected)
+	}
+	act, _ := json.Marshal(got)
+	assert.Equal(t, expected, string(act))
+
+}
