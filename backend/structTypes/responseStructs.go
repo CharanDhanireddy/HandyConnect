@@ -23,6 +23,7 @@ type Vendor struct {
 	// Service3   string `json: "service3"`
 	Rating      float32 `json:"rating"`
 	RatingCount int     `json:"rating_count"`
+	AuthToken   string  `json:"auth_token"`
 }
 
 type Cust struct {
@@ -35,6 +36,7 @@ type Cust struct {
 	Email       string  `json:"email"`
 	Rating      float32 `json:"rating"`
 	RatingCount int     `json:"rating_count"`
+	AuthToken   string  `json:"auth_token"`
 }
 
 type Service struct {

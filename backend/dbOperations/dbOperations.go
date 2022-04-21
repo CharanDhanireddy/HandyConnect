@@ -113,7 +113,7 @@ func DisplayCustData(customerId int) (structTypes.Cust, error) {
 		return cust_data, nil
 	}
 	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &email, &rating, &rating_count)
-	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email, rating, rating_count}
+	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email, rating, rating_count, ""}
 	row.Close()
 
 	return cust_data, nil
@@ -149,7 +149,7 @@ func DisplayVendorData(vendorId int) (structTypes.Vendor, error) {
 	}
 
 	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &email, &service1, &rating, &rating_count)
-	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1, rating, rating_count}
+	vend_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1, rating, rating_count,""}
 
 	row.Close()
 
