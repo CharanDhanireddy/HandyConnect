@@ -287,6 +287,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/endService": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Finish a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "booking id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/rescheduleBooking": {
             "post": {
                 "produces": [
@@ -302,6 +333,44 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/structTypes.BookingRescheduleRequest"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/startService": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Start a service",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "booking id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "otp",
+                        "name": "otp",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -595,6 +664,9 @@ const docTemplate = `{
         "structTypes.Cust": {
             "type": "object",
             "properties": {
+                "auth_token": {
+                    "type": "string"
+                },
                 "city_id": {
                     "type": "integer"
                 },
@@ -663,6 +735,9 @@ const docTemplate = `{
         "structTypes.Vendor": {
             "type": "object",
             "properties": {
+                "auth_token": {
+                    "type": "string"
+                },
                 "city_name": {
                     "type": "string"
                 },

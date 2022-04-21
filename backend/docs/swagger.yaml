@@ -95,6 +95,8 @@ definitions:
     type: object
   structTypes.Cust:
     properties:
+      auth_token:
+        type: string
       city_id:
         type: integer
       city_name:
@@ -139,6 +141,8 @@ definitions:
     type: object
   structTypes.Vendor:
     properties:
+      auth_token:
+        type: string
       city_name:
         type: string
       email:
@@ -342,6 +346,26 @@ paths:
           schema:
             type: object
       summary: create new customer
+  /endService:
+    post:
+      parameters:
+      - description: booking id
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: Finish a service
   /rescheduleBooking:
     post:
       parameters:
@@ -363,6 +387,31 @@ paths:
           schema:
             type: object
       summary: Reschedule a current booking
+  /startService:
+    post:
+      parameters:
+      - description: booking id
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: otp
+        in: query
+        name: otp
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+      summary: Start a service
   /vendor:
     get:
       description: Get Vendor by ID

@@ -129,21 +129,30 @@ func ReturnBookingVend(c *gin.Context) {
 	c.JSON(http.StatusOK, vend_book)
 }
 
+// Start a service by entering otp
+// @Summary Start a service
+// @Produce json
+// @Param id query string true "booking id"
+// @Param otp query string true "otp"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /startService [post]
 func StartService(c *gin.Context) {
 
 	pass := c.Query("otp")
 	id := (c.Query("id"))
-	// if err != nil {
-	// 	fmt.Println("stoi error for id")
-	// 	fmt.Println(err)
-	// 	c.JSON(http.StatusBadRequest, "need integer id")
-	// 	return
-	// }
 
 	start_service := dbOperations.BeginService(id, pass)
 	c.JSON(http.StatusOK, start_service)
 }
 
+// Finish a service
+// @Summary Finish a service
+// @Produce json
+// @Param id query string true "booking id"
+// @Success 200 {object} object
+// @Failure 400 {object} object
+// @Router /endService [post]
 func FinishService(c *gin.Context) {
 	bid := c.Query("id")
 	// if err != nil {
