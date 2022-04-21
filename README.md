@@ -62,7 +62,7 @@ To develop locally using Mirage mock APIs
 
 ## Sprint 4:
 
-## Cypress Test Video 89sec
+## Cypress Test Video 98sec
 
 
 https://user-images.githubusercontent.com/89587982/164355409-1cebcefa-62f4-442b-a8f2-d6974cb59bad.mp4
