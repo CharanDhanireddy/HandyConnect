@@ -20,7 +20,7 @@ The application provides the following functionalities to a vendor:
 - Start/End service using an OTP they receive from the customer before starting the service
 - Rate a customer after successful completion of a service
 
-
+---
 ## Team Members:
 | Name | Gatorlink Email | Responsibility |
 | :--: | :--: | :--: |
