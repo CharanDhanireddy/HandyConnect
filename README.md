@@ -1,8 +1,25 @@
 # HandyConnect
 Class project for CEN5035 - Software Engineering
 
-## Project Idea:
-Platform for connecting customers with skilled and experienced professionals providing services (handymen, salon, applaince repair, etc).
+## Project Description:
+**HandyConnect** is a platform for connecting customers with skilled and experienced professionals providing several everyday services such as electrical, carpentry, painting, plumbing, and more. 
+
+Vendors can sign up on the application by providing their basic details and the service they wish to provide. Customers can similarly sign up by providing their details and start scheduling bookings in a city of their choice. 
+
+The application provides the following functionalities to a customer:
+- View available services in a city of choice
+- Make a booking for a service in the chosen city
+- View their profile with their details
+- View all their bookings (historical and upcoming)
+- Reschedule or cancel bookings
+- Rate a vendor after successful completion of a service
+
+The application provides the following functionalities to a vendor:
+- View their profile with their details
+- View all their bookings (historical and upcoming)
+- Start/End service using an OTP they receive from the customer before starting the service
+- Rate a customer after successful completion of a service
+
 
 ## Team Members:
 | Name | Gatorlink Email | Responsibility |
