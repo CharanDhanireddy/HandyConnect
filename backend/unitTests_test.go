@@ -178,7 +178,7 @@ func TestBookingCust(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"id":5,"vendor_name":"Joshua Weissman","customer_name":"v d","service_name":"Carpenter","city_name":"Tampa","vendor_id":"8","customer_id":"4","service_id":"3","city_id":"2","day":10,"month":3,"year":2022,"address":"34 st dj Tampa 19873289","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0}]`
+	expected := `[{"id":5,"vendor_name":"Joshua Weissman","customer_name":"v d","service_name":"Carpenter","city_name":"Tampa","vendor_id":"8","vendor_phone":"4455664455","customer_id":"4","customer_phone":"1234567890","service_id":"3","city_id":"2","day":10,"month":3,"year":2022,"address":"34 st dj Tampa 19873289","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0,"otp":""}]`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -208,7 +208,7 @@ func TestBookingVend(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"id":13,"vendor_name":"vendor name vendor lastname","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"5","customer_id":"3","service_id":"1","city_id":"1","day":8,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0}]`
+	expected := `[{"id":13,"vendor_name":"vendor name vendor lastname","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"5","vendor_phone":"3333333333","customer_id":"3","customer_phone":"65","service_id":"1","city_id":"1","day":8,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0,"otp":""},{"id":15,"vendor_name":"vendor name vendor lastname","customer_name":"Marie Curie","service_name":"Electrician","city_name":"Gainesville","vendor_id":"5","vendor_phone":"3333333333","customer_id":"6","customer_phone":"7894561234","service_id":"1","city_id":"1","day":27,"month":4,"year":2022,"address":"sp4Test Gainesville 32681","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0,"otp":"227887"}]`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -224,7 +224,7 @@ func TestCustLoginSuccess(t *testing.T) {
 	rr := httptest.NewRecorder()
 	c, _ := gin.CreateTestContext(rr)
 	var req http.Request
-	var body = []byte(`{"email":"cusemail@email.com", "password":"pass"}`)
+	var body = []byte(`{"email":"cusemail@email.com", "password":"123456789"}`)
 	req = *httptest.NewRequest("POST", "/customerLogin", bytes.NewBuffer(body))
 	c.Request = &req
 
@@ -268,7 +268,7 @@ func TestVendLoginSuccess(t *testing.T) {
 	rr := httptest.NewRecorder()
 	c, _ := gin.CreateTestContext(rr)
 	var req http.Request
-	var body = []byte(`{"email":"vendormail@email.com", "password":"pass"}`)
+	var body = []byte(`{"email":"vendormail@email.com", "password":"123456789"}`)
 	req = *httptest.NewRequest("POST", "/vendorLogin", bytes.NewBuffer(body))
 	c.Request = &req
 
@@ -388,7 +388,7 @@ func TestCancelBooking(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"id":5,"vendor_name":"Joshua Weissman","customer_name":"v d","service_name":"Carpenter","city_name":"Tampa","vendor_id":"8","customer_id":"4","service_id":"3","city_id":"2","day":10,"month":3,"year":2022,"address":"34 st dj Tampa 19873289","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0}]`
+	expected := `[{"id":5,"vendor_name":"Joshua Weissman","customer_name":"v d","service_name":"Carpenter","city_name":"Tampa","vendor_id":"8","vendor_phone":"4455664455","customer_id":"4","customer_phone":"1234567890","service_id":"3","city_id":"2","day":10,"month":3,"year":2022,"address":"34 st dj Tampa 19873289","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0,"otp":""}]`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -422,7 +422,7 @@ func TestRescheduleBooking(t *testing.T) {
 	}
 
 	// Check the response body is what we expect.
-	expected := `[{"id":3,"vendor_name":"John Smith","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"6","customer_id":"3","service_id":"1","city_id":"1","day":7,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Cancelled","customer_rating":4,"vendor_rating":5},{"id":13,"vendor_name":"vendor name vendor lastname","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"5","customer_id":"3","service_id":"1","city_id":"1","day":8,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0}]`
+	expected := `[{"id":3,"vendor_name":"John Smith","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"6","vendor_phone":"123456789","customer_id":"3","customer_phone":"65","service_id":"1","city_id":"1","day":7,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Cancelled","customer_rating":4,"vendor_rating":5,"otp":""},{"id":13,"vendor_name":"vendor name vendor lastname","customer_name":"a b","service_name":"Electrician","city_name":"Gainesville","vendor_id":"5","vendor_phone":"3333333333","customer_id":"3","customer_phone":"65","service_id":"1","city_id":"1","day":8,"month":3,"year":2022,"address":"edc Gainesville undefined","booking_status":"Confirmed","customer_rating":0,"vendor_rating":0,"otp":""}]`
 	if rr.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			rr.Body.String(), expected)
@@ -431,4 +431,3 @@ func TestRescheduleBooking(t *testing.T) {
 	assert.Equal(t, expected, string(act))
 
 }
-

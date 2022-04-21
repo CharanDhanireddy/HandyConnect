@@ -5,6 +5,7 @@ import (
 	_ "handy/docs"
 	"handy/router"
 	"log"
+	"os"
 
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -23,5 +24,5 @@ func main() {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	r.Run(":10000")
+	r.Run(":" + os.Getenv("PORT"))
 }

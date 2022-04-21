@@ -1,9 +1,26 @@
 # HandyConnect
 Class project for CEN5035 - Software Engineering
 
-## Project Idea:
-Platform for connecting customers with skilled and experienced professionals providing services (handymen, salon, applaince repair, etc).
+## Project Description:
+**HandyConnect** is a platform for connecting customers with skilled and experienced professionals providing several everyday services such as electrical, carpentry, painting, plumbing, and more. 
 
+Vendors can sign up on the application by providing their basic details and the service they wish to provide. Customers can similarly sign up by providing their details and start scheduling bookings in a city of their choice. 
+
+The application provides the following functionalities to a customer:
+- View available services in a city of choice
+- Make a booking for a service in the chosen city
+- View their profile with their details
+- View all their bookings (historical and upcoming)
+- Reschedule or cancel bookings
+- Rate a vendor after successful completion of a service
+
+The application provides the following functionalities to a vendor:
+- View their profile with their details
+- View all their bookings (historical and upcoming)
+- Start/End service using an OTP they receive from the customer before starting the service
+- Rate a customer after successful completion of a service
+
+---
 ## Team Members:
 | Name | Gatorlink Email | Responsibility |
 | :--: | :--: | :--: |
@@ -44,6 +61,18 @@ To develop locally using Mirage mock APIs
 
 ## Sprint 4:
 
+## Cypress Test Video 89sec
+
+
+https://user-images.githubusercontent.com/20516490/164339011-85d60b66-6f63-420e-8cc5-e136d3bee6b7.mov
+
+For better video quality checkout this [Youtube link](https://youtu.be/N0Hx74m27YI)
+
+## Back-end Unit Tests
+
+
+https://user-images.githubusercontent.com/89587982/164342402-c2efe9d4-4222-4d6f-9cc7-eed79aa4a5cc.mp4
+
 
 ## [Project board](https://github.com/CharanDhanireddy/HandyConnect/projects/4)
 
@@ -62,11 +91,11 @@ To develop locally using Mirage mock APIs
 
 ### Backend
 - Customer and vendor can see their aggregate rating on their profile
-- Customer gets OTP along with each booking in confirmed state to provide to vendor for verification
-- Vendor can use OTP given by a customer to move the service to in-progress (start the service)
-- Vendor can end the service i.e. mark the service as completed
-- Added unit tests for sprint 4 backend changes
-- Updated Swagger
+- Customer gets OTP along with each booking in confirmed state to provide to vendor for verification at the time of starting a service
+- Vendor can use OTP given by a customer to move the service to In-Progress (start the service)
+- Vendor can end the service i.e. mark the service as completed after completion of service
+- Added unit tests for sprint 4 backend changes and updated previous UTs according to Database changes
+- Updated Swagger and API documentation
 ---
 
 ## Sprint 3:
