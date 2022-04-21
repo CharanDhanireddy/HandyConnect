@@ -24,5 +24,5 @@ func main() {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	r.Run(os.Getenv("PORT"))
+	r.Run(":" + os.Getenv("PORT"))
 }
