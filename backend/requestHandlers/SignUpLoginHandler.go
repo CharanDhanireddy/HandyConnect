@@ -2,6 +2,7 @@ package requestHandlers
 
 import (
 	"handy/dbOperations"
+	"handy/middleware"
 	schema "handy/schema"
 	"handy/structTypes"
 	"log"
@@ -41,6 +42,14 @@ func CustomerLogin(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "Wrong password or email")
 		return
 	}
+
+	token, err := middleware.CreateToken(uint(customer_data.Id))
+	if err != nil {
+		log.Printf("unable to generate token. Error: ", err.Error())
+		c.JSON(http.StatusUnauthorized, "unable to generate token")
+		return
+	}
+	customer_data.AuthToken = token
 
 	c.JSON(http.StatusOK, customer_data)
 }
@@ -109,6 +118,14 @@ func VendorLogin(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, "Wrong password or email")
 		return
 	}
+	
+	token, err := middleware.CreateToken(uint(vendor_data.Id))
+	if err != nil {
+		log.Printf("unable to generate token. Error: ", err.Error())
+		c.JSON(http.StatusUnauthorized, "unable to generate token")
+		return
+	}
+	vendor_data.AuthToken = token
 
 	c.JSON(http.StatusOK, vendor_data)
 }

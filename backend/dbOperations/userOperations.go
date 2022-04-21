@@ -62,7 +62,7 @@ func VerifyCustomerLogin(email string, password string) (structTypes.Cust, bool,
 		return cust_data, false, nil
 	}
 	row.Scan(&customer_id, &f_name, &l_name, &city_name, &city_id, &phn, &rating, &rating_count)
-	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email, rating, rating_count}
+	cust_data = structTypes.Cust{customer_id, f_name, l_name, city_name, city_id, phn, email, rating, rating_count, ""}
 	row.Close()
 
 	return cust_data, true, nil
@@ -118,7 +118,7 @@ func VerifyVendorLogin(email string, password string) (structTypes.Vendor, bool,
 		return vendor_data, false, nil
 	}
 	row.Scan(&vendor_id, &f_name, &l_name, &city, &phn, &service1, &rating, &rating_count)
-	vendor_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1, rating, rating_count}
+	vendor_data = structTypes.Vendor{vendor_id, f_name, l_name, city, phn, email, service1, rating, rating_count, ""}
 	row.Close()
 
 	return vendor_data, true, nil
