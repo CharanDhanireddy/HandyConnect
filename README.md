@@ -22,6 +22,14 @@ The application provides the following functionalities to a vendor:
 - Rate a customer after successful completion of a service
 
 ---
+## Demo
+
+
+
+https://user-images.githubusercontent.com/20516490/164365491-c1c22e57-1bdc-40f6-bede-8873a0479d66.mp4
+
+
+---
 ## Team Members:
 | Name | Gatorlink Email | Responsibility |
 | :--: | :--: | :--: |
