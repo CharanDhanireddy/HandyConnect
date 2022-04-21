@@ -65,7 +65,9 @@ To develop locally using Mirage mock APIs
 ## Cypress Test Video 89sec
 
 
-https://user-images.githubusercontent.com/20516490/164339011-85d60b66-6f63-420e-8cc5-e136d3bee6b7.mov
+https://user-images.githubusercontent.com/89587982/164355409-1cebcefa-62f4-442b-a8f2-d6974cb59bad.mp4
+
+
 
 For better video quality checkout this [Youtube link](https://youtu.be/N0Hx74m27YI)
 
