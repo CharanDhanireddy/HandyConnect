@@ -1,4 +1,4 @@
-# HandyConnect  [handyconnect.netlify.app](handyconnect.netlify.app)
+# HandyConnect [handyconnect.netlify.app](http://handyconnect.netlify.app)
 
 Class project for CEN5035 - Software Engineering
 
